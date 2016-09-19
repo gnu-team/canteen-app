@@ -25,8 +25,7 @@ public class JoinController {
 
     private void handleLoginPressed(ActionEvent event) {
         if (isInputValid()) {
-            user.setUser(JoinPassWord.getText());
-            user.setPassword(JoinPassWord.getText());
+            user = new User(JoinUserName.getText(), JoinPassWord.getText());
             try {
                 ((Node)(event.getSource())).getScene().getWindow().hide();
                 Parent root = FXMLLoader.load(getClass().getResource("../view/LogOut.fxml"));
