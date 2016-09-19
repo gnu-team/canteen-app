@@ -7,11 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class MainFXApplication extends Application {
+    // TODO: Put this in a ResourceBundle instead
+    private static final String TITLE = "Canteen: A Water Tracker";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle(TITLE);
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
     }
