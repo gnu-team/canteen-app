@@ -7,6 +7,12 @@ public class User {
     private String user;
     private String password;
 
+    private static final User defaultUser = new User("user", "pass");
+
+    public static User getDefaultUser() {
+        return defaultUser;
+    }
+
     public User(String user, String password) {
         this.user = user;
         this.password = password;
