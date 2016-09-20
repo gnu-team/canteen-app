@@ -28,7 +28,7 @@ public class WelcomeController {
             || ((UserName.getText().equals("user") && PassWord.getText().equals("pass")))) {
             //it hide current window
             ((Node)(event.getSource())).getScene().getWindow().hide();
-            Parent root = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../view/WelcomeView.fxml"));
             Scene scene = new Scene(root);
             Stage primaryStage = new Stage();
             primaryStage.setScene(scene);
