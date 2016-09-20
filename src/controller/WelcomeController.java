@@ -1,18 +1,15 @@
 package controller;
 
+import javafx.IMainAppReceiver;
+import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.scene.Node;
 import model.User;
 
 
-public class WelcomeController {
+public class WelcomeController implements IMainAppReceiver {
     @FXML
     private TextField UserName;
 
@@ -21,19 +18,16 @@ public class WelcomeController {
 
     @FXML
     private Label Welcome;
-    private User user;
+    private User user = User.getDefaultUser();
+    private MainFXApplication mainApplication;
+
+    public void setMainApp(MainFXApplication mainApplication) {
+        this.mainApplication = mainApplication;
+    }
 
     public void Login(ActionEvent event) throws Exception {
-        if ((UserName.getText().equals(user.getUser())) && PassWord.getText().equals(user.getPassword())
-            || ((UserName.getText().equals("user") && PassWord.getText().equals("pass")))) {
-            //it hide current window
-            ((Node)(event.getSource())).getScene().getWindow().hide();
-            Parent root = FXMLLoader.load(getClass().getResource("../view/WelcomeView.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = new Stage();
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Success Frame");
-            primaryStage.show();
+        if (user.authenticate(UserName.getText(), PassWord.getText())) {
+            mainApplication.loginComplete(user);
         } else {
             Welcome.setText("Login failed");
         }

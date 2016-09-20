@@ -12,6 +12,6 @@ public class MainController {
         mainApplication = main;
     }
     private void handleCloseMenu() {
-        System.exit(1);
+        mainApplication.close();
     }
 }
