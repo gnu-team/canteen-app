@@ -24,12 +24,12 @@ public class MainFXApplication extends Application {
         stage = primaryStage;
 
         primaryStage.setTitle(TITLE);
-        showView("WelcomeView");
+        showView("Welcome");
         primaryStage.show();
     }
 
     private void showView(String name) {
-        URL path = getClass().getResource("../view/" + name + ".fxml");
+        URL path = getClass().getResource("../view/" + name + "View.fxml");
 
         // If getResource() does not find the resource given, it returns
         // null
@@ -79,11 +79,11 @@ public class MainFXApplication extends Application {
      */
     public void loginComplete(User user) {
         this.user = user;
-        showView("SuccessView");
+        showView("Success");
     }
 
     public void showLogin() {
-        showView("LoginView");
+        showView("Login");
     }
 
     public static void main(String[] args) {
