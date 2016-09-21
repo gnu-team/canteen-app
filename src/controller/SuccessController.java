@@ -22,15 +22,6 @@ public class SuccessController implements IMainAppReceiver {
     }
     @FXML
     private void handleLogoutPressed(ActionEvent event) {
-        try {
-            ((Node)(event.getSource())).getScene().getWindow().hide();
-            Parent root = FXMLLoader.load(getClass().getResource("../view/LogOut.fxml"));
-            Scene scene = new Scene(root);
-            Stage primaryStage = new Stage();
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Success Frame");
-            primaryStage.show();
-        } catch (Exception e) {
-        }
+        mainApp.logout();
     }
 }

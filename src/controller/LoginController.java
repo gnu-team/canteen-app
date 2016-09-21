@@ -37,5 +37,6 @@ public class LoginController implements IMainAppReceiver {
     }
 
     public void handleBackButtonPressed(ActionEvent actionEvent) {
+        mainApplication.showRegister();
     }
 }
