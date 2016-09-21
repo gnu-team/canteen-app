@@ -75,7 +75,11 @@ public class MainFXApplication extends Application {
      */
     public void loginComplete(User user) {
         this.user = user;
-        showView("main");
+        showView("SuccessView");
+    }
+
+    public void showLogin() {
+        showView("LoginView");
     }
 
     public static void main(String[] args) {

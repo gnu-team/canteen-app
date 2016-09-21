@@ -26,11 +26,7 @@ public class WelcomeController implements IMainAppReceiver {
     }
 
     public void Login(ActionEvent event) throws Exception {
-        if (user.authenticate(UserName.getText(), PassWord.getText())) {
-            mainApplication.loginComplete(user);
-        } else {
-            Welcome.setText("Login failed");
-        }
+        mainApplication.showLogin();
     }
 
 
