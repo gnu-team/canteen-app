@@ -55,9 +55,13 @@ public class MainFXApplication extends Application {
         stage.setScene(new Scene(root));
     }
 
-    private void bail(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message + "\nBailing out!", ButtonType.OK);
+    public void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
         alert.showAndWait();
+    }
+
+    private void bail(String message) {
+        showAlert(message + "\nBailing out!");
         close();
     }
 
