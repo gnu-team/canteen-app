@@ -32,7 +32,7 @@ public class LoginController implements IMainAppReceiver {
         if (user.authenticate(username.getText(), password.getText())) {
             mainApplication.loginComplete(user);
         } else {
-            // TODO: Add alert
+            mainApplication.showAlert("Access denied. Please try again.");
         }
     }
 
