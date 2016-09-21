@@ -90,6 +90,11 @@ public class MainFXApplication extends Application {
         showView("Login");
     }
 
+    public void logout() {
+        this.user = null;
+        showRegister();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
