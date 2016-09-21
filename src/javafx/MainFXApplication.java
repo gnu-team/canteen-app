@@ -24,7 +24,7 @@ public class MainFXApplication extends Application {
         stage = primaryStage;
 
         primaryStage.setTitle(TITLE);
-        showView("Welcome");
+        showRegister();
         primaryStage.show();
     }
 
@@ -80,6 +80,10 @@ public class MainFXApplication extends Application {
     public void loginComplete(User user) {
         this.user = user;
         showView("Success");
+    }
+
+    public void showRegister() {
+        showView("Welcome");
     }
 
     public void showLogin() {
