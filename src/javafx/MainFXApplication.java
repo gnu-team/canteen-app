@@ -87,7 +87,7 @@ public class MainFXApplication extends Application {
     }
 
     public void showLogin() {
-        showView("Login");
+        showView("login");
     }
 
     public void logout() {

@@ -25,7 +25,7 @@ public class WelcomeController implements IMainAppReceiver {
         this.mainApplication = mainApplication;
     }
 
-    public void Login(ActionEvent event) throws Exception {
+    public void login(ActionEvent event) throws Exception {
         mainApplication.showLogin();
     }
 
