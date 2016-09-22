@@ -29,25 +29,7 @@ public class WelcomeController implements IMainAppReceiver {
         mainApplication.showLogin();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void register(ActionEvent actionEvent) {
+        mainApplication.showAlert("Registration is not implemented yet.");
+    }
 }
