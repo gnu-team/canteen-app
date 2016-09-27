@@ -1,6 +1,9 @@
 version '1.0.0'
 
 apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'javafx.MainFXApplication'
 
 repositories {
     mavenCentral()
@@ -12,7 +15,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'javafx.MainFXApplication'
+        attributes 'Main-Class': mainClassName
     }
 }
 
