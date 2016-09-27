@@ -29,7 +29,7 @@ public class MainFXApplication extends Application {
     }
 
     private void showView(String name) {
-        URL path = getClass().getResource("../view/" + name + "View.fxml");
+        URL path = getClass().getResource("/view/" + name + "View.fxml");
 
         // If getResource() does not find the resource given, it returns
         // null
