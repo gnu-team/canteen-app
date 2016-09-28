@@ -20,7 +20,11 @@
             <Font name="Courier" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXButton layoutX="76.0" layoutY="282.0" onAction="#handleSaveProfilePressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Save Changes" textFill="#fcfcfc" />
+      <JFXButton layoutX="76.0" layoutY="282.0" onAction="#handleSaveProfilePressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Save Changes" textFill="#fcfcfc">
+         <font>
+            <Font name="Courier" size="12.0" />
+         </font>
+      </JFXButton>
       <Label layoutX="129.0" layoutY="39.0" prefHeight="60.0" prefWidth="187.0" text="Edit Profile">
          <font>
             <Font name="Courier" size="24.0" />

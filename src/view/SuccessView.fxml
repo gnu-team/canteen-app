@@ -9,7 +9,7 @@
    <children>
       <JFXButton layoutX="14.0" layoutY="336.0" onAction="#handleLogoutPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Logout " textFill="#fcfcfc">
          <font>
-            <Font size="14.0" />
+            <Font name="Courier" size="14.0" />
          </font>
       </JFXButton>
       <Label layoutX="154.0" layoutY="126.0" prefHeight="91.0" prefWidth="237.0" text="Success" textAlignment="CENTER">
