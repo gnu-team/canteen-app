@@ -95,6 +95,11 @@ public class MainFXApplication extends Application {
         showRegister();
     }
 
+    public void finishRegistration(User user) {
+        this.user = user;
+        showView("Profile");
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

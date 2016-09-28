@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ComboBox;
 import model.User;
 import model.AccountType;
+import model.UserFactory;
+import model.InvalidUserException;
 
 
 public class WelcomeController implements IMainAppReceiver {
@@ -50,6 +52,16 @@ public class WelcomeController implements IMainAppReceiver {
     }
 
     public void register(ActionEvent actionEvent) {
-        mainApplication.showAlert("Registration is not implemented yet.");
+        User user;
+        try {
+            user = UserFactory.createUser(usernameField.getText(),
+                                          passwordField.getText(),
+                                          accountTypeBox.getValue());
+        } catch (InvalidUserException e) {
+            mainApplication.showAlert(e.getMessage());
+            return;
+        }
+
+        mainApplication.finishRegistration(user);
     }
 }
