@@ -13,10 +13,10 @@ import model.AccountType;
 
 public class WelcomeController implements IMainAppReceiver {
     @FXML
-    private TextField UserName;
+    private TextField usernameField;
 
     @FXML
-    private TextField PassWord;
+    private TextField passwordField;
 
     @FXML
     private ComboBox<AccountType> accountTypeBox;
