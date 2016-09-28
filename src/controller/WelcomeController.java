@@ -29,6 +29,16 @@ public class WelcomeController implements IMainAppReceiver {
     @FXML
     private void initialize() {
         accountTypeBox.getItems().setAll(AccountType.values());
+        // If we don't explicitly set a default, a JFoenix combobox
+        // apparently doesn't choose anything, which can result in a
+        // null value when user hits Register.
+        // So instead of checking if accountTypeBox.getValue() == null
+        // whenever user presses Register and showing an alert if it
+        // doesn't, choose a default value (currently USER) so
+        // getValue() == null cannot happen.
+        // The downside of this is that you can't see the "Account Type"
+        // helper text anymore.
+        accountTypeBox.setValue(AccountType.DEFAULT);
     }
 
     public void setMainApp(MainFXApplication mainApplication) {

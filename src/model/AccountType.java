@@ -6,6 +6,7 @@ public enum AccountType {
     MANAGER("Manager"),
     ADMIN("Administrator");
 
+    public static AccountType DEFAULT = USER;
     private String name;
 
     AccountType(String name) {
