@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="241.0" prefWidth="252.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SuccessController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SuccessController">
    <children>
-      <Button layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleLogoutPressed" text="Logout" />
-      <Label layoutX="100.0" layoutY="112.0" text="Success" />
+      <JFXButton layoutX="14.0" layoutY="336.0" onAction="#handleLogoutPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Logout " textFill="#fcfcfc">
+         <font>
+            <Font name="Courier" size="14.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="154.0" layoutY="126.0" prefHeight="91.0" prefWidth="237.0" text="Success" textAlignment="CENTER">
+         <font>
+            <Font name="Menlo Regular" size="29.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

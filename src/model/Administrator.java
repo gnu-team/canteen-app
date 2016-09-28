@@ -3,7 +3,7 @@ package model;
 /**
  * Created by XinZhang on 9/27/16.
  */
-public class Administrator {
+public class Administrator extends Manager {
     private String username;
     private String password;
     public Administrator() {
