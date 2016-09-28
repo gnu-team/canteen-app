@@ -6,7 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import model.User;
+import model.AccountType;
 
 
 public class WelcomeController implements IMainAppReceiver {
@@ -17,9 +19,17 @@ public class WelcomeController implements IMainAppReceiver {
     private TextField PassWord;
 
     @FXML
+    private ComboBox<AccountType> accountTypeBox;
+
+    @FXML
     private Label Welcome;
     private User user = User.getDefaultUser();
     private MainFXApplication mainApplication;
+
+    @FXML
+    private void initialize() {
+        accountTypeBox.getItems().setAll(AccountType.values());
+    }
 
     public void setMainApp(MainFXApplication mainApplication) {
         this.mainApplication = mainApplication;
