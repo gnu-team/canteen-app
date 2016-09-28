@@ -15,7 +15,6 @@ public class UserFactory {
                                   AccountType type) throws
             InvalidUserException {
         username = username.trim();
-        password = password.trim();
 
         validate(username, password);
 
