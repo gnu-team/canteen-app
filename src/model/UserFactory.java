@@ -1,11 +1,8 @@
 package model;
 
 import java.util.regex.Pattern;
-import model.User;
-import model.Worker;
-import model.Manager;
-import model.Administrator;
-import model.AccountType;
+
+import exception.InvalidUserException;
 
 public class UserFactory {
     private static final int USER_MIN = 4;
@@ -16,7 +13,7 @@ public class UserFactory {
 
     public static User createUser(String username, String password,
                                   AccountType type) throws
-                                  InvalidUserException {
+            InvalidUserException {
         username = username.trim();
         password = password.trim();
 
