@@ -8,16 +8,19 @@ import model.Administrator;
 import model.AccountType;
 
 public class UserFactory {
+    private static final int USER_MIN = 4;
+    private static final int USER_MAX = 64;
+    private static final int PASS_MIN = 8;
+    private static final int PASS_MAX = 2048;
+    private static final Pattern USER_PATTERN = Pattern.compile("[a-zA-Z0-9._-]+");
+
     public static User createUser(String username, String password,
                                   AccountType type) throws
                                   InvalidUserException {
         username = username.trim();
         password = password.trim();
 
-        String reason = validate(username, password);
-        if (reason != null) {
-            throw new InvalidUserException(reason);
-        }
+        validate(username, password);
 
         User u;
         // TODO: This is horrible. Find an alternative, e.g., somehow
@@ -44,16 +47,26 @@ public class UserFactory {
         return u;
     }
 
-    private static String validate(String username, String password) {
-        if (username.length() < 4) {
-            return "Username must be at least 4 characters";
-        } else if (password.length() < 16) {
-            return "Password must be at least 16 characters";
-        } else if (!Pattern.matches("[a-zA-Z0-9._-]+", username)) {
-            return "Username must consist of alphanumeric characters "
-                 + "plus ., _, and -.";
+    private static void inRange(String desc, String victim, int min, int max)
+                        throws InvalidUserException {
+        if (victim.length() < min) {
+            throw new InvalidUserException(desc + " must be at least " + min
+                                           + " characters");
+        } else if (victim.length() > max) {
+            throw new InvalidUserException(desc + " must be less than " + max
+                                           + " characters");
         }
+    }
 
-        return null;
+    private static void validate(String username, String password)
+                        throws InvalidUserException {
+        inRange("Username", username, USER_MIN, USER_MAX);
+        inRange("Password", password, PASS_MIN, PASS_MAX);
+
+        if (!USER_PATTERN.matcher(username).matches()) {
+            throw new InvalidUserException("Username must consist of "
+                                           + "alphanumeric characters plus ., "
+                                           + "_, and -.");
+        }
     }
 }
