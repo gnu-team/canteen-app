@@ -6,16 +6,23 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import model.User;
 
 /**
  * Handles events from the edit profile screen
  */
-public class EditProfileController implements IMainAppReceiver {
+public class ProfileController implements IMainAppReceiver {
     @FXML
-    private TextField username;
+    private TextArea bio;
     @FXML
-    private TextField password;
+    private TextField name;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField address;
+    @FXML
+    private TextField phone;
 
     private MainFXApplication mainApp;
 
