@@ -47,8 +47,8 @@ public class UserFactory {
     private static String validate(String username, String password) {
         if (username.length() < 4) {
             return "Username must be at least 4 characters";
-        } else if (password.length() < 16) {
-            return "Password must be at least 16 characters";
+        } else if (password.length() < 8) {
+            return "Password must be at least 8 characters";
         } else if (!Pattern.matches("[a-zA-Z0-9._-]+", username)) {
             return "Username must consist of alphanumeric characters "
                  + "plus ., _, and -.";
