@@ -36,6 +36,7 @@ public class ProfileController implements IMainAppReceiver {
      */
     public void handleSaveProfilePressed(ActionEvent actionEvent) {
         User user = mainApp.getUser();
+        user.setName(name.getText());
         user.setBio(bio.getText());
         user.setEmail(email.getText());
         user.setAddress(address.getText());
