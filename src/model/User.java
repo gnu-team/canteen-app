@@ -48,6 +48,22 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public String viewWaterSources(){
         return null;
     }
