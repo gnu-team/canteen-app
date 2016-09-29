@@ -1,6 +1,9 @@
 package model;
 
 
+import exception.InvalidUserException;
+import exception.NoSuchUserException;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,20 +36,25 @@ public class DataSource {
      * @param password to check user Password which entered by an user
      * @return if there is the account, return the User Object included user and password
      */
-    public User authenticate(String user, String password) {
+    public User authenticate(String user, String password) throws NoSuchUserException {
         for (User s: users) {
             if (s.authenticate(user, password)) {
                 return s;
             }
         }
-        return null;
+        throw new NoSuchUserException("No matched ID or Password");
     }
 
     /**
      * Adds new account
      * @param userdata User Object (information with new ID and Password)
      */
-    public void add(User userdata) {
+    public void add(User userdata) throws InvalidUserException {
+        for (User userOb : users) {
+            if (userdata.user.equals(userOb.user)) {
+                throw new InvalidUserException("Invalid ID");
+            }
+        }
         users.add(userdata);
     }
 }

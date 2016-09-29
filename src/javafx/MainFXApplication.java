@@ -56,7 +56,7 @@ public class MainFXApplication extends Application {
     }
 
     public void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        Alert alert = new WarningAlert(message);
         alert.showAndWait();
     }
 

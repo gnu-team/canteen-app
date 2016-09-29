@@ -1,18 +1,14 @@
 package model;
 
 import java.util.regex.Pattern;
-import model.User;
-import model.Worker;
-import model.Manager;
-import model.Administrator;
-import model.AccountType;
+
+import exception.InvalidUserException;
 
 public class UserFactory {
     public static User createUser(String username, String password,
                                   AccountType type) throws
-                                  InvalidUserException {
+            InvalidUserException {
         username = username.trim();
-        password = password.trim();
 
         String reason = validate(username, password);
         if (reason != null) {

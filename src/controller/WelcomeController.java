@@ -10,7 +10,7 @@ import javafx.scene.control.ComboBox;
 import model.User;
 import model.AccountType;
 import model.UserFactory;
-import model.InvalidUserException;
+import exception.InvalidUserException;
 
 
 public class WelcomeController implements IMainAppReceiver {
