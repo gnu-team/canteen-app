@@ -4,18 +4,22 @@ package model;
  * Created by Austin Adams on 9/19/16.
  */
 public class User {
-    protected String user;
-    protected String password;
-    protected boolean isblock = false;
+    private String user;
+    private String password;
+    private String email;
+    private String address;
+    private String bio;
+    private int phoneNumber;
+    private boolean isblock = false;
     private static final User defaultUser = new User("user", "pass");
 
     public static User getDefaultUser() {
         return defaultUser;
     }
     public User(){
-
         this("user","pass");
     }
+
     public User(String user, String password) {
         this.user = user;
         this.password = password;
@@ -27,6 +31,23 @@ public class User {
     public void reportWaterAvail(String report){
 
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public String viewWaterSources(){
         return null;
     }
