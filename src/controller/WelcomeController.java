@@ -26,7 +26,6 @@ public class WelcomeController implements IMainAppReceiver {
 
     @FXML
     private Label Welcome;
-    private User user = User.getDefaultUser();
     private MainFXApplication mainApplication;
 
     @FXML
