@@ -50,7 +50,7 @@ public class DataSource {
      */
     public void add(User userdata) throws InvalidUserException {
         for (User userOb : users) {
-            if (userdata.user.equals(userOb.user)) {
+            if (userdata.getUser().equals(userOb.getUser())) {
                 throw new InvalidUserException("Invalid ID");
             }
         }
