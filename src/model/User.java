@@ -9,7 +9,7 @@ public class User {
     private String email;
     private String address;
     private String bio;
-    private int phoneNumber;
+    private String phoneNumber;
     private boolean isblock = false;
 
     public User(){
@@ -44,7 +44,7 @@ public class User {
         this.bio = bio;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
