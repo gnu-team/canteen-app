@@ -6,6 +6,8 @@ package model;
 public class User {
     private String user;
     private String password;
+
+    private String name;
     private String email;
     private String address;
     private String bio;
@@ -30,6 +32,14 @@ public class User {
     }
     public void reportWaterAvail(String report){
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setEmail(String email) {
@@ -60,7 +70,7 @@ public class User {
         return bio;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
