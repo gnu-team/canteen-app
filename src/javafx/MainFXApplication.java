@@ -74,6 +74,15 @@ public class MainFXApplication extends Application {
     }
 
     /**
+     * Returns current user.
+     *
+     * @return the current User if authenticated, else null.
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
      * Stores the account used to authenticate after login has succeeded
      * @param user Account used to authenticate
      */
