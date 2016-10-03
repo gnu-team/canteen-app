@@ -16,7 +16,6 @@ public class DataSource {
     private static DataSource instance = new DataSource();
     private Set<User> users;
 
-
     private DataSource() {
         users = new HashSet<>();
     }

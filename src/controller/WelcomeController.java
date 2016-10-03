@@ -17,16 +17,14 @@ import exception.InvalidUserException;
 public class WelcomeController implements IMainAppReceiver {
     @FXML
     private TextField usernameField;
-
     @FXML
     private TextField passwordField;
-
     @FXML
     private ComboBox<AccountType> accountTypeBox;
-
     @FXML
     private Label Welcome;
-    private MainFXApplication mainApplication;
+
+    private MainFXApplication mainApp;
 
     @FXML
     private void initialize() {
@@ -43,12 +41,13 @@ public class WelcomeController implements IMainAppReceiver {
         accountTypeBox.setValue(AccountType.DEFAULT);
     }
 
-    public void setMainApp(MainFXApplication mainApplication) {
-        this.mainApplication = mainApplication;
+    @Override
+    public void setMainApp(MainFXApplication mainApp) {
+        this.mainApp = mainApp;
     }
 
     public void login(ActionEvent event) throws Exception {
-        mainApplication.showLogin();
+        mainApp.showLogin();
     }
 
     public void register(ActionEvent actionEvent) {
@@ -59,10 +58,10 @@ public class WelcomeController implements IMainAppReceiver {
                                           accountTypeBox.getValue());
             DataSource.getInstance().add(user);
         } catch (InvalidUserException e) {
-            mainApplication.showAlert(e.getMessage());
+            mainApp.showAlert(e.getMessage());
             return;
         }
 
-        mainApplication.finishRegistration(user);
+        mainApp.finishRegistration(user);
     }
 }

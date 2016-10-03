@@ -20,6 +20,7 @@ public class SuccessController implements IMainAppReceiver {
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
     }
+
     @FXML
     private void handleLogoutPressed(ActionEvent event) {
         mainApp.logout();

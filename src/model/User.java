@@ -6,7 +6,7 @@ package model;
 public class User {
     private String user;
     private String password;
-
+    // Profile attributes
     private String name;
     private String email;
     private String address;
@@ -77,14 +77,16 @@ public class User {
     public String viewWaterSources(){
         return null;
     }
+
     public void block() {
         this.isblock = true;
     }
+
     public void unblock(){
         this.isblock = false;
     }
+
     public boolean ifblock(){
         return this.isblock;
     }
-
 }

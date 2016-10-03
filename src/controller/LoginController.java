@@ -19,13 +19,15 @@ public class LoginController implements IMainAppReceiver {
     @FXML
     private TextField password;
 
-    private MainFXApplication mainApplication;
+    private MainFXApplication mainApp;
 
-    public void setMainApp(MainFXApplication main) {
-        mainApplication = main;
+    @Override
+    public void setMainApp(MainFXApplication mainApp) {
+        this.mainApp = mainApp;
     }
+
     private void handleCloseMenu() {
-        mainApplication.close();
+        mainApp.close();
     }
 
     public void handleLoginPressed(ActionEvent actionEvent) {
@@ -33,13 +35,13 @@ public class LoginController implements IMainAppReceiver {
             User user = DataSource.getInstance().authenticate(
                 username.getText(), password.getText());
 
-            mainApplication.loginComplete(user);
+            mainApp.loginComplete(user);
         } catch (NoSuchUserException e) {
-            mainApplication.showAlert(e.getMessage());
+            mainApp.showAlert(e.getMessage());
         }
     }
 
     public void handleBackButtonPressed(ActionEvent actionEvent) {
-        mainApplication.showRegister();
+        mainApp.showRegister();
     }
 }

@@ -1,17 +1,20 @@
 package controller;
 
+import javafx.IMainAppReceiver;
 import javafx.MainFXApplication;
 
 /**
  * Created by jitaekim on 9/18/16.
  */
-public class MainController {
-    private MainFXApplication mainApplication;
+public class MainController implements IMainAppReceiver {
+    private MainFXApplication mainApp;
 
-    public void setMainApp(MainFXApplication main) {
-        mainApplication = main;
+    @Override
+    public void setMainApp(MainFXApplication mainApp) {
+        this.mainApp = mainApp;
     }
+
     private void handleCloseMenu() {
-        mainApplication.close();
+        mainApp.close();
     }
 }

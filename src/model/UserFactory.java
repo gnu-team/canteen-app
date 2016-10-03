@@ -7,7 +7,7 @@ import exception.InvalidUserException;
 public class UserFactory {
     public static User createUser(String username, String password,
                                   AccountType type) throws
-            InvalidUserException {
+                                  InvalidUserException {
         username = username.trim();
 
         String reason = validate(username, password);
