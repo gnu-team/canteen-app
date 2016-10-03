@@ -29,7 +29,7 @@ public class Administrator extends Manager {
      * check the information for login as administrator
      * @param user the username that has been input
      * @param password the password that need to be checked
-     * @return
+     * @return true if user and password match, else false
      */
 
     public boolean authenticate(String user, String password) {
