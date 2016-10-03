@@ -146,6 +146,13 @@ public class MainFXApplication extends Application {
      */
     public void finishRegistration(User user) {
         this.user = user;
+        editProfile();
+    }
+
+    /**
+     * Displays edit profile screen for authenticated users.
+     */
+    public void editProfile() {
         showView("Profile");
     }
 

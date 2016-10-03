@@ -29,4 +29,12 @@ public class SuccessController implements IMainAppReceiver {
     private void handleLogoutPressed(ActionEvent event) {
         mainApp.logout();
     }
+
+    /**
+     * When user pressed edit profile button, displays edit profile screen.
+     */
+    @FXML
+    private void handleEditProfile(ActionEvent event) {
+        mainApp.editProfile();
+    }
 }
