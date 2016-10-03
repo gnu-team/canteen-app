@@ -17,5 +17,10 @@
             <Font name="Menlo Regular" size="29.0" />
          </font>
       </Label>
+      <JFXButton layoutX="194.0" layoutY="208.0" onAction="#handleEditProfile" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Edit Profile" textFill="#fcfcfc">
+         <font>
+            <Font name="Courier" size="12.0" />
+         </font>
+      </JFXButton>
    </children>
 </Pane>
