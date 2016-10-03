@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- * Main program which loads views as instructed by controllers
+ * Main program which loads views as instructed by controllers.
  */
 public class MainFXApplication extends Application {
     // TODO: Put this in a ResourceBundle instead
@@ -22,6 +22,9 @@ public class MainFXApplication extends Application {
     private User user;
     private Stage stage;
 
+    /**
+     * Set the window title and display the registration screen.
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         stage = primaryStage;
@@ -31,6 +34,11 @@ public class MainFXApplication extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Load a view and place it in the main window.
+     *
+     * @param name name of the view to load
+     */
     private void showView(String name) {
         URL path = getClass().getResource("/view/" + name + "View.fxml");
 
@@ -58,11 +66,24 @@ public class MainFXApplication extends Application {
         stage.setScene(new Scene(root));
     }
 
+    /**
+     * Show the user a error box.
+     *
+     * Used, for example, when user enters an incorrect password.
+     *
+     * @param message Message shown to user
+     */
     public void showAlert(String message) {
         Alert alert = new WarningAlert(message);
         alert.showAndWait();
     }
 
+    /**
+     * Display an error box and exit.
+     *
+     * @param message Error message to show. Followed by "Bailing out!" on a new
+     *                line.
+     */
     private void bail(String message) {
         showAlert(message + "\nBailing out!");
         close();
@@ -79,7 +100,7 @@ public class MainFXApplication extends Application {
     /**
      * Returns current user.
      *
-     * @return the current User if authenticated, else null.
+     * @return The current User if authenticated, else null.
      */
     public User getUser() {
         return user;
@@ -94,24 +115,43 @@ public class MainFXApplication extends Application {
         showView("Success");
     }
 
+    /**
+     * Displays welcome screen.
+     */
     public void showRegister() {
         showView("Welcome");
     }
 
+    /**
+     * Displays login screen.
+     */
     public void showLogin() {
         showView("Login");
     }
 
+    /**
+     * Unsets the current user and show registration screen again.
+     */
     public void logout() {
         this.user = null;
         showRegister();
     }
 
+    /**
+     * After registration succeeds, sets current user and displays the profile
+     * editor.
+     *
+     * @param user New user to set as current user. Should already be added to
+     *             DataSource.
+     */
     public void finishRegistration(User user) {
         this.user = user;
         showView("Profile");
     }
 
+    /**
+     * Once profile is completed, shows success screen.
+     */
     public void registrationComplete() {
         showView("Success");
     }
