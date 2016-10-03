@@ -1,13 +1,26 @@
 package model;
 
 import java.util.regex.Pattern;
-
 import exception.InvalidUserException;
 
 /**
  * Generates a User instance from a username, password, and AccountType.
+ *
+ * This hack exists because AccountType is not a field of User; instead,
+ * Manager etc. are subclasses of User.
  */
 public class UserFactory {
+    /**
+     * Checks username and password for correctness and returns a User of the
+     * given account type.
+     *
+     * @throws exception.InvalidUserException If username/password do not meet
+     *                                        length/complexity requirements.
+     * @param username The username of new account.
+     * @param password The password of new account.
+     * @param type Account type to create.
+     * @return A new User instance of the correct subclass of User.
+     */
     public static User createUser(String username, String password,
                                   AccountType type) throws
                                   InvalidUserException {
@@ -43,6 +56,13 @@ public class UserFactory {
         return u;
     }
 
+    /**
+     * Determines if username/password meet length/complexity requirements.
+     *
+     * @param username Username to check.
+     * @param password Password to check.
+     * @return null if okay, else an error message.
+     */
     private static String validate(String username, String password) {
         if (username.length() < 4) {
             return "Username must be at least 4 characters";
