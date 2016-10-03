@@ -23,7 +23,7 @@ public class MainFXApplication extends Application {
     private Stage stage;
 
     /**
-     * Set the window title and display the registration screen.
+     * Sets the window title and displays the registration screen.
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
