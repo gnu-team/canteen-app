@@ -15,15 +15,14 @@ public class User {
     private boolean isblock = false;
 
     /**
-     * Create user object
+     * Creates user object
      */
-
     public User(){
         this("user","pass");
     }
 
     /**
-     * Create user object with given username and password
+     * Creates user object with given username and password
      * @param user the username
      * @param password the password
      */
@@ -33,7 +32,7 @@ public class User {
     }
 
     /**
-     * To get the username of User account
+     * Gets the username of User account
      * @return the username
      */
 
@@ -42,7 +41,7 @@ public class User {
     }
 
     /**
-     * The check if the login information is correct or not
+     * Checks if the login information is correct or not
      * @param user the username that has been input
      * @param password the password that has been input
      * @return if the login is correct or not
@@ -52,7 +51,7 @@ public class User {
     }
 
     /**
-     * To report on water availability
+     * Reports on water availability
      * @param report the report of water availability
      */
     public void reportWaterAvail(String report){
@@ -60,16 +59,15 @@ public class User {
     }
 
     /**
-     * To get the name of User
+     * Gets the name of User
      * @return the name of user
      */
-
     public String getName() {
         return name;
     }
 
     /**
-     * To set the name of user
+     * Sets the name of user
      * @param name the name of user
      */
     public void setName(String name) {
@@ -77,7 +75,7 @@ public class User {
     }
 
     /**
-     * To set the email of user
+     * Sets the email of user
      * @param email the email of user
      */
 
@@ -86,7 +84,7 @@ public class User {
     }
 
     /**
-     * To set the address of user
+     * Sets the address of user
      * @param address the address of user
      */
 
@@ -95,7 +93,7 @@ public class User {
     }
 
     /**
-     * the set the Bio of user
+     * Sets the Bio of user
      * @param bio the Bio of user
      */
     public void setBio(String bio) {
@@ -103,7 +101,7 @@ public class User {
     }
 
     /**
-     * To set the phone number of user
+     * Sets the phone number of user
      * @param phoneNumber the phone number of user
      */
     public void setPhoneNumber(String phoneNumber) {
@@ -111,7 +109,7 @@ public class User {
     }
 
     /**
-     * To get the email of user
+     * Gets the email of user
      * @return the email of user
      */
     public String getEmail() {
@@ -119,7 +117,7 @@ public class User {
     }
 
     /**
-     * To get the address of User
+     * Gets the address of User
      * @return the address of User
      */
     public String getAddress() {
@@ -127,7 +125,7 @@ public class User {
     }
 
     /**
-     * To get the Bio of User
+     * Gets the Bio of User
      * @return the Bio of User
      */
     public String getBio() {
@@ -135,7 +133,7 @@ public class User {
     }
 
     /**
-     * To get the phone number of User
+     * Gets the phone number of User
      * @return the phone number of user
      */
     public String getPhoneNumber() {
@@ -143,7 +141,7 @@ public class User {
     }
 
     /**
-     * to get the water sources information
+     * Gets the water sources information
      * @return the water sources information
      */
     public String viewWaterSources(){
@@ -151,22 +149,21 @@ public class User {
     }
 
     /**
-     * To block the user
+     * Block the user
      */
-
     public void block() {
         this.isblock = true;
     }
 
     /**
-     * To unblock the user
+     * Unblocks the user
      */
     public void unblock(){
         this.isblock = false;
     }
 
     /**
-     * To check if the user is blocked
+     * Checks if the user is blocked
      * @return if the user is blocked
      */
     public boolean ifblock(){
