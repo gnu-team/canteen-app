@@ -10,7 +10,6 @@ import java.util.Set;
 
 /**
  * Stores an account and check if there is an account or not
- * Created by NikosD on 9/28/16.
  */
 public class DataSource {
     private static DataSource instance = new DataSource();

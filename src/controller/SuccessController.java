@@ -10,9 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * Created by jitaekim on 9/18/16.
- */
 public class SuccessController implements IMainAppReceiver {
     private MainFXApplication mainApp;
 

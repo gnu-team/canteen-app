@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Created by XinZhang on 9/27/16.
- */
 public class Manager extends Worker{
     public Manager(){
         this("username", "Password");
