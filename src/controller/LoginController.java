@@ -26,10 +26,6 @@ public class LoginController implements IMainAppReceiver {
         this.mainApp = mainApp;
     }
 
-    private void handleCloseMenu() {
-        mainApp.close();
-    }
-
     public void handleLoginPressed(ActionEvent actionEvent) {
         try {
             User user = DataSource.getInstance().authenticate(
