@@ -1,12 +1,9 @@
 package model;
 
-
 import exception.InvalidUserException;
 import exception.NoSuchUserException;
-
 import java.util.HashSet;
 import java.util.Set;
-
 
 /**
  * Stores an account and check if there is an account or not

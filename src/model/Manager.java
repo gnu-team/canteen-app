@@ -1,6 +1,9 @@
 package model;
 
-public class Manager extends Worker{
+/**
+ * Manager account: can view, delete reports
+ */
+public class Manager extends Worker {
     public Manager(){
         this("username", "Password");
     }

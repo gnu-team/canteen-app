@@ -13,6 +13,9 @@ import model.UserFactory;
 import model.DataSource;
 import exception.InvalidUserException;
 
+/**
+ * Handles events from the welcome screen
+ */
 public class WelcomeController implements IMainAppReceiver {
     @FXML
     private TextField usernameField;

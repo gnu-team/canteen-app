@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Defines a user account, which can view water sources and leave reports.
+ */
 public class User {
     private String user;
     private String password;

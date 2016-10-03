@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * System administrator account
+ */
 public class Administrator extends Manager {
     private String username;
     private String password;

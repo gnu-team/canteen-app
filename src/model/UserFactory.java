@@ -4,6 +4,9 @@ import java.util.regex.Pattern;
 
 import exception.InvalidUserException;
 
+/**
+ * Generates a User instance from a username, password, and AccountType.
+ */
 public class UserFactory {
     public static User createUser(String username, String password,
                                   AccountType type) throws

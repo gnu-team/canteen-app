@@ -10,6 +10,9 @@ import model.User;
 import model.DataSource;
 import exception.NoSuchUserException;
 
+/**
+ * Handles events from the login screen
+ */
 public class LoginController implements IMainAppReceiver {
     @FXML
     private TextField username;

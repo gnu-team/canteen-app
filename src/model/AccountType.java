@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Enumeration storing different types of users
+ */
 public enum AccountType {
     USER("User"),
     WORKER("Worker"),

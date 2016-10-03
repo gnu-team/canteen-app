@@ -12,6 +12,9 @@ import model.User;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * Main program which loads views as instructed by controllers
+ */
 public class MainFXApplication extends Application {
     // TODO: Put this in a ResourceBundle instead
     private static final String TITLE = "Canteen: A Water Tracker";
