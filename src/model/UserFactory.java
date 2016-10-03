@@ -1,23 +1,35 @@
 package model;
 
 import java.util.regex.Pattern;
-
 import exception.InvalidUserException;
 
+/**
+ * Generates a User instance from a username, password, and AccountType.
+ *
+ * This hack exists because AccountType is not a field of User; instead,
+ * Manager etc. are subclasses of User.
+ */
 public class UserFactory {
-    private static final int USER_MIN = 4;
-    private static final int USER_MAX = 64;
-    private static final int PASS_MIN = 8;
-    private static final int PASS_MAX = 2048;
-    private static final Pattern USER_PATTERN = Pattern.compile("[a-zA-Z0-9._-]+");
-
+    /**
+     * Checks username and password for correctness and returns a User of the
+     * given account type.
+     *
+     * @throws exception.InvalidUserException If username/password do not meet
+     *                                        length/complexity requirements.
+     * @param username The username of new account.
+     * @param password The password of new account.
+     * @param type Account type to create.
+     * @return A new User instance of the correct subclass of User.
+     */
     public static User createUser(String username, String password,
                                   AccountType type) throws
-            InvalidUserException {
+                                  InvalidUserException {
         username = username.trim();
-        password = password.trim();
 
-        validate(username, password);
+        String reason = validate(username, password);
+        if (reason != null) {
+            throw new InvalidUserException(reason);
+        }
 
         User u;
         // TODO: This is horrible. Find an alternative, e.g., somehow
@@ -44,26 +56,23 @@ public class UserFactory {
         return u;
     }
 
-    private static void inRange(String desc, String victim, int min, int max)
-                        throws InvalidUserException {
-        if (victim.length() < min) {
-            throw new InvalidUserException(desc + " must be at least " + min
-                                           + " characters");
-        } else if (victim.length() > max) {
-            throw new InvalidUserException(desc + " must be less than " + max
-                                           + " characters");
+    /**
+     * Determines if username/password meet length/complexity requirements.
+     *
+     * @param username Username to check.
+     * @param password Password to check.
+     * @return null if okay, else an error message.
+     */
+    private static String validate(String username, String password) {
+        if (username.length() < 4) {
+            return "Username must be at least 4 characters";
+        } else if (password.length() < 8) {
+            return "Password must be at least 8 characters";
+        } else if (!Pattern.matches("[a-zA-Z0-9._-]+", username)) {
+            return "Username must consist of alphanumeric characters "
+                 + "plus ., _, and -.";
         }
-    }
 
-    private static void validate(String username, String password)
-                        throws InvalidUserException {
-        inRange("Username", username, USER_MIN, USER_MAX);
-        inRange("Password", password, PASS_MIN, PASS_MAX);
-
-        if (!USER_PATTERN.matcher(username).matches()) {
-            throw new InvalidUserException("Username must consist of "
-                                           + "alphanumeric characters plus ., "
-                                           + "_, and -.");
-        }
+        return null;
     }
 }

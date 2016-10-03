@@ -1,9 +1,9 @@
 package model;
 
 /**
- * Created by XinZhang on 9/27/16.
+ * Defines a worker account, which can report on purity levels.
  */
-public class Worker extends User{
+public class Worker extends User {
     public Worker(){
         this("user","password");
     }

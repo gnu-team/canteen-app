@@ -10,24 +10,27 @@ import javafx.scene.control.ComboBox;
 import model.User;
 import model.AccountType;
 import model.UserFactory;
+import model.DataSource;
 import exception.InvalidUserException;
 
-
+/**
+ * Handles events from the welcome screen
+ */
 public class WelcomeController implements IMainAppReceiver {
     @FXML
     private TextField usernameField;
-
     @FXML
     private TextField passwordField;
-
     @FXML
     private ComboBox<AccountType> accountTypeBox;
-
     @FXML
     private Label Welcome;
-    private User user = User.getDefaultUser();
-    private MainFXApplication mainApplication;
 
+    private MainFXApplication mainApp;
+
+    /**
+     * Populates the account type combobox.
+     */
     @FXML
     private void initialize() {
         accountTypeBox.getItems().setAll(AccountType.values());
@@ -43,25 +46,36 @@ public class WelcomeController implements IMainAppReceiver {
         accountTypeBox.setValue(AccountType.DEFAULT);
     }
 
-    public void setMainApp(MainFXApplication mainApplication) {
-        this.mainApplication = mainApplication;
+    @Override
+    public void setMainApp(MainFXApplication mainApp) {
+        this.mainApp = mainApp;
     }
 
+    /**
+     * Displays the login screen when user presses the login button.
+     */
     public void login(ActionEvent event) throws Exception {
-        mainApplication.showLogin();
+        mainApp.showLogin();
     }
 
+    /**
+     * Attempts to create a new user with the information provided.
+     *
+     * Displays an error box if user already exists or username/password do not
+     * match requirements.
+     */
     public void register(ActionEvent actionEvent) {
         User user;
         try {
             user = UserFactory.createUser(usernameField.getText(),
                                           passwordField.getText(),
                                           accountTypeBox.getValue());
+            DataSource.getInstance().add(user);
         } catch (InvalidUserException e) {
-            mainApplication.showAlert(e.getMessage());
+            mainApp.showAlert(e.getMessage());
             return;
         }
 
-        mainApplication.finishRegistration(user);
+        mainApp.finishRegistration(user);
     }
 }

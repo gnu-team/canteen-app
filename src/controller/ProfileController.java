@@ -32,9 +32,17 @@ public class ProfileController implements IMainAppReceiver {
     }
 
     /**
-     * Displays an error when user presses "Save Profile."
+     * Saves profile information and tells MainFXApp to display the success
+     * page.
      */
     public void handleSaveProfilePressed(ActionEvent actionEvent) {
-        mainApp.showAlert("Saving profile is not implemented yet.");
+        User user = mainApp.getUser();
+        user.setName(name.getText());
+        user.setBio(bio.getText());
+        user.setEmail(email.getText());
+        user.setAddress(address.getText());
+        user.setPhoneNumber(phone.getText());
+
+        mainApp.registrationComplete();
     }
 }

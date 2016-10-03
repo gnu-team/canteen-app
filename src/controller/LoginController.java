@@ -7,9 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
 import model.User;
+import model.DataSource;
+import exception.NoSuchUserException;
 
 /**
- * Created by jitaekim on 9/18/16.
+ * Handles events from the login screen
  */
 public class LoginController implements IMainAppReceiver {
     @FXML
@@ -17,26 +19,33 @@ public class LoginController implements IMainAppReceiver {
     @FXML
     private TextField password;
 
-    private MainFXApplication mainApplication;
+    private MainFXApplication mainApp;
 
-    public void setMainApp(MainFXApplication main) {
-        mainApplication = main;
-    }
-    private void handleCloseMenu() {
-        mainApplication.close();
+    @Override
+    public void setMainApp(MainFXApplication mainApp) {
+        this.mainApp = mainApp;
     }
 
+    /**
+     * When user presses login button, attempts to log in.
+     *
+     * If there's an authentication failure, shows a whiny alert.
+     */
     public void handleLoginPressed(ActionEvent actionEvent) {
-        User user = User.getDefaultUser();
+        try {
+            User user = DataSource.getInstance().authenticate(
+                username.getText(), password.getText());
 
-        if (user.authenticate(username.getText(), password.getText())) {
-            mainApplication.loginComplete(user);
-        } else {
-            mainApplication.showAlert("Access denied. Please try again.");
+            mainApp.loginComplete(user);
+        } catch (NoSuchUserException e) {
+            mainApp.showAlert(e.getMessage());
         }
     }
 
+    /**
+     * Allows user to cancel login and return to the registration screen.
+     */
     public void handleBackButtonPressed(ActionEvent actionEvent) {
-        mainApplication.showRegister();
+        mainApp.showRegister();
     }
 }
