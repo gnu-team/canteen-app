@@ -26,6 +26,11 @@ public class LoginController implements IMainAppReceiver {
         this.mainApp = mainApp;
     }
 
+    /**
+     * When user presses login button, attempts to log in.
+     *
+     * If there's an authentication failure, shows a whiny alert.
+     */
     public void handleLoginPressed(ActionEvent actionEvent) {
         try {
             User user = DataSource.getInstance().authenticate(
@@ -37,6 +42,9 @@ public class LoginController implements IMainAppReceiver {
         }
     }
 
+    /**
+     * Allows user to cancel login and return to the registration screen.
+     */
     public void handleBackButtonPressed(ActionEvent actionEvent) {
         mainApp.showRegister();
     }

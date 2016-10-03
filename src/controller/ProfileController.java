@@ -32,7 +32,8 @@ public class ProfileController implements IMainAppReceiver {
     }
 
     /**
-     * Tells MainFXApp to display the success page.
+     * Saves profile information and tells MainFXApp to display the success
+     * page.
      */
     public void handleSaveProfilePressed(ActionEvent actionEvent) {
         User user = mainApp.getUser();

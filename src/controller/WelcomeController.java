@@ -28,6 +28,9 @@ public class WelcomeController implements IMainAppReceiver {
 
     private MainFXApplication mainApp;
 
+    /**
+     * Populates the account type combobox.
+     */
     @FXML
     private void initialize() {
         accountTypeBox.getItems().setAll(AccountType.values());
@@ -48,10 +51,19 @@ public class WelcomeController implements IMainAppReceiver {
         this.mainApp = mainApp;
     }
 
+    /**
+     * Displays the login screen when user presses the login button.
+     */
     public void login(ActionEvent event) throws Exception {
         mainApp.showLogin();
     }
 
+    /**
+     * Attempts to create a new user with the information provided.
+     *
+     * Displays an error box if user already exists or username/password do not
+     * match requirements.
+     */
     public void register(ActionEvent actionEvent) {
         User user;
         try {

@@ -21,6 +21,10 @@ public class SuccessController implements IMainAppReceiver {
         this.mainApp = mainApp;
     }
 
+    /**
+     * When the logout button is pressed, informs MainFXApp, which will unset
+     * the current user and display the registration screen.
+     */
     @FXML
     private void handleLogoutPressed(ActionEvent event) {
         mainApp.logout();
