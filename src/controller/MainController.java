@@ -11,9 +11,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Handles events from the success screen
+ * Handles events from the main screen
  */
-public class SuccessController implements IMainAppReceiver {
+public class MainController implements IMainAppReceiver {
     private MainFXApplication mainApp;
 
     @Override

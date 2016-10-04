@@ -112,7 +112,7 @@ public class MainFXApplication extends Application {
      */
     public void loginComplete(User user) {
         this.user = user;
-        showView("Success");
+        showView("Main");
     }
 
     /**
@@ -160,7 +160,7 @@ public class MainFXApplication extends Application {
      * Once profile is completed, shows success screen.
      */
     public void registrationComplete() {
-        showView("Success");
+        showView("Main");
     }
 
     public static void main(String[] args) {
