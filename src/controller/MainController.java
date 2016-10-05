@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * Handles events from the main screen
