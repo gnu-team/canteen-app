@@ -163,6 +163,19 @@ public class MainFXApplication extends Application {
         showView("Main");
     }
 
+    /**
+     * After logged in, user can create water report
+     */
+    public void createWaterReport() {
+        showView("WaterReport");
+    }
+    /**
+     * If user press cancel button for water report, shows main screen.
+     */
+    public void cancelWaterReport() {
+        showView("Main");
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

@@ -37,4 +37,11 @@ public class MainController implements IMainAppReceiver {
     private void handleEditProfile(ActionEvent event) {
         mainApp.editProfile();
     }
+
+    /**
+     * When user pressed create water report, displays create Report Screen.
+     */
+    @FXML
+    private void handleCreateWaterReport(ActionEvent event) { mainApp.createWaterReport(); }
+
 }

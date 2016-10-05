@@ -20,4 +20,10 @@ public class CreateReportController implements IMainAppReceiver {
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
     }
+
+    /**
+     * When user pressed cancel water report, displays main screen.
+     */
+    @FXML
+    private void handleCancelWaterReport(ActionEvent event) { mainApp.cancelWaterReport(); }
 }

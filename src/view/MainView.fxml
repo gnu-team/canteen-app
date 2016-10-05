@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <JFXButton layoutX="14.0" layoutY="336.0" onAction="#handleLogoutPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Logout " textFill="#fcfcfc">
          <font>
             <Font name="Courier" size="14.0" />
          </font>
       </JFXButton>
-      <Label layoutX="154.0" layoutY="126.0" prefHeight="91.0" prefWidth="237.0" text="Success" textAlignment="CENTER">
+      <Label layoutX="200.0" layoutY="20.0" text="Water Report" textAlignment="CENTER">
          <font>
             <Font name="Menlo Regular" size="29.0" />
          </font>
       </Label>
-      <JFXButton layoutX="194.0" layoutY="208.0" onAction="#handleEditProfile" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Edit Profile" textFill="#fcfcfc">
+      <JFXButton layoutX="480.0" layoutY="336.0" onAction="#handleEditProfile" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Edit Profile" textFill="#fcfcfc">
          <font>
             <Font name="Courier" size="12.0" />
          </font>
       </JFXButton>
+      <Button layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleCreateWaterReport" text="Create Water Report" />
    </children>
 </Pane>
