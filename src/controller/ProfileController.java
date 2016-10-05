@@ -29,6 +29,16 @@ public class ProfileController implements IMainAppReceiver {
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
+
+        // Populates editor fields with current values.
+        // Can't do this in initialize() because initialize is called before
+        // this method.
+        User user = mainApp.getUser();
+        name.setText(user.getName());
+        bio.setText(user.getBio());
+        email.setText(user.getEmail());
+        address.setText(user.getAddress());
+        phone.setText(user.getPhoneNumber());
     }
 
     /**

@@ -5,14 +5,14 @@ package model;
  */
 public class Manager extends Worker {
     /**
-     * create manager object with default username and password
+     * Creates manager object with default username and password
      */
     public Manager(){
         this("username", "Password");
     }
 
     /**
-     * create manager object with username and password
+     * Creates manager object with username and password
      * @param user the username to be created
      * @param password the password for new account
      */
@@ -22,7 +22,7 @@ public class Manager extends Worker {
     }
 
     /**
-     * view reports
+     * Views reports
      * @return the report to be viewed
      */
     public String viewReports(){
@@ -30,7 +30,7 @@ public class Manager extends Worker {
     }
 
     /**
-     * To view the trends of water Purity
+     * Views the trends of water Purity
      * @return the trend of water purity
      */
     public String viewTrendOfPurity(){
@@ -38,7 +38,7 @@ public class Manager extends Worker {
     }
 
     /**
-     * Delete individual report
+     * Deletes individual report
      */
     public void deleteReport(){
 

@@ -11,22 +11,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Handles events from the success screen
+ * Handles events from the create report screen
  */
-public class SuccessController implements IMainAppReceiver {
+public class CreateReportController implements IMainAppReceiver {
     private MainFXApplication mainApp;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
-    }
-
-    /**
-     * When the logout button is pressed, informs MainFXApp, which will unset
-     * the current user and display the registration screen.
-     */
-    @FXML
-    private void handleLogoutPressed(ActionEvent event) {
-        mainApp.logout();
     }
 }
