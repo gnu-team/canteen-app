@@ -1,5 +1,7 @@
 package controller;
 
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
 import javafx.IMainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -8,13 +10,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
+import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Handles events from the main screen
  */
 public class MainController implements IMainAppReceiver {
     private MainFXApplication mainApp;
+
+    @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private JFXHamburger hamburger;
+
+    @FXML
+    private JFXDrawer drawer;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
