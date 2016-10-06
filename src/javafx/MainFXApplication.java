@@ -35,18 +35,19 @@ public class MainFXApplication extends Application {
     }
 
     /**
-     * Load a view and place it in the main window.
+     * Load a view and return its root node.
      *
      * @param name name of the view to load
+     * @return root node of view specified
      */
-    private void showView(String name) {
+    public Parent loadView(String name) {
         URL path = getClass().getResource("/view/" + name + "View.fxml");
 
         // If getResource() does not find the resource given, it returns
         // null
         if (path == null) {
             bail("Cannot locate view " + name + ".");
-            return;
+            return null;
         }
 
         FXMLLoader loader = new FXMLLoader(path);
@@ -56,14 +57,30 @@ public class MainFXApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             bail("IOException thrown when loading view '" + name + "'.");
-            return;
+            return null;
         }
 
         // TODO: Use dependency injection or something instead of this
         // interface-cast hack
-        ((IMainAppReceiver)loader.getController()).setMainApp(this);
+        IMainAppReceiver controller = (IMainAppReceiver) loader.getController();
+        if (controller != null) {
+            controller.setMainApp(this);
+        }
 
-        stage.setScene(new Scene(root));
+        return root;
+    }
+
+    /**
+     * Load a view and place it in the main window.
+     *
+     * @param name name of the view to load
+     */
+    private void showView(String name) {
+        Parent root = loadView(name);
+
+        if (root != null) {
+            stage.setScene(new Scene(root));
+        }
     }
 
     /**
