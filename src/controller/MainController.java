@@ -34,6 +34,8 @@ public class MainController implements IMainAppReceiver {
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
+
+        drawer.setSidePane(mainApp.loadView("DrawerContent"));
     }
 
     /**
