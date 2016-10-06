@@ -4,21 +4,35 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="400.0" prefWidth="181.0" xmlns="http://javafx.com/javafx/8.0.65"
-      xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ImageView fitHeight="136.0" fitWidth="185.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../maxresdefault.jpg" />
-         </image>
-      </ImageView>
-      <JFXButton prefHeight="64.0" prefWidth="183.0" text="Button" />
-      <JFXButton prefHeight="64.0" prefWidth="183.0" text="Button" />
-      <JFXButton prefHeight="64.0" prefWidth="183.0" text="Button" />
-      <JFXButton prefHeight="64.0" prefWidth="183.0" text="Button" />
-      <JFXButton prefHeight="64.0" prefWidth="183.0" text="Button" />
-   </children>
+<VBox fx:id="box" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="181.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fitHeight="136.0" fitWidth="185.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../../maxresdefault.jpg"/>
+            </image>
+        </ImageView>
+        <JFXButton prefHeight="64.0" prefWidth="183.0" text="Map">
+            <font>
+                <Font name="Courier" size="14.0"/>
+            </font>
+        </JFXButton>
+        <JFXButton prefHeight="64.0" prefWidth="183.0" text="Water Source List">
+            <font>
+                <Font name="Courier" size="14.0"/>
+            </font>
+        </JFXButton>
+        <JFXButton prefHeight="64.0" prefWidth="183.0" text="Report Water Source">
+            <font>
+                <Font name="Courier" size="14.0"/>
+            </font>
+        </JFXButton>
+        <JFXButton prefHeight="64.0" prefWidth="183.0" text="Edit Profile">
+            <font>
+                <Font name="Courier" size="14.0"/>
+            </font>
+        </JFXButton>
+    </children>
 </VBox>
