@@ -61,7 +61,10 @@ public class MainFXApplication extends Application {
 
         // TODO: Use dependency injection or something instead of this
         // interface-cast hack
-        ((IMainAppReceiver)loader.getController()).setMainApp(this);
+        IMainAppReceiver controller = (IMainAppReceiver) loader.getController();
+        if (controller != null) {
+            controller.setMainApp(this);
+        }
 
         stage.setScene(new Scene(root));
     }
