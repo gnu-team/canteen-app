@@ -73,6 +73,10 @@ public class MainController implements IMainAppReceiver {
         mainApp.editProfile();
     }
 
+    public void closeDrawer() {
+        drawer.close();
+    }
+
     public void showMap() {
         showView("Map");
     }
@@ -81,7 +85,7 @@ public class MainController implements IMainAppReceiver {
         showView("ReportList");
     }
 
-    public void showNewReport() {
+    public void showCreateReport() {
         showView("CreateNewReport");
     }
 

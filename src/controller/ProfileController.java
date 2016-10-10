@@ -12,7 +12,8 @@ import model.User;
 /**
  * Handles events from the edit profile screen
  */
-public class ProfileController implements IMainAppReceiver {
+public class ProfileController implements IMainAppReceiver,
+                                          IMainControllerReceiver {
     @FXML
     private TextArea bio;
     @FXML
@@ -25,6 +26,7 @@ public class ProfileController implements IMainAppReceiver {
     private TextField phone;
 
     private MainFXApplication mainApp;
+    private MainController mainController;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
@@ -39,6 +41,11 @@ public class ProfileController implements IMainAppReceiver {
         email.setText(user.getEmail());
         address.setText(user.getAddress());
         phone.setText(user.getPhoneNumber());
+    }
+
+    @Override
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
     /**
