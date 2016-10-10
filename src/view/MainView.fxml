@@ -17,7 +17,7 @@
       <Pane prefHeight="56.0" prefWidth="600.0" style="-fx-background-color: #003cc9;">
          <children>
             <JFXHamburger fx:id="hamburger" layoutX="17.0" layoutY="19.0"
-                          stylesheets="@CSS/Styles.css" />
+                          stylesheets="@CSS/Styles.css" onMouseClicked="#handleHamburgerClicked" />
             <JFXButton layoutX="521.0" layoutY="17.0" text="Logout" onAction="#handleLogoutPressed"
                        textFill="WHITE">
                <font>

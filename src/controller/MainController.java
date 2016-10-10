@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXHamburger;
 import javafx.IMainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -36,6 +37,18 @@ public class MainController implements IMainAppReceiver {
         this.mainApp = mainApp;
 
         drawer.setSidePane(mainApp.loadView("DrawerContent"));
+    }
+
+    /**
+     * Expands/retracts the drawer when user presses the hamburger.
+     */
+    @FXML
+    private void handleHamburgerClicked(MouseEvent event) {
+        if (drawer.isShown()) {
+            drawer.close();
+        } else {
+            drawer.open();
+        }
     }
 
     /**
