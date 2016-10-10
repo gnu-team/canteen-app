@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
@@ -32,11 +33,15 @@ public class MainController implements IMainAppReceiver {
     @FXML
     private JFXDrawer drawer;
 
+    @FXML
+    private StackPane mainPane;
+
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
 
         drawer.setSidePane(loadView("DrawerContent"));
+        showMap();
     }
 
     /**
@@ -68,6 +73,22 @@ public class MainController implements IMainAppReceiver {
         mainApp.editProfile();
     }
 
+    public void showMap() {
+        showView("Map");
+    }
+
+    public void showReportList() {
+        showView("ReportList");
+    }
+
+    public void showNewReport() {
+        showView("CreateNewReport");
+    }
+
+    public void showEditProfile() {
+        showView("Profile");
+    }
+
     /**
      * Load the root node of another view, and pass the controller a reference
      * to this instance.
@@ -77,5 +98,9 @@ public class MainController implements IMainAppReceiver {
             IMainControllerReceiver controller = (IMainControllerReceiver) c;
             controller.setMainController(this);
         });
+    }
+
+    private void showView(String name) {
+        mainPane.getChildren().setAll(loadView(name));
     }
 }
