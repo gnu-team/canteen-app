@@ -5,20 +5,18 @@ import com.jfoenix.controls.JFXHamburger;
 import javafx.IMainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
-
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
 /**
  * Handles events from the main screen
@@ -35,27 +33,27 @@ public class MainController implements IMainAppReceiver {
     @FXML
     private JFXDrawer drawer;
 
+    @FXML
+    private StackPane mainPane;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
-        /**
-         * It set a view for navigation Drawer content
-         * it controls hamburger button
-         */
-        drawer.setSidePane(mainApp.loadView("DrawerContent"));
-        HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
-        transition.setRate(-1);
-        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)->{
-            transition.setRate(transition.getRate()*-1);
-            transition.play();
 
-            if(drawer.isShown())
-            {
-                drawer.close();
-            }else
-                drawer.open();
-        });
+        drawer.setSidePane(loadView("DrawerContent"));
+        showMap();
+    }
+
+    /**
+     * Expands/retracts the drawer when user presses the hamburger.
+     */
+    @FXML
+    private void handleHamburgerClicked(MouseEvent event) {
+        if (drawer.isShown()) {
+            drawer.close();
+        } else {
+            drawer.open();
+        }
     }
 
     /**
@@ -75,4 +73,34 @@ public class MainController implements IMainAppReceiver {
         mainApp.editProfile();
     }
 
+    public void showMap() {
+        showView("Map");
+    }
+
+    public void showReportList() {
+        showView("ReportList");
+    }
+
+    public void showNewReport() {
+        showView("CreateNewReport");
+    }
+
+    public void showEditProfile() {
+        showView("Profile");
+    }
+
+    /**
+     * Load the root node of another view, and pass the controller a reference
+     * to this instance.
+     */
+    private Parent loadView(String name) {
+        return mainApp.loadView(name, c -> {
+            IMainControllerReceiver controller = (IMainControllerReceiver) c;
+            controller.setMainController(this);
+        });
+    }
+
+    private void showView(String name) {
+        mainPane.getChildren().setAll(loadView(name));
+    }
 }
