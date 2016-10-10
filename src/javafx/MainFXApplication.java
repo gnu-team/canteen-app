@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import java.util.function.Consumer;
 import model.User;
 
 import java.io.IOException;
@@ -41,6 +42,18 @@ public class MainFXApplication extends Application {
      * @return root node of view specified
      */
     public Parent loadView(String name) {
+        return loadView(name, null);
+    }
+
+    /**
+     * Load a view and return its root node.
+     *
+     * @param name name of the view to load
+     * @param controllerConsumer function performing custom operations on
+     *        controller, or null
+     * @return root node of view specified
+     */
+    public Parent loadView(String name, Consumer<Object> controllerConsumer) {
         URL path = getClass().getResource("/view/" + name + "View.fxml");
 
         // If getResource() does not find the resource given, it returns
@@ -65,6 +78,11 @@ public class MainFXApplication extends Application {
         IMainAppReceiver controller = (IMainAppReceiver) loader.getController();
         if (controller != null) {
             controller.setMainApp(this);
+
+            // Do caller-specific stuff on controller
+            if (controllerConsumer != null) {
+                controllerConsumer.accept(controller);
+            }
         }
 
         return root;

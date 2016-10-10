@@ -1,7 +1,13 @@
 package controller;
 
 /**
- * Created by Ph3ncyclidine on 10/5/16.
+ * Handles clicked buttons in the drawer.
  */
-public class DrawerContentController {
+public class DrawerContentController implements IMainControllerReceiver {
+    private MainController mainController;
+
+    @Override
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 }

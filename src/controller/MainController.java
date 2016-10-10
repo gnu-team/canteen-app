@@ -36,7 +36,7 @@ public class MainController implements IMainAppReceiver {
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
 
-        drawer.setSidePane(mainApp.loadView("DrawerContent"));
+        drawer.setSidePane(loadView("DrawerContent"));
     }
 
     /**
@@ -66,5 +66,16 @@ public class MainController implements IMainAppReceiver {
     @FXML
     private void handleEditProfile(ActionEvent event) {
         mainApp.editProfile();
+    }
+
+    /**
+     * Load the root node of another view, and pass the controller a reference
+     * to this instance.
+     */
+    private Parent loadView(String name) {
+        return mainApp.loadView(name, c -> {
+            IMainControllerReceiver controller = (IMainControllerReceiver) c;
+            controller.setMainController(this);
+        });
     }
 }
