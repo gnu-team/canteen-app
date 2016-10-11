@@ -11,9 +11,11 @@ import java.util.Set;
 public class DataSource {
     private static DataSource instance = new DataSource();
     private Set<User> users;
+    private Set<Report> reports;
 
     private DataSource() {
         users = new HashSet<>();
+        reports = new HashSet<>();
     }
 
     /**
@@ -43,13 +45,21 @@ public class DataSource {
      * Adds new account
      * @param userdata User Object (information with new ID and Password)
      */
-    public void add(User userdata) throws InvalidUserException {
+    public void addUser(User userdata) throws InvalidUserException {
         for (User userOb : users) {
             if (userdata.getUser().equals(userOb.getUser())) {
                 throw new InvalidUserException("Invalid ID");
             }
         }
         users.add(userdata);
+    }
+
+    public void addReport(Report report) {
+        reports.add(report);
+    }
+
+    public Iterable listReports() {
+        return reports;
     }
 }
 
