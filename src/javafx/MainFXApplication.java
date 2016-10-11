@@ -8,6 +8,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import java.util.function.Consumer;
+
+import model.DataSource;
+import model.MemoryDataSource;
 import model.User;
 
 import java.io.IOException;
@@ -22,6 +25,7 @@ public class MainFXApplication extends Application {
 
     private User user;
     private Stage stage;
+    private DataSource dataSource;
 
     /**
      * Sets the window title and displays the registration screen.
@@ -29,10 +33,20 @@ public class MainFXApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         stage = primaryStage;
+        // For now, store system state in memory
+        dataSource = MemoryDataSource.getInstance();
 
         primaryStage.setTitle(TITLE);
         showRegister();
         primaryStage.show();
+    }
+
+    /**
+     * Return the DataSource used to store state in this application.
+     * @return A DataSource instance
+     */
+    public DataSource getDataSource() {
+        return dataSource;
     }
 
     /**

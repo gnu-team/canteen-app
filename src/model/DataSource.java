@@ -1,67 +1,38 @@
 package model;
 
+import java.util.Collection;
 import exception.InvalidUserException;
 import exception.NoSuchUserException;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
- * Stores an account and check if there is an account or not
+ * Maintains system state, either by storing state in memory or by
+ * querying a service.
  */
-public class DataSource {
-    private static DataSource instance = new DataSource();
-    private Set<User> users;
-    private Set<Report> reports;
-
-    private DataSource() {
-        users = new HashSet<>();
-        reports = new HashSet<>();
-    }
-
-    /**
-     * Gets the instance for this class
-     * @return instance for this class
-     */
-    public static DataSource getInstance() {
-        return instance;
-    }
-
+public interface DataSource {
     /**
      * Checks if there is the account or not in the list which we already have
      * @param user to check user ID which entered by an user
      * @param password to check user Password which entered by an user
      * @return if there is the account, return the User Object included user and password
      */
-    public User authenticate(String user, String password) throws NoSuchUserException {
-        for (User s: users) {
-            if (s.authenticate(user, password)) {
-                return s;
-            }
-        }
-        throw new NoSuchUserException("No matched ID or Password");
-    }
+    User authenticate(String user, String password) throws NoSuchUserException;
 
     /**
      * Adds new account
      * @param userdata User Object (information with new ID and Password)
      */
-    public void addUser(User userdata) throws InvalidUserException {
-        for (User userOb : users) {
-            if (userdata.getUser().equals(userOb.getUser())) {
-                throw new InvalidUserException("Invalid ID");
-            }
-        }
-        users.add(userdata);
-    }
+    void addUser(User userdata) throws InvalidUserException;
 
-    public void addReport(Report report) {
-        reports.add(report);
-    }
+    /**
+     * Adds new report
+     * @param report New report to add
+     */
+    void addReport(Report report);
 
-    public Collection<Report> listReports() {
-        return reports;
-    }
+    /**
+     * Returns all reports in the system
+     * @return a Collection containing all known Reports
+     */
+    Collection<Report> listReports();
 }
 

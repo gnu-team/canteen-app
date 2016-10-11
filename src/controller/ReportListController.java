@@ -36,10 +36,6 @@ public class ReportListController implements IMainAppReceiver, IMainControllerRe
 
     @FXML
     private void initialize() {
-        Collection<Report> reports = DataSource.getInstance().listReports();
-        reportTable.getItems().setAll(reports);
-        reportTable.setColumnResizePolicy(rf -> true);
-
         // Set column cell factories
         dateCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getDate()));
@@ -56,6 +52,10 @@ public class ReportListController implements IMainAppReceiver, IMainControllerRe
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
+
+        // Populate table
+        Collection<Report> reports = mainApp.getDataSource().listReports();
+        reportTable.getItems().setAll(reports);
     }
 
     @Override

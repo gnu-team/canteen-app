@@ -70,7 +70,7 @@ public class WelcomeController implements IMainAppReceiver {
             user = UserFactory.createUser(usernameField.getText(),
                                           passwordField.getText(),
                                           accountTypeBox.getValue());
-            DataSource.getInstance().addUser(user);
+            mainApp.getDataSource().addUser(user);
         } catch (InvalidUserException e) {
             mainApp.showAlert(e.getMessage());
             return;
