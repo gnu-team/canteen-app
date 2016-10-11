@@ -9,9 +9,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0"
       prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controller.DrawerContentController">
+      fx:controller="controller.CreateReportController">
    <children>
-      <JFXTextField focusColor="#028383" labelFloat="true" layoutX="105.0" layoutY="66.0" maxWidth="276.0" minWidth="276.0" prefHeight="33.0" prefWidth="276.0" promptText="Location">
+      <JFXTextField focusColor="#028383" labelFloat="true" layoutX="105.0" layoutY="66.0" maxWidth="276.0" minWidth="276.0" prefHeight="33.0" prefWidth="276.0" promptText="Location" fx:id="locationField">
          <font>
             <Font name="Courier" size="14.0" />
          </font>

@@ -9,16 +9,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.AccountType;
-import model.WaterCondition;
-import model.WaterType;
+import model.*;
+
+import java.util.Date;
 
 /**
  * Handles events from the create report screen
  */
 public class CreateReportController implements IMainAppReceiver, IMainControllerReceiver {
-
+    @FXML
+    private TextField locationField;
     @FXML
     private ComboBox<WaterType> waterTypeBox;
     @FXML
@@ -57,8 +59,14 @@ public class CreateReportController implements IMainAppReceiver, IMainController
      */
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
-        mainController.showCreateReport();
-        mainController.closeDrawer();
+        DataSource.getInstance().addReport(new Report(
+            new Date(),
+            mainApp.getUser(),
+            locationField.getText(),
+            waterTypeBox.getValue(),
+            waterConditionBox.getValue()
+        ));
+        mainController.showMap();
     }
 
     /**
