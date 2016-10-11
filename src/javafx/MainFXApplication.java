@@ -9,6 +9,7 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import java.util.function.Consumer;
 
+import model.ApiDataSource;
 import model.DataSource;
 import model.MemoryDataSource;
 import model.User;
@@ -34,7 +35,7 @@ public class MainFXApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         stage = primaryStage;
         // For now, store system state in memory
-        dataSource = MemoryDataSource.getInstance();
+        dataSource = new ApiDataSource();
 
         primaryStage.setTitle(TITLE);
         showRegister();
