@@ -2,6 +2,8 @@ package model;
 
 import exception.InvalidUserException;
 import exception.NoSuchUserException;
+
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -58,7 +60,7 @@ public class DataSource {
         reports.add(report);
     }
 
-    public Iterable listReports() {
+    public Collection<Report> listReports() {
         return reports;
     }
 }
