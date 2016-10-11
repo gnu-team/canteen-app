@@ -16,12 +16,12 @@
             <Font name="Courier" size="14.0" />
          </font>
       </JFXTextField>
-      <JFXButton layoutX="112.0" layoutY="219.0" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Report" textFill="#fcfcfc">
+      <JFXButton layoutX="112.0" layoutY="219.0" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Report" textFill="#fcfcfc" onAction="#handleCreateReportPressed">
          <font>
             <Font name="Courier" size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="294.0" layoutY="219.0" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Cancel" textFill="#fcfcfc">
+      <JFXButton layoutX="294.0" layoutY="219.0" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Cancel" textFill="#fcfcfc" onAction="#handleCancelReportPressed">
          <font>
             <Font name="Courier" size="14.0" />
          </font>
