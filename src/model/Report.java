@@ -1,12 +1,14 @@
 package model;
 
 import java.util.Date;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Represents a water source report.
  */
 public class Report {
     private Date date;
+    @SerializedName("creator_name")
     private User creator;
     // TODO: Use geocoordinates instead of a String
     private String location;
