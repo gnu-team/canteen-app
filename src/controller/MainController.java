@@ -86,7 +86,7 @@ public class MainController implements IMainAppReceiver {
     }
 
     public void showCreateReport() {
-        showView("CreateNewReport");
+        showView("CreateReport");
     }
 
     public void showEditProfile() {
