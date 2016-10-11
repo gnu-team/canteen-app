@@ -194,11 +194,9 @@ public class MainFXApplication extends Application {
     /**
      * Once profile is completed, shows success screen.
      */
-    public void showMain() {
+    public void registrationComplete() {
         showView("Main");
     }
-
-
 
     public static void main(String[] args) {
         launch(args);

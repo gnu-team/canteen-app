@@ -74,6 +74,6 @@ public class CreateReportController implements IMainAppReceiver, IMainController
      */
     @FXML
     private void handleCancelReportPressed(ActionEvent event) {
-        mainApp.showMain();
+        mainController.showMap();
     }
 }
