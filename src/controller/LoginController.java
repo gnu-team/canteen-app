@@ -33,7 +33,7 @@ public class LoginController implements IMainAppReceiver {
      */
     public void handleLoginPressed(ActionEvent actionEvent) {
         try {
-            User user = DataSource.getInstance().authenticate(
+            User user = mainApp.getDataSource().authenticate(
                 username.getText(), password.getText());
 
             mainApp.loginComplete(user);
