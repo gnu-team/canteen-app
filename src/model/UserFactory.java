@@ -37,16 +37,16 @@ public class UserFactory {
         //       class (???)
         switch (type) {
             case USER:
-                u = new User(username, password);
+                u = new User(username, password, type);
                 break;
             case WORKER:
-                u = new Worker(username, password);
+                u = new Worker(username, password, type);
                 break;
             case MANAGER:
-                u = new Manager(username, password);
+                u = new Manager(username, password, type);
                 break;
             case ADMIN:
-                u = new Administrator(username, password);
+                u = new Administrator(username, password, type);
                 break;
             default:
                 throw new UnsupportedOperationException("Creating a " + type

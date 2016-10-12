@@ -26,6 +26,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Scanner;
 
 /**
  * Created by Austin Adams on 10/10/16.
@@ -40,6 +41,7 @@ public class ApiDataSource implements DataSource {
         gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
         gsonBuilder.registerTypeAdapter(WaterType.class, new WaterTypeDeserializer());
         gsonBuilder.registerTypeAdapter(WaterCondition.class, new WaterConditionDeserializer());
+        gsonBuilder.registerTypeAdapter(AccountType.class, new AccountTypeDeserializer());
     }
 
     @Override
@@ -66,7 +68,53 @@ public class ApiDataSource implements DataSource {
 
     @Override
     public void addUser(User userdata) throws DataBackendException, InvalidUserException {
-        throw new UnsupportedOperationException("addUser() is not implemented yet");
+        HttpURLConnection conn = request("POST", "/users/");
+
+        OutputStream request;
+        try {
+            request = conn.getOutputStream();
+        } catch (IOException e) {
+            throw new DataBackendException("Could not make request registering new user", e);
+        }
+
+        OutputStreamWriter writer = new OutputStreamWriter(request);
+        Gson gson = gsonBuilder.create();
+        gson.toJson(userdata, writer);
+        try {
+            writer.close();
+        } catch (IOException e) {
+            throw new DataBackendException("Flushing request body", e);
+        }
+
+        int statusCode;
+        try {
+            statusCode = conn.getResponseCode();
+        } catch (IOException e) {
+            throw new DataBackendException("Retrieving response code", e);
+        }
+
+        // Quick debugging hack for viewing error messages
+        // This is horrible, but thanks for giving me no alternative,
+        // Java! <3
+        // See TODO below
+        InputStream response = conn.getErrorStream();
+        if (response != null) {
+            Scanner kludge = new Scanner(response);
+            kludge.useDelimiter("\\A");
+            System.err.println(kludge.next());
+        }
+
+        if (statusCode != HttpURLConnection.HTTP_CREATED) {
+            // TODO: Include detail from response body
+            throw new DataBackendException("Bad response status code " + statusCode);
+        }
+
+        // Now that we've created the new account, test login
+        try {
+            authenticate(userdata.getUser(), userdata.getPassword());
+        } catch (NoSuchUserException e) {
+            throw new InvalidUserException(e.getMessage());
+        }
     }
 
     @Override
@@ -141,12 +189,6 @@ public class ApiDataSource implements DataSource {
             throw new DataBackendException("Bad protocol", e);
         }
 
-        // Set the Authorization header
-        // http://stackoverflow.com/a/12603622/321301
-        String userpass = user + ":" + password;
-        String authblob = DatatypeConverter.printBase64Binary(userpass.getBytes());
-        conn.setRequestProperty("Authorization", "Basic " + authblob);
-
         // To get a JSON response, set the Accept header
         conn.setRequestProperty("Accept", "application/json");
 
@@ -154,6 +196,14 @@ public class ApiDataSource implements DataSource {
         if (method.equals("POST")) {
             conn.setDoOutput(true);
             conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        }
+
+        if (user != null && password != null) {
+            // Set the Authorization header
+            // http://stackoverflow.com/a/12603622/321301
+            String userpass = user + ":" + password;
+            String authblob = DatatypeConverter.printBase64Binary(userpass.getBytes());
+            conn.setRequestProperty("Authorization", "Basic " + authblob);
         }
 
         return conn;
@@ -189,6 +239,13 @@ public class ApiDataSource implements DataSource {
         @Override
         public WaterCondition deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             return WaterCondition.values()[json.getAsInt()];
+        }
+    }
+
+    private class AccountTypeDeserializer implements JsonSerializer<AccountType> {
+        @Override
+        public JsonElement serialize(AccountType src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(src.toString() + "s");
         }
     }
 }
