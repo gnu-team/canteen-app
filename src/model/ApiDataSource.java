@@ -34,7 +34,7 @@ import java.util.Scanner;
 public class ApiDataSource implements DataSource {
     private GsonBuilder gsonBuilder;
     private String user, password;
-    private static final String API_ENDPOINT = "http://localhost:8000";
+    private static final String API_ENDPOINT = "https://canteen.austinjadams.com";
 
     public ApiDataSource() {
         gsonBuilder = new GsonBuilder();
