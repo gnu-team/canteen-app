@@ -1,5 +1,6 @@
 package controller;
 
+import exception.DataBackendException;
 import javafx.IMainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -59,13 +60,19 @@ public class CreateReportController implements IMainAppReceiver, IMainController
      */
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
-        mainApp.getDataSource().addReport(new Report(
-            new Date(),
-            mainApp.getUser(),
-            locationField.getText(),
-            waterTypeBox.getValue(),
-            waterConditionBox.getValue()
-        ));
+        try {
+            mainApp.getDataSource().addReport(new Report(
+                    new Date(),
+                    mainApp.getUser(),
+                    locationField.getText(),
+                    waterTypeBox.getValue(),
+                    waterConditionBox.getValue()
+            ));
+        } catch (DataBackendException be) {
+            be.printStackTrace();
+            mainApp.showAlert(be.getMessage());
+            return;
+        }
         mainController.showMap();
     }
 

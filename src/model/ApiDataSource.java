@@ -9,6 +9,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import exception.DataBackendException;
 import exception.InvalidUserException;
 import exception.NoSuchUserException;
 
@@ -42,24 +43,21 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public User authenticate(String user, String password) throws NoSuchUserException {
+    public User authenticate(String user, String password) throws DataBackendException, NoSuchUserException {
         this.user = user;
         this.password = password;
 
         int statusCode;
         try {
             statusCode = request("GET", "/").getResponseCode();
-        // TODO: Handle this better
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new DataBackendException("Could not make login request successfully", e);
         }
 
         if (statusCode == HttpURLConnection.HTTP_FORBIDDEN) {
             throw new NoSuchUserException("Authentication failed");
         } else if (statusCode != HttpURLConnection.HTTP_OK) {
-            // TODO: Include detail from response body
-            throw new NoSuchUserException("Bad status code " + statusCode);
+            throw new DataBackendException("Bad status code " + statusCode);
         }
 
         // For now, always return null.
@@ -67,21 +65,19 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public void addUser(User userdata) throws InvalidUserException {
+    public void addUser(User userdata) throws DataBackendException, InvalidUserException {
         throw new UnsupportedOperationException("addUser() is not implemented yet");
     }
 
     @Override
-    public void addReport(Report report) {
+    public void addReport(Report report) throws DataBackendException {
         HttpURLConnection conn = request("POST", "/reports/");
 
         OutputStream request;
         try {
             request = conn.getOutputStream();
-        // TODO: Handle this better
         } catch (IOException e) {
-            e.printStackTrace();
-            return;
+            throw new DataBackendException("Could not make request submitting new report", e);
         }
 
         OutputStreamWriter writer = new OutputStreamWriter(request);
@@ -89,37 +85,32 @@ public class ApiDataSource implements DataSource {
         gson.toJson(report, writer);
         try {
             writer.close();
-        // TODO: Handle this better
         } catch (IOException e) {
-            e.printStackTrace();
-            return;
+            throw new DataBackendException("Flushing request body", e);
         }
 
-        int statusCode = 0;
+        int statusCode;
         try {
             statusCode = conn.getResponseCode();
         } catch (IOException e) {
-            e.printStackTrace();
-            return;
+            throw new DataBackendException("Retrieving response code", e);
         }
 
         if (statusCode != HttpURLConnection.HTTP_CREATED) {
             // TODO: Include detail from response body
-            throw new RuntimeException("Bad status code " + statusCode);
+            throw new DataBackendException("Bad response status code " + statusCode);
         }
     }
 
     @Override
-    public Collection<Report> listReports() {
+    public Collection<Report> listReports() throws DataBackendException {
         HttpURLConnection conn = request("GET", "/reports/");
 
         InputStream response;
         try {
             response = conn.getInputStream();
-            // TODO: Handle this better
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new DataBackendException("Could not request report list", e);
         }
 
         Gson gson = gsonBuilder.create();
@@ -128,32 +119,26 @@ public class ApiDataSource implements DataSource {
         return Arrays.asList(reports);
     }
 
-    private HttpURLConnection request(String method, String path) {
+    private HttpURLConnection request(String method, String path) throws DataBackendException {
         URL url;
 
         try {
             url = new URL(API_ENDPOINT + path);
-        // TODO: Handle this better
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
+            throw new DataBackendException("Malformed URL", e);
         }
 
         HttpURLConnection conn;
         try {
             conn = (HttpURLConnection) url.openConnection();
-        // TODO: Handle this better
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new DataBackendException("Opening request connection", e);
         }
 
         try {
             conn.setRequestMethod(method);
-        // TODO: Handle this better
         } catch (ProtocolException e) {
-            e.printStackTrace();
-            return null;
+            throw new DataBackendException("Bad protocol", e);
         }
 
         // Set the Authorization header

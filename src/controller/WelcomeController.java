@@ -1,5 +1,6 @@
 package controller;
 
+import exception.DataBackendException;
 import javafx.IMainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -72,6 +73,10 @@ public class WelcomeController implements IMainAppReceiver {
                                           accountTypeBox.getValue());
             mainApp.getDataSource().addUser(user);
         } catch (InvalidUserException e) {
+            mainApp.showAlert(e.getMessage());
+            return;
+        } catch (DataBackendException e) {
+            e.printStackTrace();
             mainApp.showAlert(e.getMessage());
             return;
         }

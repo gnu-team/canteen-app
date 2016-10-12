@@ -1,5 +1,6 @@
 package controller;
 
+import exception.DataBackendException;
 import javafx.IMainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -54,7 +55,14 @@ public class ReportListController implements IMainAppReceiver, IMainControllerRe
         this.mainApp = mainApp;
 
         // Populate table
-        Collection<Report> reports = mainApp.getDataSource().listReports();
+        Collection<Report> reports;
+        try {
+            reports = mainApp.getDataSource().listReports();
+        } catch (DataBackendException e) {
+            e.printStackTrace();
+            mainApp.showAlert(e.getMessage());
+            return;
+        }
         reportTable.getItems().setAll(reports);
     }
 
