@@ -46,12 +46,9 @@ public class ApiDataSource implements DataSource {
 
     @Override
     public User authenticate(String user, String password) throws DataBackendException, NoSuchUserException {
-        this.user = user;
-        this.password = password;
-
         int statusCode;
         try {
-            statusCode = request("GET", "/").getResponseCode();
+            statusCode = request("GET", "/", user, password).getResponseCode();
         } catch (IOException e) {
             throw new DataBackendException("Could not make login request successfully", e);
         }
@@ -61,6 +58,10 @@ public class ApiDataSource implements DataSource {
         } else if (statusCode != HttpURLConnection.HTTP_OK) {
             throw new DataBackendException("Bad status code " + statusCode);
         }
+
+        // Set credentials only if login succeeded
+        this.user = user;
+        this.password = password;
 
         // For now, always return null.
         return null;
@@ -168,6 +169,10 @@ public class ApiDataSource implements DataSource {
     }
 
     private HttpURLConnection request(String method, String path) throws DataBackendException {
+        return request(method, path, user, password);
+    }
+
+    private HttpURLConnection request(String method, String path, String user, String password) throws DataBackendException {
         URL url;
 
         try {
