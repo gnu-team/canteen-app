@@ -1,5 +1,6 @@
 package controller;
 
+import exception.DataBackendException;
 import javafx.IMainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -38,6 +39,9 @@ public class LoginController implements IMainAppReceiver {
 
             mainApp.loginComplete(user);
         } catch (NoSuchUserException e) {
+            mainApp.showAlert(e.getMessage());
+        } catch (DataBackendException e) {
+            e.printStackTrace();
             mainApp.showAlert(e.getMessage());
         }
     }

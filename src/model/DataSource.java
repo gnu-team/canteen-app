@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Collection;
+
+import exception.DataBackendException;
 import exception.InvalidUserException;
 import exception.NoSuchUserException;
 
@@ -15,24 +17,24 @@ public interface DataSource {
      * @param password to check user Password which entered by an user
      * @return if there is the account, return the User Object included user and password
      */
-    User authenticate(String user, String password) throws NoSuchUserException;
+    User authenticate(String user, String password) throws DataBackendException, NoSuchUserException;
 
     /**
      * Adds new account
      * @param userdata User Object (information with new ID and Password)
      */
-    void addUser(User userdata) throws InvalidUserException;
+    void addUser(User userdata) throws DataBackendException, InvalidUserException;
 
     /**
      * Adds new report
      * @param report New report to add
      */
-    void addReport(Report report);
+    void addReport(Report report) throws DataBackendException;
 
     /**
      * Returns all reports in the system
      * @return a Collection containing all known Reports
      */
-    Collection<Report> listReports();
+    Collection<Report> listReports() throws DataBackendException;
 }
 
