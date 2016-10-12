@@ -8,17 +8,18 @@ public class Manager extends Worker {
      * Creates manager object with default username and password
      */
     public Manager(){
-        this("username", "Password");
+        this("username", "Password", AccountType.MANAGER);
     }
 
     /**
      * Creates manager object with username and password
      * @param user the username to be created
      * @param password the password for new account
+     * @param type account type
      */
 
-    public Manager(String user, String password) {
-        super(user, password);
+    public Manager(String user, String password, AccountType type) {
+        super(user, password, type);
     }
 
     /**
