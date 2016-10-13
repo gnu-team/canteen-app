@@ -51,8 +51,10 @@ public class MainController implements IMainAppReceiver {
     private void handleHamburgerClicked(MouseEvent event) {
         if (drawer.isShown()) {
             drawer.close();
+            drawer.setOnDrawerClosed((event1) -> drawer.toBack());
         } else {
             drawer.open();
+            drawer.setOnDrawerOpening((event1) -> drawer.toFront());
         }
     }
 
