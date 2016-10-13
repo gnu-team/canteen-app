@@ -66,9 +66,20 @@ public class Report {
         this.condition = condition;
     }
 
+    /**
+     * Sets the id
+     * @param id
+     */
     public void setID(int id) {
         this.id = id;
     }
+
+    /**
+     * Make a foramt for a report number
+     * ex) S-0001
+     * S means Source Report
+     * @return report number which changed to the format
+     */
     public String getReportNumber() {
 
         NumberFormat nf = new DecimalFormat("0000"); // ex) Making S-0001
