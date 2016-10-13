@@ -59,7 +59,9 @@ public class CreateReportController implements IMainAppReceiver, IMainController
      */
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
-        if (waterTypeBox.getValue() == null) {
+        if (locationField.getText().trim().equals("")) {
+            mainApp.showAlert("Please enter a location");
+        } else if (waterTypeBox.getValue() == null) {
             mainApp.showAlert("Please choose a water type");
         } else if (waterConditionBox.getValue() == null) {
             mainApp.showAlert("Please choose a water condition");
