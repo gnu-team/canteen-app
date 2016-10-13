@@ -34,6 +34,11 @@ public enum AccountType {
     public static AccountType DEFAULT = USER;
     private String name;
 
+    /**
+     * Creates an account with the given name.
+     *
+     * @param name label of this account
+     */
     AccountType(String name) {
         this.name = name;
     }

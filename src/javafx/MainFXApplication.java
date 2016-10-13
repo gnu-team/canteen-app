@@ -212,6 +212,9 @@ public class MainFXApplication extends Application {
         showView("Main");
     }
 
+    /**
+     * Launches the application.
+     */
     public static void main(String[] args) {
         launch(args);
     }

@@ -11,6 +11,11 @@ public enum WaterCondition {
 
     private String name;
 
+    /**
+     * Creates a new water condition with the given name.
+     *
+     * @param name label for this water condition
+     */
     WaterCondition(String name) {
         this.name = name;
     }

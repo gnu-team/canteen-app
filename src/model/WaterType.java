@@ -13,6 +13,11 @@ public enum WaterType {
 
     private String name;
 
+    /**
+     * Creates a new water type with the given name.
+     *
+     * @param name label for this water type
+     */
     WaterType(String name) {
         this.name = name;
     }

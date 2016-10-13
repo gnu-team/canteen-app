@@ -34,6 +34,9 @@ public class ReportListController implements IMainAppReceiver, IMainControllerRe
     private MainFXApplication mainApp;
     private MainController mainController;
 
+    /**
+     * Configures the columns of the table of reports.
+     */
     @FXML
     private void initialize() {
         // Set column cell factories
