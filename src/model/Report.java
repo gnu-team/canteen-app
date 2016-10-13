@@ -1,5 +1,7 @@
 package model;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 
 /**
@@ -12,23 +14,26 @@ public class Report {
     private String location;
     private WaterType type;
     private WaterCondition condition;
+    private int id;
+    private String reportNumber;
 
-    public Report(Date date, User creator, String location, WaterType type, WaterCondition condition) {
-        this.date = date;
+    public Report(User creator, String location, WaterType type, WaterCondition condition) {
+        this.date = new Date();
         this.creator = creator;
         this.location = location;
         this.type = type;
         this.condition = condition;
     }
 
+    public String getDateFormat() {
+        String dateStr = String.format("%tD", date); // mm/dd/yy
+        String timeStr = String.format(" %tl:%<tM%<tp", date); // 5:19pm
+        return dateStr + timeStr;
+    }
+
     public Date getDate() {
-        return date;
+        return this.date;
     }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public User getCreator() {
         return creator;
     }
@@ -59,5 +64,16 @@ public class Report {
 
     public void setCondition(WaterCondition condition) {
         this.condition = condition;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
+    public String getReportNumber() {
+
+        NumberFormat nf = new DecimalFormat("0000"); // ex) Making S-0001
+        //S means Source, P will mean purity , and H will mean Historical
+        String reportNumber = "S-" + nf.format(id);
+        return reportNumber;
     }
 }

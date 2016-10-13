@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+
 /**
  * Stores an account and check if there is an account or not
  */
@@ -50,6 +51,7 @@ public class MemoryDataSource implements DataSource {
 
     @Override
     public void addReport(Report report) {
+        report.setID(reports.size());
         reports.add(report);
     }
 

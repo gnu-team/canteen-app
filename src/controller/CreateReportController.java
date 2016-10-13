@@ -60,7 +60,6 @@ public class CreateReportController implements IMainAppReceiver, IMainController
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
         mainApp.getDataSource().addReport(new Report(
-            new Date(),
             mainApp.getUser(),
             locationField.getText(),
             waterTypeBox.getValue(),
