@@ -43,7 +43,7 @@ public class ReportListController implements IMainAppReceiver, IMainControllerRe
         dateCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getDate()));
         creatorCol.cellValueFactoryProperty().setValue(cdf ->
-            new ReadOnlyObjectWrapper<>(cdf.getValue().getCreator().getName()));
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getCreator().getUser()));
         locationCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getLocation()));
         typeCol.cellValueFactoryProperty().setValue(cdf ->
