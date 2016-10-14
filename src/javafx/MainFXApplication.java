@@ -38,7 +38,7 @@ public class MainFXApplication extends Application {
         dataSource = new ApiDataSource();
 
         primaryStage.setTitle(TITLE);
-        showRegister();
+        showLogin();
         primaryStage.show();
     }
 
@@ -169,7 +169,7 @@ public class MainFXApplication extends Application {
      * Displays welcome screen.
      */
     public void showRegister() {
-        showView("Welcome");
+        showView("Register");
     }
 
     /**

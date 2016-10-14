@@ -5,27 +5,25 @@ import javafx.IMainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Pagination;
+import javafx.scene.control.TextField;
 import model.User;
-import model.AccountType;
-import model.UserFactory;
 import model.DataSource;
+import model.UserFactory;
+import model.AccountType;
 import exception.InvalidUserException;
 
 /**
- * Handles events from the welcome screen
+ * Handles events from the registration screen
  */
-public class WelcomeController implements IMainAppReceiver {
+public class RegisterController implements IMainAppReceiver {
     @FXML
     private TextField usernameField;
     @FXML
     private TextField passwordField;
     @FXML
     private ComboBox<AccountType> accountTypeBox;
-    @FXML
-    private Label Welcome;
 
     private MainFXApplication mainApp;
 
@@ -53,19 +51,9 @@ public class WelcomeController implements IMainAppReceiver {
     }
 
     /**
-     * Displays the login screen when user presses the login button.
+     * When user presses register button, attempts to register.
      */
-    public void login(ActionEvent event) throws Exception {
-        mainApp.showLogin();
-    }
-
-    /**
-     * Attempts to create a new user with the information provided.
-     *
-     * Displays an error box if user already exists or username/password do not
-     * match requirements.
-     */
-    public void register(ActionEvent actionEvent) {
+    public void handleRegisterPressed(ActionEvent actionEvent) {
         User user;
         try {
             user = UserFactory.createUser(usernameField.getText(),
@@ -82,5 +70,12 @@ public class WelcomeController implements IMainAppReceiver {
         }
 
         mainApp.finishRegistration(user);
+    }
+
+    /**
+     * Allows user to cancel login and return to the registration screen.
+     */
+    public void handleBackButtonPressed(ActionEvent actionEvent) {
+        mainApp.showLogin();
     }
 }
