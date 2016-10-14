@@ -9,11 +9,6 @@
 <VBox fx:id="box" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="400.0" prefWidth="181.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DrawerContentController">
     <children>
-        <ImageView fitHeight="136.0" fitWidth="185.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../../../../maxresdefault.jpg"/>
-            </image>
-        </ImageView>
         <JFXButton prefHeight="64.0" prefWidth="183.0" text="Map" onAction="#handleMapPressed">
             <font>
                 <Font name="Courier" size="14.0"/>
