@@ -67,7 +67,8 @@ public class CreateReportController implements IMainAppReceiver, IMainController
      */
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
-        if (locationField.getText().trim().equals("")) {
+        if (latitudeField.getText().trim().equals("")
+                || longitudeField.getText().trim().equals("")) {
             mainApp.showAlert("Please enter a location");
         } else if (waterTypeBox.getValue() == null) {
             mainApp.showAlert("Please choose a water type");
@@ -77,7 +78,8 @@ public class CreateReportController implements IMainAppReceiver, IMainController
             try {
                 mainApp.getDataSource().addReport(new Report(
                     mainApp.getUser(),
-                    locationField.getText(),
+                    Double.parseDouble(latitudeField.getText()),
+                        Double.parseDouble(longitudeField.getText()),
                     waterTypeBox.getValue(),
                     waterConditionBox.getValue()
                 ));
