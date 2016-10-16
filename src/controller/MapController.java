@@ -11,10 +11,12 @@ import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import javafx.IMainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.FileChooser;
+import model.MemoryDataSource;
 import netscape.javascript.JSObject;
 
 import java.awt.*;
@@ -25,7 +27,8 @@ import java.util.ResourceBundle;
 /**
  * Created by Claude Peon on 10/16/16.
  */
-public class MapController implements Initializable, MapComponentInitializedListener {
+public class MapController implements Initializable, MapComponentInitializedListener,
+        IMainAppReceiver, IMainControllerReceiver {
 
     @FXML
     private GoogleMapView mapView;
@@ -34,17 +37,25 @@ public class MapController implements Initializable, MapComponentInitializedList
 
     private Window mainStage;
 
-    private MainFXApplication app;
+    private MainFXApplication mainApp;
+
+    private MainController mainController;
 
     @Override
-    public void initialize(URL url, ResourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         mapView.addMapInializedListener(this);
     }
 
-    public void setCallbacks(Window stage, MainFXApplication app) {
-        mainStage = stage;
-        this.app = app;
+    @Override
+    public void setMainApp(MainFXApplication mainApp) {
+        this.mainApp = mainApp;
     }
+
+    @Override
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
 
     @Override
     public void mapInitialized() {
@@ -56,7 +67,7 @@ public class MapController implements Initializable, MapComponentInitializedList
         options.center(center)
                 .zoom(9)
                 .overviewMapControl(false)
-                .panControl(false)
+                .panControl(true)
                 .rotateControl(false)
                 .scaleControl(false)
                 .streetViewControl(false)
@@ -67,8 +78,8 @@ public class MapController implements Initializable, MapComponentInitializedList
 
 
         //TODO Bob uses a facade. Need to make this work with our implementation
-        Facade fc = Facade.getInstance();
-        List<Location> locations = fc.getLocations();
+        MemoryDataSource memoryDataSource = MemoryDataSource.getInstance();
+        List<Location> locations = memoryDataSource.getLocations();
 
         for (Location l: locations) {
             MarkerOptions markerOptions = new MarkerOptions();
@@ -92,7 +103,5 @@ public class MapController implements Initializable, MapComponentInitializedList
 
             map.addMarker(marker);
         }
-
-
     }
 }
