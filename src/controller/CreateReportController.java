@@ -20,12 +20,19 @@ import java.util.Date;
  * Handles events from the create report screen
  */
 public class CreateReportController implements IMainAppReceiver, IMainControllerReceiver {
+    //@FXML
+    //private TextField locationField;
     @FXML
-    private TextField locationField;
+    private TextField latitudeField;
+
+    @FXML TextField longitudeField;
+
     @FXML
     private ComboBox<WaterType> waterTypeBox;
+
     @FXML
     private ComboBox<WaterCondition> waterConditionBox;
+
     private MainFXApplication mainApp;
     private MainController mainController;
 
