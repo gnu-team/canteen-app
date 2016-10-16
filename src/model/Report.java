@@ -12,17 +12,20 @@ public class Report {
     private Date date;
     @SerializedName("creator_name")
     private User creator;
-    // TODO: Use geocoordinates instead of a String
-    private String location;
+    //private String location;
+    private double latitude;
+    private double longitude;
     private WaterType type;
     private WaterCondition condition;
     private int id;
     private String reportNumber;
 
-    public Report(User creator, String location, WaterType type, WaterCondition condition) {
+    public Report(User creator, double latitude, double longitude, WaterType type, WaterCondition condition) {
         this.date = new Date();
         this.creator = creator;
-        this.location = location;
+        //this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.type = type;
         this.condition = condition;
     }
@@ -44,12 +47,28 @@ public class Report {
         this.creator = creator;
     }
 
-    public String getLocation() {
-        return location;
+    //public String getLocation() {
+    //    return location;
+    //}
+
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public double getLongitude() {
+        return longitude;
+    }
+
+    //public void setLocation(String location) {
+    //    this.location = location;
+    //}
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public WaterType getType() {
@@ -77,7 +96,7 @@ public class Report {
     }
 
     /**
-     * Make a foramt for a report number
+     * Make a format for a report number
      * ex) S-0001
      * S means Source Report
      * @return report number which changed to the format
