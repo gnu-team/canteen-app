@@ -3,14 +3,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
-
+<?import com.lynden.gmapsfx.GoogleMapView?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MapController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@img/map.png" />
-         </image>
-      </ImageView>
+      <GoogleMapView fx:id="mapView" prefHeight="500.0" prefWidth="300.0" />
    </children>
 </StackPane>
