@@ -74,7 +74,7 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
             reports = mainApp.getDataSource().listReports();
         } catch (DataBackendException e) {
             e.printStackTrace();
-            mainApp.showAlert("Could not retrieve list of reports.");
+            mainApp.showAlert(e.getMessage());
             return;
         }
 

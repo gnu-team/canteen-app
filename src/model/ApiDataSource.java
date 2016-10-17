@@ -46,17 +46,22 @@ public class ApiDataSource implements DataSource {
 
     @Override
     public User authenticate(String user, String password) throws DataBackendException, NoSuchUserException {
+        HttpURLConnection conn = request("GET", "/", user, password);
         int statusCode;
         try {
-            statusCode = request("GET", "/", user, password).getResponseCode();
+            statusCode = conn.getResponseCode();
         } catch (IOException e) {
             throw new DataBackendException("Could not make login request successfully", e);
         }
 
-        if (statusCode == HttpURLConnection.HTTP_FORBIDDEN) {
-            throw new NoSuchUserException("Authentication failed");
-        } else if (statusCode != HttpURLConnection.HTTP_OK) {
-            throw new DataBackendException("Bad status code " + statusCode);
+        if (statusCode != HttpURLConnection.HTTP_OK) {
+            ApiError err = parseError(conn);
+
+            if (err == null) {
+                throw new DataBackendException("Bad status code " + statusCode);
+            } else {
+                throw new DataBackendException(err.getDetail());
+            }
         }
 
         // Set credentials only if login succeeded
@@ -94,20 +99,14 @@ public class ApiDataSource implements DataSource {
             throw new DataBackendException("Retrieving response code", e);
         }
 
-        // Quick debugging hack for viewing error messages
-        // This is horrible, but thanks for giving me no alternative,
-        // Java! <3
-        // See TODO below
-        InputStream response = conn.getErrorStream();
-        if (response != null) {
-            Scanner kludge = new Scanner(response);
-            kludge.useDelimiter("\\A");
-            System.err.println(kludge.next());
-        }
-
         if (statusCode != HttpURLConnection.HTTP_CREATED) {
-            // TODO: Include detail from response body
-            throw new DataBackendException("Bad response status code " + statusCode);
+            ApiError err = parseError(conn);
+
+            if (err == null) {
+                throw new DataBackendException("Bad status code " + statusCode);
+            } else {
+                throw new DataBackendException(err.getDetail());
+            }
         }
 
         // Now that we've created the new account, test login
@@ -146,8 +145,13 @@ public class ApiDataSource implements DataSource {
         }
 
         if (statusCode != HttpURLConnection.HTTP_CREATED) {
-            // TODO: Include detail from response body
-            throw new DataBackendException("Bad response status code " + statusCode);
+            ApiError err = parseError(conn);
+
+            if (err == null) {
+                throw new DataBackendException("Bad status code " + statusCode);
+            } else {
+                throw new DataBackendException(err.getDetail());
+            }
         }
     }
 
@@ -155,7 +159,25 @@ public class ApiDataSource implements DataSource {
     public Collection<Report> listReports() throws DataBackendException {
         HttpURLConnection conn = request("GET", "/reports/");
 
+        int statusCode;
+        try {
+            statusCode = conn.getResponseCode();
+        } catch (IOException e) {
+            throw new DataBackendException("Retrieving response code", e);
+        }
+
+        if (statusCode != HttpURLConnection.HTTP_OK) {
+            ApiError err = parseError(conn);
+
+            if (err == null) {
+                throw new DataBackendException("Bad status code " + statusCode);
+            } else {
+                throw new DataBackendException(err.getDetail());
+            }
+        }
+
         InputStream response;
+
         try {
             response = conn.getInputStream();
         } catch (IOException e) {
@@ -212,6 +234,18 @@ public class ApiDataSource implements DataSource {
         }
 
         return conn;
+    }
+
+    private ApiError parseError(HttpURLConnection conn) {
+        ApiError err = null;
+        InputStream response = conn.getErrorStream();
+
+        if (response != null) {
+            Gson gson = gsonBuilder.create();
+            err = gson.fromJson(new InputStreamReader(response), ApiError.class);
+        }
+
+        return err;
     }
 
     private class UserDeserializer implements JsonDeserializer<User> {
