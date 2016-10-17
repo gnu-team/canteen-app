@@ -184,7 +184,7 @@ public class MainFXApplication extends Application {
      */
     public void logout() {
         this.user = null;
-        showRegister();
+        showLogin();
     }
 
     /**
