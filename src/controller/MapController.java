@@ -11,39 +11,47 @@ import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import controller.IMainControllerReceiver;
 import javafx.MainFXApplication;
+import javafx.IMainAppReceiver;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.FileChooser;
+import model.Report;
+import exception.DataBackendException;
 import netscape.javascript.JSObject;
 
 import java.awt.*;
 import java.io.File;
 import java.net.URL;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 /**
  * Created by Claude Peon on 10/16/16.
  */
-public class MapController implements Initializable, MapComponentInitializedListener {
-
+public class MapController implements IMainAppReceiver, IMainControllerReceiver,
+                                      Initializable, MapComponentInitializedListener {
     @FXML
     private GoogleMapView mapView;
 
     private GoogleMap map;
-
-    private Window mainStage;
-
-    private MainFXApplication app;
+    private MainFXApplication mainApp;
+    private MainController mainController;
 
     @Override
-    public void initialize(URL url, ResourceBundle) {
-        mapView.addMapInializedListener(this);
+    public void setMainApp(MainFXApplication mainApp) {
+        this.mainApp = mainApp;
     }
 
-    public void setCallbacks(Window stage, MainFXApplication app) {
-        mainStage = stage;
-        this.app = app;
+    @Override
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
+        mapView.addMapInializedListener(this);
     }
 
     @Override
@@ -65,18 +73,22 @@ public class MapController implements Initializable, MapComponentInitializedList
 
         map = mapView.createMap(options);
 
+        Collection<Report> reports;
+        try {
+            reports = mainApp.getDataSource().listReports();
+        } catch (DataBackendException e) {
+            e.printStackTrace();
+            mainApp.showAlert("Could not retrieve list of reports.");
+            return;
+        }
 
-        //TODO Bob uses a facade. Need to make this work with our implementation
-        Facade fc = Facade.getInstance();
-        List<Location> locations = fc.getLocations();
-
-        for (Location l: locations) {
+        for (Report r : reports) {
             MarkerOptions markerOptions = new MarkerOptions();
-            LatLong loc = new LatLong(l.getLatitude(), l.getLongitude());
+            LatLong loc = new LatLong(r.getLatitude(), r.getLongitude());
 
             markerOptions.position(loc)
                     .visible(Boolean.TRUE)
-                    .title(l.getTitle());
+                    .title("Water Source");
 
             Marker marker = new Marker(markerOptions);
 
@@ -84,7 +96,7 @@ public class MapController implements Initializable, MapComponentInitializedList
                     UIEventType.click,
                     (JSObject obj) -> {
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content(l.getDescription());
+                        infoWindowOptions.content("Water Source Description");
 
                         InfoWindow window = new InfoWindow(infoWindowOptions);
                         window.open(map, marker);
@@ -92,7 +104,5 @@ public class MapController implements Initializable, MapComponentInitializedList
 
             map.addMarker(marker);
         }
-
-
     }
 }
