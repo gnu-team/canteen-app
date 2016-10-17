@@ -58,11 +58,11 @@ public class MapController implements IMainAppReceiver, IMainControllerReceiver,
     public void mapInitialized() {
         MapOptions options = new MapOptions();
 
-        //set up the center location on Atlanta
-        LatLong center = new LatLong(33, 84);
+        // Set up the center location on Georgia Tech
+        LatLong center = new LatLong(33.779, -84.398);
 
         options.center(center)
-                .zoom(9)
+                .zoom(14)
                 .overviewMapControl(false)
                 .panControl(false)
                 .rotateControl(false)
