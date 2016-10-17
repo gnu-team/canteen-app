@@ -1,25 +1,18 @@
 package controller;
 
 import exception.DataBackendException;
-import javafx.IMainAppReceiver;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import model.*;
-
-import java.util.Date;
 
 /**
  * Handles events from the create report screen
  */
-public class CreateReportController implements IMainAppReceiver, IMainControllerReceiver {
+public class CreateReportController implements MainAppReceiver, MainControllerReceiver {
     //@FXML
     //private TextField locationField;
     @FXML

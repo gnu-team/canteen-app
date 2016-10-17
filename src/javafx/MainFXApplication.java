@@ -5,13 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import java.util.function.Consumer;
 
 import model.ApiDataSource;
 import model.DataSource;
-import model.MemoryDataSource;
 import model.User;
 
 import java.io.IOException;
@@ -90,7 +88,7 @@ public class MainFXApplication extends Application {
 
         // TODO: Use dependency injection or something instead of this
         // interface-cast hack
-        IMainAppReceiver controller = (IMainAppReceiver) loader.getController();
+        MainAppReceiver controller = (MainAppReceiver) loader.getController();
         if (controller != null) {
             controller.setMainApp(this);
 

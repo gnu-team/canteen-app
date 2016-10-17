@@ -2,13 +2,13 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.IMainAppReceiver;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 
 /**
  * Handles clicked buttons in the drawer.
  */
-public class DrawerContentController implements IMainAppReceiver, IMainControllerReceiver {
+public class DrawerContentController implements MainAppReceiver, MainControllerReceiver {
     private MainFXApplication mainApp;
     private MainController mainController;
 

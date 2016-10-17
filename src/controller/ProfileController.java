@@ -1,10 +1,9 @@
 package controller;
 
-import javafx.IMainAppReceiver;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import model.User;
@@ -12,8 +11,8 @@ import model.User;
 /**
  * Handles events from the edit profile screen
  */
-public class ProfileController implements IMainAppReceiver,
-                                          IMainControllerReceiver {
+public class ProfileController implements MainAppReceiver,
+        MainControllerReceiver {
     @FXML
     private TextArea bio;
     @FXML

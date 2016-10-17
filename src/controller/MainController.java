@@ -2,26 +2,19 @@ package controller;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
-import javafx.IMainAppReceiver;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXHamburger;
-import javafx.fxml.FXML;
 
 /**
  * Handles events from the main screen
  */
-public class MainController implements IMainAppReceiver {
+public class MainController implements MainAppReceiver {
     private MainFXApplication mainApp;
 
     @FXML
@@ -117,7 +110,7 @@ public class MainController implements IMainAppReceiver {
      */
     private Parent loadView(String name) {
         return mainApp.loadView(name, c -> {
-            IMainControllerReceiver controller = (IMainControllerReceiver) c;
+            MainControllerReceiver controller = (MainControllerReceiver) c;
             controller.setMainController(this);
         });
     }

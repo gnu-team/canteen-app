@@ -1,20 +1,19 @@
 package controller;
 
 import exception.DataBackendException;
-import javafx.IMainAppReceiver;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import model.User;
-import model.DataSource;
 import exception.NoSuchUserException;
 
 /**
  * Handles events from the welcome screen
  */
-public class LoginController implements IMainAppReceiver {
+public class LoginController implements MainAppReceiver {
     @FXML
     private TextField usernameField;
     @FXML

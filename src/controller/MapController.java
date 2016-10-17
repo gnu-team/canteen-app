@@ -11,18 +11,14 @@ import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
-import controller.IMainControllerReceiver;
 import javafx.MainFXApplication;
-import javafx.IMainAppReceiver;
+import javafx.MainAppReceiver;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.stage.FileChooser;
 import model.Report;
 import exception.DataBackendException;
 import netscape.javascript.JSObject;
 
-import java.awt.*;
-import java.io.File;
 import java.net.URL;
 import java.util.Collection;
 import java.util.ResourceBundle;
@@ -30,7 +26,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Claude Peon on 10/16/16.
  */
-public class MapController implements IMainAppReceiver, IMainControllerReceiver,
+public class MapController implements MainAppReceiver, MainControllerReceiver,
                                       Initializable, MapComponentInitializedListener {
     @FXML
     private GoogleMapView mapView;

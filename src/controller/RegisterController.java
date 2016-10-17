@@ -1,15 +1,13 @@
 package controller;
 
 import exception.DataBackendException;
-import javafx.IMainAppReceiver;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
 import model.User;
-import model.DataSource;
 import model.UserFactory;
 import model.AccountType;
 import exception.InvalidUserException;
@@ -17,7 +15,7 @@ import exception.InvalidUserException;
 /**
  * Handles events from the registration screen
  */
-public class RegisterController implements IMainAppReceiver {
+public class RegisterController implements MainAppReceiver {
     @FXML
     private TextField usernameField;
     @FXML

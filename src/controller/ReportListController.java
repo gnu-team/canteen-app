@@ -1,13 +1,12 @@
 package controller;
 
 import exception.DataBackendException;
-import javafx.IMainAppReceiver;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import model.DataSource;
 import model.Report;
 import model.WaterCondition;
 import model.WaterType;
@@ -18,7 +17,7 @@ import java.util.Date;
 /**
  * Handles events sent by the reports list.
  */
-public class ReportListController implements IMainAppReceiver, IMainControllerReceiver {
+public class ReportListController implements MainAppReceiver, MainControllerReceiver {
     @FXML
     private TableView<Report> reportTable;
     @FXML
