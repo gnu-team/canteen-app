@@ -26,7 +26,9 @@ public class ReportListController implements IMainAppReceiver, IMainControllerRe
     @FXML
     private TableColumn<Report, String> creatorCol;
     @FXML
-    private TableColumn<Report, String> locationCol;
+    private TableColumn<Report, Double> latitudeCol;
+    @FXML
+    private TableColumn<Report, Double> longitudeCol;
     @FXML
     private TableColumn<Report, WaterType> typeCol;
     @FXML
@@ -45,8 +47,10 @@ public class ReportListController implements IMainAppReceiver, IMainControllerRe
             new ReadOnlyObjectWrapper<>(cdf.getValue().getDate()));
         creatorCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getCreator().getUser()));
-        locationCol.cellValueFactoryProperty().setValue(cdf ->
-            new ReadOnlyObjectWrapper<>(cdf.getValue().getLocation()));
+        latitudeCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getLatitude()));
+        longitudeCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getLongitude()));
         typeCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getType()));
         conditionCol.cellValueFactoryProperty().setValue(cdf ->
