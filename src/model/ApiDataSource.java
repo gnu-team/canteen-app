@@ -74,7 +74,9 @@ public class ApiDataSource implements DataSource {
 
     @Override
     public void addUser(User userdata) throws DataBackendException, InvalidUserException {
-        HttpURLConnection conn = request("POST", "/users/");
+        // If we've already authenticated, don't use the stored
+        // username/password pair when registering
+        HttpURLConnection conn = request("POST", "/users/", null, null);
 
         OutputStream request;
         try {
