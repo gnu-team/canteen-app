@@ -100,7 +100,7 @@ public class ApiDataSource implements DataSource {
         @Override
         public User deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             User u = new User();
-            u.setName(json.getAsString());
+            u.setUser(json.getAsString());
             return u;
         }
     }
