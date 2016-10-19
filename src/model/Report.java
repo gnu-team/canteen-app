@@ -12,7 +12,6 @@ public class Report {
     private Date date;
     @SerializedName("creator_name")
     private User creator;
-    //private String location;
     private double latitude;
     private double longitude;
     private WaterType type;
@@ -23,7 +22,6 @@ public class Report {
     public Report(User creator, double latitude, double longitude, WaterType type, WaterCondition condition) {
         this.date = new Date();
         this.creator = creator;
-        //this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;
         this.type = type;
@@ -47,10 +45,6 @@ public class Report {
         this.creator = creator;
     }
 
-    //public String getLocation() {
-    //    return location;
-    //}
-
     public double getLatitude() {
         return latitude;
     }
@@ -58,10 +52,6 @@ public class Report {
     public double getLongitude() {
         return longitude;
     }
-
-    //public void setLocation(String location) {
-    //    this.location = location;
-    //}
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
