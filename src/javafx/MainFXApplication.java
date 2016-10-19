@@ -8,9 +8,9 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import java.util.function.Consumer;
 
-import model.ApiDataSource;
 import model.DataSource;
 import model.User;
+import model.api.ApiDataSource;
 
 import java.io.IOException;
 import java.net.URL;
