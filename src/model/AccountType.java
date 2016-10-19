@@ -31,7 +31,7 @@ public enum AccountType {
     /**
      * Account type chosen by default in registration screen.
      */
-    public static AccountType DEFAULT = USER;
+    public static final AccountType DEFAULT = USER;
     private String name;
 
     /**
