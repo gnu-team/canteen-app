@@ -21,7 +21,7 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
     @FXML
     private TableView<Report> reportTable;
     @FXML
-    private TableColumn<Report, Date> dateCol;
+    private TableColumn<Report, String> dateCol;
     @FXML
     private TableColumn<Report, String> creatorCol;
     @FXML
@@ -43,7 +43,7 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
     private void initialize() {
         // Set column cell factories
         dateCol.cellValueFactoryProperty().setValue(cdf ->
-            new ReadOnlyObjectWrapper<>(cdf.getValue().getDate()));
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getDateFormat()));
         creatorCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getCreator().getUser()));
         latitudeCol.cellValueFactoryProperty().setValue(cdf ->
