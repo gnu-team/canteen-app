@@ -60,9 +60,15 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
      */
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
+        Double latitude, longitude;
+
         if (latitudeField.getText().trim().equals("")
                 || longitudeField.getText().trim().equals("")) {
             mainApp.showAlert("Please enter a location");
+        } else if ((latitude = tryParseDouble(latitudeField.getText())) == null) {
+            mainApp.showAlert("Please enter a valid number for latitude");
+        } else if ((longitude = tryParseDouble(longitudeField.getText())) == null) {
+            mainApp.showAlert("Please enter a valid number for longitude");
         } else if (waterTypeBox.getValue() == null) {
             mainApp.showAlert("Please choose a water type");
         } else if (waterConditionBox.getValue() == null) {
@@ -71,8 +77,8 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
             try {
                 mainApp.getDataSource().addReport(new Report(
                     mainApp.getUser(),
-                    Double.parseDouble(latitudeField.getText()),
-                        Double.parseDouble(longitudeField.getText()),
+                    latitude,
+                    longitude,
                     waterTypeBox.getValue(),
                     waterConditionBox.getValue()
                 ));
@@ -83,6 +89,14 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
             }
 
             mainController.showMap();
+        }
+    }
+
+    private Double tryParseDouble(String s) {
+        try {
+            return Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            return null;
         }
     }
 
