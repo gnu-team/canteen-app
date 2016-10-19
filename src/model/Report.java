@@ -17,7 +17,6 @@ public class Report {
     private WaterType type;
     private WaterCondition condition;
     private int id;
-    private String reportNumber;
 
     public Report(User creator, double latitude, double longitude, WaterType type, WaterCondition condition) {
         this.date = new Date();
