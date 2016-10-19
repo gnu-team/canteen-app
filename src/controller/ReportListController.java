@@ -32,6 +32,8 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
     private TableColumn<Report, WaterType> typeCol;
     @FXML
     private TableColumn<Report, WaterCondition> conditionCol;
+    @FXML
+    private TableColumn<Report, String> descriptionCol;
 
     private MainFXApplication mainApp;
     private MainController mainController;
@@ -54,6 +56,8 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
             new ReadOnlyObjectWrapper<>(cdf.getValue().getType()));
         conditionCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getCondition()));
+        descriptionCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getDescription()));
     }
 
     @Override

@@ -13,18 +13,16 @@ import model.*;
  * Handles events from the create report screen
  */
 public class CreateReportController implements MainAppReceiver, MainControllerReceiver {
-    //@FXML
-    //private TextField locationField;
     @FXML
     private TextField latitudeField;
-
-    @FXML TextField longitudeField;
-
+    @FXML
+    private TextField longitudeField;
     @FXML
     private ComboBox<WaterType> waterTypeBox;
-
     @FXML
     private ComboBox<WaterCondition> waterConditionBox;
+    @FXML
+    private TextField descriptionField;
 
     private MainFXApplication mainApp;
     private MainController mainController;
@@ -80,8 +78,8 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
                     latitude,
                     longitude,
                     waterTypeBox.getValue(),
-                    waterConditionBox.getValue()
-                ));
+                    waterConditionBox.getValue(),
+                    descriptionField.getText()));
             } catch (DataBackendException be) {
                 be.printStackTrace();
                 mainApp.showAlert(be.getMessage());

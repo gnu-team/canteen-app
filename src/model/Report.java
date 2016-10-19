@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * Represents a water source report.
  */
 public class Report {
+    private int id;
     private Date date;
     @SerializedName("creator_name")
     private User creator;
@@ -16,15 +17,16 @@ public class Report {
     private double longitude;
     private WaterType type;
     private WaterCondition condition;
-    private int id;
+    private String description;
 
-    public Report(User creator, double latitude, double longitude, WaterType type, WaterCondition condition) {
+    public Report(User creator, double latitude, double longitude, WaterType type, WaterCondition condition, String description) {
         this.date = new Date();
         this.creator = creator;
         this.latitude = latitude;
         this.longitude = longitude;
         this.type = type;
         this.condition = condition;
+        this.description = description;
     }
 
     public String getDateFormat() {
@@ -74,6 +76,14 @@ public class Report {
 
     public void setCondition(WaterCondition condition) {
         this.condition = condition;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
