@@ -38,9 +38,16 @@ public class User {
      * Gets the username of User account
      * @return the username
      */
-
     public String getUser() {
         return username;
+    }
+
+    /**
+     * Sets the username of this account.
+     * @param username new username
+     */
+    public void setUser(String username) {
+        this.username = username;
     }
 
     /**
