@@ -37,6 +37,12 @@ public class MainController implements MainAppReceiver {
         showMap();
     }
 
+    @FXML
+    private void initialize() {
+        drawer.setOnDrawerClosed(e -> drawer.toBack());
+        drawer.setOnDrawerOpening(e -> drawer.toFront());
+    }
+
     /**
      * Expands/retracts the drawer when user presses the hamburger.
      */
@@ -44,10 +50,8 @@ public class MainController implements MainAppReceiver {
     private void handleHamburgerClicked(MouseEvent event) {
         if (drawer.isShown()) {
             drawer.close();
-            drawer.setOnDrawerClosed((event1) -> drawer.toBack());
         } else {
             drawer.open();
-            drawer.setOnDrawerOpening((event1) -> drawer.toFront());
         }
     }
 
