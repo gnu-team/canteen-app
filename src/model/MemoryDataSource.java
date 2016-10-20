@@ -1,5 +1,6 @@
 package model;
 
+import exception.DataBackendException;
 import exception.InvalidUserException;
 import exception.NoSuchUserException;
 
@@ -56,8 +57,18 @@ public class MemoryDataSource implements DataSource {
     }
 
     @Override
+    public void addPurityReport(PurityReport purityReport) throws DataBackendException {
+        throw new DataBackendException("Not implemented");
+    }
+
+    @Override
     public Collection<Report> listReports() {
         return reports;
+    }
+
+    @Override
+    public Collection<PurityReport> listPurityReports() throws DataBackendException {
+        throw new DataBackendException("Not implemented");
     }
 }
 

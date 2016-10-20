@@ -57,4 +57,16 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
         mainController.showEditProfile();
         mainController.closeDrawer();
     }
+
+    @FXML
+    private void handlePurityReportListPressed(ActionEvent event) {
+        mainController.showPurityReportList();
+        mainController.closeDrawer();
+    }
+
+    @FXML
+    private void handleCreatePurityReportPressed(ActionEvent event) {
+        mainController.showCreatePurityReport();
+        mainController.closeDrawer();
+    }
 }

@@ -24,6 +24,16 @@
                 <Font name="Courier" size="14.0"/>
             </font>
         </JFXButton>
+        <JFXButton prefHeight="64.0" prefWidth="183.0" text="Water Purity List" onAction="#handlePurityReportListPressed">
+            <font>
+                <Font name="Courier" size="14.0"/>
+            </font>
+        </JFXButton>
+        <JFXButton prefHeight="64.0" prefWidth="183.0" text="Report Water Purity" onAction="#handleCreatePurityReportPressed">
+            <font>
+                <Font name="Courier" size="14.0"/>
+            </font>
+        </JFXButton>
         <JFXButton prefHeight="64.0" prefWidth="183.0" text="Edit Profile" onAction="#handleEditProfilePressed">
             <font>
                 <Font name="Courier" size="14.0"/>

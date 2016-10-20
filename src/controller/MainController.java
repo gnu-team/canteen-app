@@ -102,6 +102,20 @@ public class MainController implements MainAppReceiver {
     }
 
     /**
+     * Shows the purity report list screen.
+     */
+    public void showPurityReportList() {
+        showView("PurityReportList");
+    }
+
+    /**
+     * Shows the purity report editor.
+     */
+    public void showCreatePurityReport() {
+        showView("CreatePurityReport");
+    }
+
+    /**
      * Shows the edit profile screen.
      */
     public void showEditProfile() {

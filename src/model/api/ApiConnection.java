@@ -26,6 +26,8 @@ public class ApiConnection<T extends ApiError> {
     private final String method, path;
     private final HttpURLConnection conn;
 
+    // TODO: Redesign this class so we don't need this
+    @SuppressWarnings("unchecked")
     public ApiConnection(String method, String path, int statusWanted, String user, String password) throws DataBackendException {
         this(method, path, statusWanted, (Class<T>) ApiError.class, user, password);
     }

@@ -14,9 +14,11 @@ import exception.InvalidUserException;
 import exception.NoSuchUserException;
 import model.AccountType;
 import model.DataSource;
+import model.PurityReport;
 import model.Report;
 import model.User;
 import model.WaterCondition;
+import model.WaterPurityCondition;
 import model.WaterType;
 
 import java.io.Reader;
@@ -35,6 +37,7 @@ public class ApiDataSource implements DataSource {
         gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
         gsonBuilder.registerTypeAdapter(WaterType.class, new WaterTypeDeserializer());
         gsonBuilder.registerTypeAdapter(WaterCondition.class, new WaterConditionDeserializer());
+        gsonBuilder.registerTypeAdapter(WaterPurityCondition.class, new WaterPurityConditionDeserializer());
         gsonBuilder.registerTypeAdapter(AccountType.class, new AccountTypeDeserializer());
     }
 
@@ -85,6 +88,18 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
+    public void addPurityReport(PurityReport purityReport) throws DataBackendException {
+        ApiConnection<ApiPurityReportError> conn = new ApiConnection<>("POST", "/purity_reports/", HttpURLConnection.HTTP_CREATED, ApiPurityReportError.class, user, password);
+        Writer request = conn.getRequestWriter();
+
+        Gson gson = gsonBuilder.create();
+        gson.toJson(purityReport, request);
+
+        conn.closeRequest(request);
+        conn.connect();
+    }
+
+    @Override
     public Collection<Report> listReports() throws DataBackendException {
         ApiConnection conn = new ApiConnection("GET", "/reports/", HttpURLConnection.HTTP_OK, user, password);
         Reader response = conn.getResponseReader();
@@ -95,6 +110,16 @@ public class ApiDataSource implements DataSource {
         return Arrays.asList(reports);
     }
 
+    @Override
+    public Collection<PurityReport> listPurityReports() throws DataBackendException {
+        ApiConnection conn = new ApiConnection("GET", "/purity_reports/", HttpURLConnection.HTTP_OK, user, password);
+        Reader response = conn.getResponseReader();
+
+        Gson gson = gsonBuilder.create();
+        PurityReport[] reports = gson.fromJson(response, PurityReport[].class);
+
+        return Arrays.asList(reports);
+    }
 
     private class UserDeserializer implements JsonDeserializer<User> {
         @Override
@@ -126,6 +151,18 @@ public class ApiDataSource implements DataSource {
         @Override
         public WaterCondition deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             return WaterCondition.values()[json.getAsInt()];
+        }
+    }
+
+    private class WaterPurityConditionDeserializer implements JsonSerializer<WaterPurityCondition>, JsonDeserializer<WaterPurityCondition> {
+        @Override
+        public JsonElement serialize(WaterPurityCondition src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(Arrays.asList(WaterPurityCondition.values()).indexOf(src));
+        }
+
+        @Override
+        public WaterPurityCondition deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return WaterPurityCondition.values()[json.getAsInt()];
         }
     }
 

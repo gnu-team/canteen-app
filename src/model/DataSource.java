@@ -32,9 +32,24 @@ public interface DataSource {
     void addReport(Report report) throws DataBackendException;
 
     /**
+     * Adds new purity report
+     * @param purityReport New purity report to add
+     * @throws DataBackendException for unexpected backend failures
+     */
+    void addPurityReport(PurityReport purityReport) throws DataBackendException;
+
+    /**
      * Returns all reports in the system
      * @return a Collection containing all known Reports
+     * @throws DataBackendException for unexpected backend failures
      */
     Collection<Report> listReports() throws DataBackendException;
+
+    /**
+     * Returns all purity reports in the system
+     * @return a Collection containing all known PurityReports
+     * @throws DataBackendException for unexpected backend failures
+     */
+    Collection<PurityReport> listPurityReports() throws DataBackendException;
 }
 
