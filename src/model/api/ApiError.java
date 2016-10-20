@@ -4,7 +4,11 @@ public class ApiError {
     private String detail;
 
     public String getDetail() {
-        return detail;
+        return (detail != null) ? detail : fieldErrors();
+    }
+
+    protected String fieldErrors() {
+        return null;
     }
 
     protected void listReasons(StringBuilder dest, String label, String[] reasons) {

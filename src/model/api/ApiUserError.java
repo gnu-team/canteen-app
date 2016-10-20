@@ -5,16 +5,12 @@ public class ApiUserError extends ApiError {
     private String[] group;
     private String[] password;
 
-    public String getDetail() {
+    @Override
+    public String fieldErrors() {
         StringBuilder sb = new StringBuilder();
         listReasons(sb, "User name", username);
         listReasons(sb, "Group name", group);
         listReasons(sb, "Password", password);
-
-        if (sb.length() > 0) {
-            return sb.toString();
-        } else {
-            return null;
-        }
+        return (sb.length() > 0) ? sb.toString() : null;
     }
 }
