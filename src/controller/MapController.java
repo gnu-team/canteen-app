@@ -28,6 +28,10 @@ import java.util.ResourceBundle;
  */
 public class MapController implements MainAppReceiver, MainControllerReceiver,
                                       Initializable, MapComponentInitializedListener {
+    private static final double GEORGIA_TECH_LAT = 33.779;
+    private static final double GEORGIA_TECH_LONG = -84.398;
+    private static final int GEORGIA_TECH_ZOOM = 14;
+
     @FXML
     private GoogleMapView mapView;
 
@@ -55,10 +59,10 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
         MapOptions options = new MapOptions();
 
         // Set up the center location on Georgia Tech
-        LatLong center = new LatLong(33.779, -84.398);
+        LatLong center = new LatLong(GEORGIA_TECH_LAT, GEORGIA_TECH_LONG);
 
         options.center(center)
-                .zoom(14)
+                .zoom(GEORGIA_TECH_ZOOM)
                 .overviewMapControl(false)
                 .panControl(false)
                 .rotateControl(false)
