@@ -88,7 +88,7 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
 
             markerOptions.position(loc)
                     .visible(Boolean.TRUE)
-                    .title("Water Source");
+                    .title(r.getSummary());
 
             Marker marker = new Marker(markerOptions);
 
@@ -96,7 +96,10 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
                     UIEventType.click,
                     (JSObject obj) -> {
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("Water Source Description");
+                        infoWindowOptions.content(String.format(
+                            "<strong>%s</strong><br>%.4f, %.4f<br><br>%s",
+                            r.getSummary(), r.getLatitude(), r.getLongitude(),
+                            r.getDescription()));
 
                         InfoWindow window = new InfoWindow(infoWindowOptions);
                         window.open(map, marker);

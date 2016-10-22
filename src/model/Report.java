@@ -107,4 +107,8 @@ public class Report {
         String reportNumber = "S-" + nf.format(id);
         return reportNumber;
     }
+
+    public String getSummary() {
+        return String.format("%s: %s %s", getReportNumber(), condition, type);
+    }
 }
