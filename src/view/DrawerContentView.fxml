@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -11,32 +9,32 @@
     <children>
         <JFXButton prefHeight="64.0" prefWidth="183.0" text="Map" onAction="#handleMapPressed">
             <font>
-                <Font name="Courier" size="14.0"/>
+                <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
         <JFXButton prefHeight="64.0" prefWidth="183.0" text="Water Source List" onAction="#handleReportListPressed">
             <font>
-                <Font name="Courier" size="14.0"/>
+                <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
         <JFXButton prefHeight="64.0" prefWidth="183.0" text="Report Water Source" onAction="#handleCreateReportPressed">
             <font>
-                <Font name="Courier" size="14.0"/>
+                <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
         <JFXButton prefHeight="64.0" prefWidth="183.0" text="Water Purity List" onAction="#handlePurityReportListPressed">
             <font>
-                <Font name="Courier" size="14.0"/>
+                <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
         <JFXButton prefHeight="64.0" prefWidth="183.0" text="Report Water Purity" onAction="#handleCreatePurityReportPressed">
             <font>
-                <Font name="Courier" size="14.0"/>
+                <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
         <JFXButton prefHeight="64.0" prefWidth="183.0" text="Edit Profile" onAction="#handleEditProfilePressed">
             <font>
-                <Font name="Courier" size="14.0"/>
+                <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
     </children>
