@@ -36,6 +36,9 @@ public class MainFXApplication extends Application {
         dataSource = new ApiDataSource();
 
         primaryStage.setTitle(TITLE);
+        // None of our views resize properly, so don't let users try to
+        // resize the window
+        primaryStage.setResizable(false);
         showLogin();
         primaryStage.show();
     }
