@@ -14,7 +14,6 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import javafx.MainFXApplication;
 import javafx.MainAppReceiver;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import model.Report;
 import exception.DataBackendException;
 import netscape.javascript.JSObject;
@@ -27,7 +26,7 @@ import java.util.ResourceBundle;
  * Created by Claude Peon on 10/16/16.
  */
 public class MapController implements MainAppReceiver, MainControllerReceiver,
-                                      Initializable, MapComponentInitializedListener {
+                                      MapComponentInitializedListener {
     private static final double GEORGIA_TECH_LAT = 33.779;
     private static final double GEORGIA_TECH_LONG = -84.398;
     private static final int GEORGIA_TECH_ZOOM = 14;
@@ -38,20 +37,26 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
     private GoogleMap map;
     private MainFXApplication mainApp;
     private MainController mainController;
+    private Collection<Report> reports;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
+
+        try {
+            reports = mainApp.getDataSource().listReports();
+        } catch (DataBackendException e) {
+            e.printStackTrace();
+            mainApp.showAlert(e.getMessage());
+            return;
+        }
+
+        mapView.addMapInializedListener(this);
     }
 
     @Override
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle bundle) {
-        mapView.addMapInializedListener(this);
     }
 
     @Override
@@ -72,15 +77,6 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
                 .mapType(MapTypeIdEnum.TERRAIN);
 
         map = mapView.createMap(options);
-
-        Collection<Report> reports;
-        try {
-            reports = mainApp.getDataSource().listReports();
-        } catch (DataBackendException e) {
-            e.printStackTrace();
-            mainApp.showAlert(e.getMessage());
-            return;
-        }
 
         for (Report r : reports) {
             MarkerOptions markerOptions = new MarkerOptions();
@@ -107,5 +103,8 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
 
             map.addMarker(marker);
         }
+
+        // Don't need reports anymore, so allow them to get garbage collected.
+        reports = null;
     }
 }
