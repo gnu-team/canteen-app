@@ -26,6 +26,13 @@ public interface DataSource {
     void addUser(User userdata) throws DataBackendException, InvalidUserException;
 
     /**
+     * Change attributes (e.g., profile) of current user account
+     * @param userdata User Object (information with changed
+     *                 ID/Password/Profile)
+     */
+    void updateUser(User userdata) throws DataBackendException;
+
+    /**
      * Adds new report
      * @param report New report to add
      */

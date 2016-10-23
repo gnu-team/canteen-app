@@ -43,15 +43,18 @@ public class ApiDataSource implements DataSource {
 
     @Override
     public User authenticate(String user, String password) throws DataBackendException, NoSuchUserException {
-        ApiConnection conn = new ApiConnection("GET", "/", HttpURLConnection.HTTP_OK, user, password);
-        conn.connect();
+        ApiConnection conn = new ApiConnection("GET", "/users/me/", HttpURLConnection.HTTP_OK, user, password);
+        Reader response = conn.getResponseReader();
+
+        Gson gson = gsonBuilder.create();
+        User userData = gson.fromJson(response, User.class);
 
         // Store credentials only if login succeeded
         this.user = user;
         this.password = password;
 
         // For now, always return null.
-        return null;
+        return userData;
     }
 
     @Override
@@ -73,6 +76,27 @@ public class ApiDataSource implements DataSource {
         } catch (NoSuchUserException e) {
             throw new InvalidUserException(e.getMessage());
         }
+
+        // Clear out password. Now that we've used it to register+login
+        // successfully, we've stored it here in ApiDataSource, and (1) we
+        // don't want it hanging around, and (2) we don't want to change the
+        // password every time we call updateUser(userdata) in the future
+        userdata.setPassword(null);
+    }
+
+    @Override
+    public void updateUser(User userdata) throws DataBackendException {
+        // Use PATCH rather than PUT so we can exclude unchanged
+        // fields. (Currently, this is just password because we don't
+        // offer a way to change it in the client yet.)
+        ApiConnection<ApiUserError> conn = new ApiConnection<>("PATCH", "/users/me/", HttpURLConnection.HTTP_OK, ApiUserError.class, user, password);
+        Writer request = conn.getRequestWriter();
+
+        Gson gson = gsonBuilder.create();
+        gson.toJson(userdata, request);
+
+        conn.closeRequest(request);
+        conn.connect();
     }
 
     @Override
@@ -121,12 +145,19 @@ public class ApiDataSource implements DataSource {
         return Arrays.asList(reports);
     }
 
+    private class FullUser extends User {}
     private class UserDeserializer implements JsonDeserializer<User> {
         @Override
         public User deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            User u = new User();
-            u.setUser(json.getAsString());
-            return u;
+            // Full user object (e.g., {"username": "austin", "first_name": "Austin", ... })
+            if (json.isJsonObject()) {
+                return context.deserialize(json, FullUser.class);
+            // Username string (e.g., "austin") to wrap in a User object
+            } else {
+                User u = new User();
+                u.setUser(json.getAsString());
+                return u;
+            }
         }
     }
 
@@ -166,10 +197,15 @@ public class ApiDataSource implements DataSource {
         }
     }
 
-    private class AccountTypeDeserializer implements JsonSerializer<AccountType> {
+    private class AccountTypeDeserializer implements JsonSerializer<AccountType>, JsonDeserializer<AccountType> {
         @Override
         public JsonElement serialize(AccountType src, Type typeOfSrc, JsonSerializationContext context) {
             return new JsonPrimitive(src.toString() + "s");
+        }
+
+        @Override
+        public AccountType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return null;
         }
     }
 }

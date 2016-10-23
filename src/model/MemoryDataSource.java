@@ -51,6 +51,11 @@ public class MemoryDataSource implements DataSource {
     }
 
     @Override
+    public void updateUser(User userdata) throws DataBackendException {
+        throw new DataBackendException("Not implemented");
+    }
+
+    @Override
     public void addReport(Report report) {
         report.setID(reports.size());
         reports.add(report);

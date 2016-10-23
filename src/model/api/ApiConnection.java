@@ -80,6 +80,22 @@ public class ApiConnection<T extends ApiError> {
             throw new DataBackendException("Opening request connection", e);
         }
 
+        // If it's a non-GET (e.g., POST), we need to send a request body and
+        // possibly work around an Oracleism in the design of HttpURLConnection
+        if (!method.equals("GET")) {
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+
+            // Work around https://bugs.openjdk.java.net/browse/JDK-7016595
+            // (Java's puzzling, intentional inability to make PATCH requests)
+            // by setting the X-HTTP-Method-Override header to the desired
+            // method but sending a POST.
+            if (!method.equals("POST")) {
+                conn.setRequestProperty("X-HTTP-Method-Override", method);
+                method = "POST";
+            }
+        }
+
         try {
             conn.setRequestMethod(method);
         } catch (ProtocolException e) {
@@ -88,12 +104,6 @@ public class ApiConnection<T extends ApiError> {
 
         // To get a JSON response, set the Accept header
         conn.setRequestProperty("Accept", "application/json");
-
-        // If it's a POST, we need to send a request body
-        if (method.equals("POST")) {
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        }
 
         if (user != null && password != null) {
             // Set the Authorization header
