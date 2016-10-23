@@ -1,6 +1,6 @@
 package controller;
 
-import exception.DataBackendException;
+import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -8,10 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.PurityReport;
-import model.Report;
-import model.WaterCondition;
 import model.WaterPurityCondition;
-import model.WaterType;
 
 import java.util.Collection;
 
@@ -73,7 +70,7 @@ public class PurityReportListController implements MainAppReceiver, MainControll
         Collection<PurityReport> purityReports;
         try {
             purityReports = mainApp.getDataSource().listPurityReports();
-        } catch (DataBackendException e) {
+        } catch (DataException e) {
             e.printStackTrace();
             mainApp.showAlert(e.getMessage());
             return;

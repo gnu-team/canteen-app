@@ -1,6 +1,6 @@
 package controller;
 
-import exception.DataBackendException;
+import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -12,7 +12,6 @@ import model.WaterCondition;
 import model.WaterType;
 
 import java.util.Collection;
-import java.util.Date;
 
 /**
  * Handles events sent by the reports list.
@@ -68,7 +67,7 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
         Collection<Report> reports;
         try {
             reports = mainApp.getDataSource().listReports();
-        } catch (DataBackendException e) {
+        } catch (DataException e) {
             e.printStackTrace();
             mainApp.showAlert(e.getMessage());
             return;

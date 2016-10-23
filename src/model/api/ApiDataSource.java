@@ -9,9 +9,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import exception.DataBackendException;
-import exception.InvalidUserException;
-import exception.NoSuchUserException;
+import model.exception.DataException;
 import model.AccountType;
 import model.DataSource;
 import model.PurityReport;
@@ -42,7 +40,7 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public User authenticate(String user, String password) throws DataBackendException, NoSuchUserException {
+    public User authenticate(String user, String password) throws DataException {
         ApiConnection conn = new ApiConnection("GET", "/users/me/", HttpURLConnection.HTTP_OK, user, password);
         Reader response = conn.getResponseReader();
 
@@ -58,7 +56,7 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public void addUser(User userdata) throws DataBackendException, InvalidUserException {
+    public void addUser(User userdata) throws DataException {
         // If we've already authenticated, don't use the stored
         // username/password pair when registering
         ApiConnection<ApiUserError> conn = new ApiConnection<>("POST", "/users/", HttpURLConnection.HTTP_CREATED, ApiUserError.class, null, null);
@@ -71,11 +69,7 @@ public class ApiDataSource implements DataSource {
         conn.connect();
 
         // Now that we've created the new account, test login
-        try {
-            authenticate(userdata.getUser(), userdata.getPassword());
-        } catch (NoSuchUserException e) {
-            throw new InvalidUserException(e.getMessage());
-        }
+        authenticate(userdata.getUser(), userdata.getPassword());
 
         // Clear out password. Now that we've used it to register+login
         // successfully, we've stored it here in ApiDataSource, and (1) we
@@ -85,7 +79,7 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public void updateUser(User userdata) throws DataBackendException {
+    public void updateUser(User userdata) throws DataException {
         // Use PATCH rather than PUT so we can exclude unchanged
         // fields. (Currently, this is just password because we don't
         // offer a way to change it in the client yet.)
@@ -100,7 +94,7 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public void addReport(Report report) throws DataBackendException {
+    public void addReport(Report report) throws DataException {
         ApiConnection<ApiReportError> conn = new ApiConnection<>("POST", "/reports/", HttpURLConnection.HTTP_CREATED, ApiReportError.class, user, password);
         Writer request = conn.getRequestWriter();
 
@@ -112,7 +106,7 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public void addPurityReport(PurityReport purityReport) throws DataBackendException {
+    public void addPurityReport(PurityReport purityReport) throws DataException {
         ApiConnection<ApiPurityReportError> conn = new ApiConnection<>("POST", "/purity_reports/", HttpURLConnection.HTTP_CREATED, ApiPurityReportError.class, user, password);
         Writer request = conn.getRequestWriter();
 
@@ -124,7 +118,7 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public Collection<Report> listReports() throws DataBackendException {
+    public Collection<Report> listReports() throws DataException {
         ApiConnection conn = new ApiConnection("GET", "/reports/", HttpURLConnection.HTTP_OK, user, password);
         Reader response = conn.getResponseReader();
 
@@ -135,7 +129,7 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public Collection<PurityReport> listPurityReports() throws DataBackendException {
+    public Collection<PurityReport> listPurityReports() throws DataException {
         ApiConnection conn = new ApiConnection("GET", "/purity_reports/", HttpURLConnection.HTTP_OK, user, password);
         Reader response = conn.getResponseReader();
 

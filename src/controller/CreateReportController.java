@@ -1,6 +1,6 @@
 package controller;
 
-import exception.DataBackendException;
+import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -80,7 +80,7 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
                     waterTypeBox.getValue(),
                     waterConditionBox.getValue(),
                     descriptionField.getText()));
-            } catch (DataBackendException be) {
+            } catch (DataException be) {
                 be.printStackTrace();
                 mainApp.showAlert(be.getMessage());
                 return;

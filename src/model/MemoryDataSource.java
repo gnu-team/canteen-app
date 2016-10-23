@@ -1,8 +1,6 @@
 package model;
 
-import exception.DataBackendException;
-import exception.InvalidUserException;
-import exception.NoSuchUserException;
+import model.exception.DataException;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -31,28 +29,28 @@ public class MemoryDataSource implements DataSource {
     }
 
     @Override
-    public User authenticate(String user, String password) throws NoSuchUserException {
+    public User authenticate(String user, String password) throws DataException {
         for (User s: users) {
             if (s.authenticate(user, password)) {
                 return s;
             }
         }
-        throw new NoSuchUserException("No matched ID or Password");
+        throw new DataException("No matched ID or Password");
     }
 
     @Override
-    public void addUser(User userdata) throws InvalidUserException {
+    public void addUser(User userdata) throws DataException {
         for (User userOb : users) {
             if (userdata.getUser().equals(userOb.getUser())) {
-                throw new InvalidUserException("Invalid ID");
+                throw new DataException("Invalid ID");
             }
         }
         users.add(userdata);
     }
 
     @Override
-    public void updateUser(User userdata) throws DataBackendException {
-        throw new DataBackendException("Not implemented");
+    public void updateUser(User userdata) throws DataException {
+        throw new DataException("Not implemented");
     }
 
     @Override
@@ -62,8 +60,8 @@ public class MemoryDataSource implements DataSource {
     }
 
     @Override
-    public void addPurityReport(PurityReport purityReport) throws DataBackendException {
-        throw new DataBackendException("Not implemented");
+    public void addPurityReport(PurityReport purityReport) throws DataException {
+        throw new DataException("Not implemented");
     }
 
     @Override
@@ -72,8 +70,8 @@ public class MemoryDataSource implements DataSource {
     }
 
     @Override
-    public Collection<PurityReport> listPurityReports() throws DataBackendException {
-        throw new DataBackendException("Not implemented");
+    public Collection<PurityReport> listPurityReports() throws DataException {
+        throw new DataException("Not implemented");
     }
 }
 

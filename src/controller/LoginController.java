@@ -1,6 +1,6 @@
 package controller;
 
-import exception.DataBackendException;
+import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import model.User;
-import exception.NoSuchUserException;
 
 /**
  * Handles events from the welcome screen
@@ -37,10 +36,7 @@ public class LoginController implements MainAppReceiver {
         try {
             user = mainApp.getDataSource().authenticate(usernameField.getText(),
                                                         passwordField.getText());
-        } catch (NoSuchUserException e) {
-            mainApp.showAlert(e.getMessage());
-            return;
-        } catch (DataBackendException e) {
+        } catch (DataException e) {
             e.printStackTrace();
             mainApp.showAlert(e.getMessage());
             return;

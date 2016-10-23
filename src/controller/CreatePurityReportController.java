@@ -1,6 +1,6 @@
 package controller;
 
-import exception.DataBackendException;
+import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import model.PurityReport;
-import model.Report;
 import model.WaterPurityCondition;
 
 /**
@@ -79,7 +78,7 @@ public class CreatePurityReportController implements MainAppReceiver, MainContro
                     contaminantPPM,
                     conditionBox.getValue(),
                     descriptionField.getText()));
-            } catch (DataBackendException be) {
+            } catch (DataException be) {
                 be.printStackTrace();
                 mainApp.showAlert(be.getMessage());
                 return;

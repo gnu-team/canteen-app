@@ -15,12 +15,10 @@ import javafx.MainFXApplication;
 import javafx.MainAppReceiver;
 import javafx.fxml.FXML;
 import model.Report;
-import exception.DataBackendException;
+import model.exception.DataException;
 import netscape.javascript.JSObject;
 
-import java.net.URL;
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 /**
  * Created by Claude Peon on 10/16/16.
@@ -45,7 +43,7 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
 
         try {
             reports = mainApp.getDataSource().listReports();
-        } catch (DataBackendException e) {
+        } catch (DataException e) {
             e.printStackTrace();
             mainApp.showAlert(e.getMessage());
             return;

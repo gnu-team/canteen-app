@@ -14,7 +14,7 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import exception.DataBackendException;
+import model.exception.DataException;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -28,11 +28,11 @@ public class ApiConnection<T extends ApiError> {
 
     // TODO: Redesign this class so we don't need this
     @SuppressWarnings("unchecked")
-    public ApiConnection(String method, String path, int statusWanted, String user, String password) throws DataBackendException {
+    public ApiConnection(String method, String path, int statusWanted, String user, String password) throws DataException {
         this(method, path, statusWanted, (Class<T>) ApiError.class, user, password);
     }
 
-    public ApiConnection(String method, String path, int statusWanted, Class<T> errType, String user, String password) throws DataBackendException {
+    public ApiConnection(String method, String path, int statusWanted, Class<T> errType, String user, String password) throws DataException {
         this.statusWanted = statusWanted;
         this.errType = errType;
         this.method = method;
@@ -44,40 +44,40 @@ public class ApiConnection<T extends ApiError> {
     /**
      * Initiates connection and checks status code
      */
-    public void connect() throws DataBackendException {
+    public void connect() throws DataException {
         int statusCode;
         try {
             statusCode = conn.getResponseCode();
         } catch (IOException e) {
-            throw new DataBackendException("Could not make " + method + " request to " + path, e);
+            throw new DataException("Could not make " + method + " request to " + path, e);
         }
 
         if (statusCode != statusWanted) {
             String err = parseError();
 
             if (err == null) {
-                throw new DataBackendException("Unexpected response code "
+                throw new DataException("Unexpected response code "
                     + statusCode + " but no error sent.");
             } else {
-                throw new DataBackendException(err);
+                throw new DataException(err);
             }
         }
     }
 
-    private HttpURLConnection makeConn(String method, String path, String user, String password) throws DataBackendException {
+    private HttpURLConnection makeConn(String method, String path, String user, String password) throws DataException {
         URL url;
 
         try {
             url = new URL(API_ENDPOINT + path);
         } catch (MalformedURLException e) {
-            throw new DataBackendException("Malformed URL", e);
+            throw new DataException("Malformed URL", e);
         }
 
         HttpURLConnection conn;
         try {
             conn = (HttpURLConnection) url.openConnection();
         } catch (IOException e) {
-            throw new DataBackendException("Opening request connection", e);
+            throw new DataException("Opening request connection", e);
         }
 
         // If it's a non-GET (e.g., POST), we need to send a request body and
@@ -99,7 +99,7 @@ public class ApiConnection<T extends ApiError> {
         try {
             conn.setRequestMethod(method);
         } catch (ProtocolException e) {
-            throw new DataBackendException("Bad protocol", e);
+            throw new DataException("Bad protocol", e);
         }
 
         // To get a JSON response, set the Accept header
@@ -130,15 +130,15 @@ public class ApiConnection<T extends ApiError> {
         return result;
     }
 
-    public void closeRequest(Writer writer) throws DataBackendException {
+    public void closeRequest(Writer writer) throws DataException {
         try {
             writer.close();
         } catch (IOException e) {
-            throw new DataBackendException("Flushing request body", e);
+            throw new DataException("Flushing request body", e);
         }
     }
 
-    public Reader getResponseReader() throws DataBackendException {
+    public Reader getResponseReader() throws DataException {
         // Check the response code before we try to read
         connect();
 
@@ -146,18 +146,18 @@ public class ApiConnection<T extends ApiError> {
         try {
             request = conn.getInputStream();
         } catch (IOException e) {
-            throw new DataBackendException("Could not getInputStream()", e);
+            throw new DataException("Could not getInputStream()", e);
         }
 
         return new InputStreamReader(request);
     }
 
-    public Writer getRequestWriter() throws DataBackendException {
+    public Writer getRequestWriter() throws DataException {
         OutputStream request;
         try {
             request = conn.getOutputStream();
         } catch (IOException e) {
-            throw new DataBackendException("Could not getOutputStream()", e);
+            throw new DataException("Could not getOutputStream()", e);
         }
 
         return new OutputStreamWriter(request);

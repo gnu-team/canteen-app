@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
-import exception.DataBackendException;
+import model.exception.DataException;
 import model.User;
 
 /**
@@ -66,7 +66,7 @@ public class ProfileController implements MainAppReceiver,
 
         try {
             mainApp.getDataSource().updateUser(user);
-        } catch (DataBackendException e) {
+        } catch (DataException e) {
             e.printStackTrace();
             mainApp.showAlert(e.getMessage());
             return;
