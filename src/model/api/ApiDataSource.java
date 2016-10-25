@@ -199,7 +199,15 @@ public class ApiDataSource implements DataSource {
 
         @Override
         public AccountType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            return null;
+            String pluralGroupName = json.getAsString();
+            String singularGroupName = pluralGroupName.substring(0, pluralGroupName.length() - 1);
+            AccountType at = AccountType.getByName(singularGroupName);
+
+            if (at == null) {
+                throw new JsonParseException("Unknown group name " + singularGroupName);
+            } else {
+                return at;
+            }
         }
     }
 }

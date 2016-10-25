@@ -187,6 +187,10 @@ public class User {
         return phoneNumber;
     }
 
+    public boolean canUsePurityReports() {
+        return group != null && group.canUsePurityReports();
+    }
+
     /**
      * Gets the water sources information
      * @return the water sources information

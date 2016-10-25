@@ -22,12 +22,12 @@
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton prefHeight="64.0" prefWidth="183.0" text="Water Purity List" onAction="#handlePurityReportListPressed">
+        <JFXButton prefHeight="64.0" prefWidth="183.0" text="Water Purity List" onAction="#handlePurityReportListPressed" fx:id="purityReportListButton">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton prefHeight="64.0" prefWidth="183.0" text="Report Water Purity" onAction="#handleCreatePurityReportPressed">
+        <JFXButton prefHeight="64.0" prefWidth="183.0" text="Report Water Purity" onAction="#handleCreatePurityReportPressed" fx:id="createPurityReportButton">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>

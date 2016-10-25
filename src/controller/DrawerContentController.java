@@ -2,6 +2,8 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 
@@ -9,17 +11,38 @@ import javafx.MainFXApplication;
  * Handles clicked buttons in the drawer.
  */
 public class DrawerContentController implements MainAppReceiver, MainControllerReceiver {
+    @FXML
+    private Button purityReportListButton;
+    @FXML
+    private Button createPurityReportButton;
+
     private MainFXApplication mainApp;
     private MainController mainController;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
+
+        // Hide purity report controls if needed
+        if (!mainApp.getUser().canUsePurityReports()) {
+            hide(purityReportListButton);
+            hide(createPurityReportButton);
+        }
     }
 
     @Override
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+    }
+
+    /**
+     * Hides the node n.
+     *
+     * @param n node to hide
+     */
+    private void hide(Node n) {
+        n.setManaged(false);
+        n.setVisible(false);
     }
 
     /**
