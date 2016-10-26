@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
       minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-      xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controller.LoginController">
+      xmlns="http://javafx.com/javafx/8.0.65"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.RegisterController">
    <children>
       <JFXTextField fx:id="usernameField" focusColor="#028383" labelFloat="true"
-                    layoutX="162.0" layoutY="159.0" maxWidth="276.0"
-                    minWidth="276.0" prefHeight="33.0" prefWidth="276.0"
-                    promptText="Username">
+                    layoutX="162.0" layoutY="134.0" maxWidth="276.0" minWidth="276.0"
+                    prefHeight="33.0" prefWidth="276.0" promptText="Username">
          <font>
             <Font name="Courier" size="14.0" />
          </font>
       </JFXTextField>
-      <JFXPasswordField fx:id="passwordField" layoutX="162.0" layoutY="200.0"
+      <JFXPasswordField fx:id="passwordField" layoutX="162.0" layoutY="175.0"
                         maxWidth="276.0" minWidth="268.0" prefHeight="33.0"
-                        prefWidth="276.0" promptText="Password">
-         <font>
-            <Font name="Courier" size="13.0" />
-         </font>
-      </JFXPasswordField>
+                        prefWidth="276.0" promptText="Password" />
+      <JFXComboBox fx:id="accountTypeBox" layoutX="171.0" layoutY="217.0"
+                   prefHeight="27.0" prefWidth="162.0"
+                   promptText="Account Type" />
       <JFXButton layoutX="171.0" layoutY="262.0"
                  onAction="#handleRegisterPressed" prefHeight="43.0"
                  prefWidth="106.0" ripplerFill="#003cc9"
@@ -36,18 +35,14 @@
             <Font name="Courier" size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="318.0" layoutY="262.0" onAction="#handleLoginPressed"
-                 prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9"
-                 style="-fx-background-color: #3366ff;" text="Login"
+      <JFXButton layoutX="14.0" layoutY="336.0"
+                 onAction="#handleBackButtonPressed" prefHeight="43.0"
+                 prefWidth="106.0" ripplerFill="#003cc9"
+                 style="-fx-background-color: #3366ff;" text="Back "
                  textFill="#fcfcfc">
          <font>
             <Font name="Courier" size="14.0" />
          </font>
       </JFXButton>
-      <Label layoutX="245.0" layoutY="82.0" text="Canteen">
-         <font>
-            <Font name="Courier" size="26.0" />
-         </font>
-      </Label>
    </children>
 </Pane>

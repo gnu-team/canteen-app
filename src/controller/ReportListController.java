@@ -1,12 +1,12 @@
 package controller;
 
-import javafx.IMainAppReceiver;
+import exception.DataBackendException;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import model.DataSource;
 import model.Report;
 import model.WaterCondition;
 import model.WaterType;
@@ -17,15 +17,17 @@ import java.util.Date;
 /**
  * Handles events sent by the reports list.
  */
-public class ReportListController implements IMainAppReceiver, IMainControllerReceiver {
+public class ReportListController implements MainAppReceiver, MainControllerReceiver {
     @FXML
     private TableView<Report> reportTable;
     @FXML
-    private TableColumn<Report, Date> dateCol;
+    private TableColumn<Report, String> dateCol;
     @FXML
     private TableColumn<Report, String> creatorCol;
     @FXML
-    private TableColumn<Report, String> locationCol;
+    private TableColumn<Report, Double> latitudeCol;
+    @FXML
+    private TableColumn<Report, Double> longitudeCol;
     @FXML
     private TableColumn<Report, WaterType> typeCol;
     @FXML
@@ -34,15 +36,20 @@ public class ReportListController implements IMainAppReceiver, IMainControllerRe
     private MainFXApplication mainApp;
     private MainController mainController;
 
+    /**
+     * Configures the columns of the table of reports.
+     */
     @FXML
     private void initialize() {
         // Set column cell factories
         dateCol.cellValueFactoryProperty().setValue(cdf ->
-            new ReadOnlyObjectWrapper<>(cdf.getValue().getDate()));
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getDateFormat()));
         creatorCol.cellValueFactoryProperty().setValue(cdf ->
-            new ReadOnlyObjectWrapper<>(cdf.getValue().getCreator().getName()));
-        locationCol.cellValueFactoryProperty().setValue(cdf ->
-            new ReadOnlyObjectWrapper<>(cdf.getValue().getLocation()));
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getCreator().getUser()));
+        latitudeCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getLatitude()));
+        longitudeCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getLongitude()));
         typeCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getType()));
         conditionCol.cellValueFactoryProperty().setValue(cdf ->
@@ -54,7 +61,14 @@ public class ReportListController implements IMainAppReceiver, IMainControllerRe
         this.mainApp = mainApp;
 
         // Populate table
-        Collection<Report> reports = mainApp.getDataSource().listReports();
+        Collection<Report> reports;
+        try {
+            reports = mainApp.getDataSource().listReports();
+        } catch (DataBackendException e) {
+            e.printStackTrace();
+            mainApp.showAlert(e.getMessage());
+            return;
+        }
         reportTable.getItems().setAll(reports);
     }
 

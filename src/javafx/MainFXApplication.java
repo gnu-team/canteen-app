@@ -5,12 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import java.util.function.Consumer;
 
+import model.ApiDataSource;
 import model.DataSource;
-import model.MemoryDataSource;
 import model.User;
 
 import java.io.IOException;
@@ -34,10 +33,10 @@ public class MainFXApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         stage = primaryStage;
         // For now, store system state in memory
-        dataSource = MemoryDataSource.getInstance();
+        dataSource = new ApiDataSource();
 
         primaryStage.setTitle(TITLE);
-        showRegister();
+        showLogin();
         primaryStage.show();
     }
 
@@ -89,7 +88,7 @@ public class MainFXApplication extends Application {
 
         // TODO: Use dependency injection or something instead of this
         // interface-cast hack
-        IMainAppReceiver controller = (IMainAppReceiver) loader.getController();
+        MainAppReceiver controller = (MainAppReceiver) loader.getController();
         if (controller != null) {
             controller.setMainApp(this);
 
@@ -168,7 +167,7 @@ public class MainFXApplication extends Application {
      * Displays welcome screen.
      */
     public void showRegister() {
-        showView("Welcome");
+        showView("Register");
     }
 
     /**
@@ -183,7 +182,7 @@ public class MainFXApplication extends Application {
      */
     public void logout() {
         this.user = null;
-        showRegister();
+        showLogin();
     }
 
     /**
@@ -212,6 +211,9 @@ public class MainFXApplication extends Application {
         showView("Main");
     }
 
+    /**
+     * Launches the application.
+     */
     public static void main(String[] args) {
         launch(args);
     }

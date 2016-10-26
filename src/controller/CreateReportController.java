@@ -1,30 +1,31 @@
 package controller;
 
-import javafx.IMainAppReceiver;
+import exception.DataBackendException;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import model.*;
-
-import java.util.Date;
 
 /**
  * Handles events from the create report screen
  */
-public class CreateReportController implements IMainAppReceiver, IMainControllerReceiver {
+public class CreateReportController implements MainAppReceiver, MainControllerReceiver {
+    //@FXML
+    //private TextField locationField;
     @FXML
-    private TextField locationField;
+    private TextField latitudeField;
+
+    @FXML TextField longitudeField;
+
     @FXML
     private ComboBox<WaterType> waterTypeBox;
+
     @FXML
     private ComboBox<WaterCondition> waterConditionBox;
+
     private MainFXApplication mainApp;
     private MainController mainController;
 
@@ -59,14 +60,30 @@ public class CreateReportController implements IMainAppReceiver, IMainController
      */
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
-        mainApp.getDataSource().addReport(new Report(
-            new Date(),
-            mainApp.getUser(),
-            locationField.getText(),
-            waterTypeBox.getValue(),
-            waterConditionBox.getValue()
-        ));
-        mainController.showMap();
+        if (latitudeField.getText().trim().equals("")
+                || longitudeField.getText().trim().equals("")) {
+            mainApp.showAlert("Please enter a location");
+        } else if (waterTypeBox.getValue() == null) {
+            mainApp.showAlert("Please choose a water type");
+        } else if (waterConditionBox.getValue() == null) {
+            mainApp.showAlert("Please choose a water condition");
+        } else {
+            try {
+                mainApp.getDataSource().addReport(new Report(
+                    mainApp.getUser(),
+                    Double.parseDouble(latitudeField.getText()),
+                        Double.parseDouble(longitudeField.getText()),
+                    waterTypeBox.getValue(),
+                    waterConditionBox.getValue()
+                ));
+            } catch (DataBackendException be) {
+                be.printStackTrace();
+                mainApp.showAlert(be.getMessage());
+                return;
+            }
+
+            mainController.showMap();
+        }
     }
 
     /**

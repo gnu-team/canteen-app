@@ -10,7 +10,8 @@
         <columns>
           <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date" />
           <TableColumn fx:id="creatorCol" prefWidth="113.0" text="Creator" />
-            <TableColumn fx:id="locationCol" prefWidth="155.0" text="Location" />
+            <TableColumn fx:id="latitudeCol" prefWidth="50.0" text="Latitude" />
+            <TableColumn fx:id="longitudeCol" prefWidth="50.0" text="Longitude" />
             <TableColumn fx:id="typeCol" minWidth="9.0" prefWidth="122.0" text="Type" />
             <TableColumn fx:id="conditionCol" minWidth="0.0" prefWidth="134.0" text="Condition" />
         </columns>

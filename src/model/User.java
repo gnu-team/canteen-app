@@ -4,8 +4,9 @@ package model;
  * Defines a user account, which can view water sources and leave reports.
  */
 public class User {
-    private String user;
+    private String username;
     private String password;
+    private AccountType group;
     // Profile attributes
     private String name;
     private String email;
@@ -18,17 +19,19 @@ public class User {
      * Creates user object
      */
     public User(){
-        this("user","pass");
+        this("user", "pass", AccountType.USER);
     }
 
     /**
      * Creates user object with given username and password
      * @param user the username
      * @param password the password
+     * @param type account type
      */
-    public User(String user, String password) {
-        this.user = user;
+    public User(String user, String password, AccountType type) {
+        this.username = user;
         this.password = password;
+        this.group = type;
     }
 
     /**
@@ -37,7 +40,15 @@ public class User {
      */
 
     public String getUser() {
-        return user;
+        return username;
+    }
+
+    /**
+     * Gets the password of this account
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
     }
 
     /**
@@ -47,7 +58,7 @@ public class User {
      * @return if the login is correct or not
      */
     public boolean authenticate(String user, String password) {
-        return this.user.equals(user) && this.password.equals(password);
+        return this.username.equals(user) && this.password.equals(password);
     }
 
     /**

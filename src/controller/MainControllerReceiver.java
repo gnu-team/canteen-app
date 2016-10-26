@@ -10,7 +10,7 @@ package controller;
  * All controllers assigned to views launched by MainController must
  * implement this interface.
  */
-public interface IMainControllerReceiver {
+public interface MainControllerReceiver {
     /**
      * Passes a reference to MainController into this controller.
      *
