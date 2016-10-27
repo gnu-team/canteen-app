@@ -19,7 +19,7 @@ import model.exception.DataException;
 import javax.xml.bind.DatatypeConverter;
 
 public class ApiConnection<T extends ApiError> {
-    private static final String API_ENDPOINT = "https://canteen.austinjadams.com";
+    private static final String API_ENDPOINT = "https://canteen-water.org";
     private final GsonBuilder gsonBuilder;
     private final int statusWanted;
     private final Class<T> errType;
