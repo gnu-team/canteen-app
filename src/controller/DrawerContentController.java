@@ -36,7 +36,9 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     }
 
     /**
-     * Hides the node n.
+     * Sets the node as managed so that there isn't a blank
+     * space, then makes it invisible. This method is used to hide
+     * elements of the ui that are only intended for higher level users.
      *
      * @param n node to hide
      */
@@ -90,6 +92,12 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     @FXML
     private void handleCreatePurityReportPressed(ActionEvent event) {
         mainController.showCreatePurityReport();
+        mainController.closeDrawer();
+    }
+
+    @FXML
+    private void handleCreateHistoricalReportPressed(ActionEvent event) {
+        mainController.showHistoricalReport();
         mainController.closeDrawer();
     }
 }

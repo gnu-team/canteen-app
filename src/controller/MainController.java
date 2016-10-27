@@ -123,6 +123,13 @@ public class MainController implements MainAppReceiver {
     }
 
     /**
+     * Shows the HistoricalReportView
+     */
+    public void showHistoricalReport() {
+        showView("HistoricalReport");
+    }
+
+    /**
      * Loads the root node of another view, and pass the controller a reference
      * to this instance.
      */
