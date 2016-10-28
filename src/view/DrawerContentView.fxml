@@ -31,7 +31,7 @@
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton onAction="#handleHistoricalReportPressed" prefHeight="48.0" prefWidth="183.0" text="Historical Report">
+        <JFXButton fx:id="historyReportButton" onAction="#handleHistoricalReportPressed" prefHeight="48.0" prefWidth="183.0" text="Historical Report">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
