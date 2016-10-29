@@ -30,6 +30,8 @@ public class MainController implements MainAppReceiver {
     @FXML
     private StackPane mainPane;
 
+    private HamburgerBackArrowBasicTransition transition;
+
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
@@ -38,11 +40,15 @@ public class MainController implements MainAppReceiver {
         showMap();
     }
 
+    /**
+     * Creates a hamburger that pulls out a drawer when clicked. It also
+     * transitions to an arrow when clicked and back when clicked again.
+     * This is used as the primary method to navigate the app.
+     */
     @FXML
     private void initialize() {
 
-        HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
-        transition.setRate(-1);
+        transitionHelper();
         hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)-> {
             transition.setRate(transition.getRate() * -1);
             transition.play();
@@ -60,12 +66,14 @@ public class MainController implements MainAppReceiver {
     }
 
     /**
-     * Expands/retracts the drawer when user presses the hamburger.
+     * A private helper method to allow constant use of the hamburger
+     * transition across multiple methods in the class without having
+     * to create new instance of the HamburgerBackArrowBasicTransition
      */
-    @FXML
-    private void handleHamburgerPressed(ActionEvent event) {
-
-
+    private void transitionHelper() {
+        transition = new
+                HamburgerBackArrowBasicTransition(hamburger);
+        transition.setRate(-1);
     }
 
     /**
@@ -90,6 +98,8 @@ public class MainController implements MainAppReceiver {
      * Slides the drawer shut.
      */
     public void closeDrawer() {
+        transition.setRate(-1);
+        transition.play();
         drawer.close();
     }
 
