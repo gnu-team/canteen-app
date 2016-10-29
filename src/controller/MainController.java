@@ -97,7 +97,7 @@ public class MainController implements MainAppReceiver {
     /**
      * Slides the drawer shut.
      */
-    public void closeDrawer() {
+    private void closeDrawer() {
         transition.setRate(-1);
         transition.play();
         drawer.close();
@@ -107,7 +107,9 @@ public class MainController implements MainAppReceiver {
      * Shows the map screen.
      */
     public void showMap() {
+        //closeDrawer();
         showView("Map");
+        closeDrawer();
     }
 
     /**
@@ -115,6 +117,7 @@ public class MainController implements MainAppReceiver {
      */
     public void showReportList() {
         showView("ReportList");
+        closeDrawer();
     }
 
     /**
@@ -122,6 +125,7 @@ public class MainController implements MainAppReceiver {
      */
     public void showCreateReport() {
         showView("CreateReport");
+        closeDrawer();
     }
 
     /**
@@ -129,6 +133,7 @@ public class MainController implements MainAppReceiver {
      */
     public void showPurityReportList() {
         showView("PurityReportList");
+        closeDrawer();
     }
 
     /**
@@ -136,6 +141,7 @@ public class MainController implements MainAppReceiver {
      */
     public void showCreatePurityReport() {
         showView("CreatePurityReport");
+        closeDrawer();
     }
 
     /**
@@ -143,6 +149,7 @@ public class MainController implements MainAppReceiver {
      */
     public void showEditProfile() {
         showView("Profile");
+        closeDrawer();
     }
 
     /**
@@ -150,6 +157,7 @@ public class MainController implements MainAppReceiver {
      */
     public void showHistoricalReport() {
         showView("HistoricalReport");
+        closeDrawer();
     }
 
     /**

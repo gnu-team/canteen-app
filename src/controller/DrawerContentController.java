@@ -59,7 +59,6 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     @FXML
     private void handleMapPressed(ActionEvent event) {
         mainController.showMap();
-        mainController.closeDrawer();
     }
 
     /**
@@ -68,7 +67,6 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     @FXML
     private void handleReportListPressed(ActionEvent event) {
         mainController.showReportList();
-        mainController.closeDrawer();
     }
 
     /**
@@ -77,7 +75,6 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
         mainController.showCreateReport();
-        mainController.closeDrawer();
     }
 
     /**
@@ -86,24 +83,20 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     @FXML
     private void handleEditProfilePressed(ActionEvent event) {
         mainController.showEditProfile();
-        mainController.closeDrawer();
     }
 
     @FXML
     private void handlePurityReportListPressed(ActionEvent event) {
         mainController.showPurityReportList();
-        mainController.closeDrawer();
     }
 
     @FXML
     private void handleCreatePurityReportPressed(ActionEvent event) {
         mainController.showCreatePurityReport();
-        mainController.closeDrawer();
     }
 
     @FXML
     private void handleHistoricalReportPressed(ActionEvent event) {
         mainController.showHistoricalReport();
-        mainController.closeDrawer();
     }
 }
