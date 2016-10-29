@@ -11,22 +11,22 @@
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton onAction="#handleReportListPressed" prefHeight="48.0" prefWidth="183.0" text="Water Source List">
+        <JFXButton onAction="#handleReportListPressed" prefHeight="48.0" prefWidth="183.0" text="Source List">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton onAction="#handleCreateReportPressed" prefHeight="48.0" prefWidth="183.0" text="Report Water Source">
+        <JFXButton onAction="#handleCreateReportPressed" prefHeight="48.0" prefWidth="183.0" text="Report New Source">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="purityReportListButton" onAction="#handlePurityReportListPressed" prefHeight="48.0" prefWidth="183.0" text="Water Purity List">
+        <JFXButton fx:id="purityReportListButton" onAction="#handlePurityReportListPressed" prefHeight="48.0" prefWidth="183.0" text="Purity List">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="createPurityReportButton" onAction="#handleCreatePurityReportPressed" prefHeight="48.0" prefWidth="183.0" text="Report Water Purity">
+        <JFXButton fx:id="createPurityReportButton" onAction="#handleCreatePurityReportPressed" prefHeight="48.0" prefWidth="183.0" text="Report Purity">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
