@@ -31,17 +31,7 @@
             </JFXButton>
          </right>
          <left>
-            <JFXButton onAction="#handleHamburgerPressed" text="" textFill="WHITE" BorderPane.alignment="CENTER">
-               <graphic>
-                  <JFXHamburger fx:id="hamburger" stylesheets="@CSS/Styles.css" />
-               </graphic>
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
-               <padding>
-                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-               </padding>
-            </JFXButton>
+            <JFXHamburger fx:id="hamburger" prefHeight="46.0" prefWidth="53.0" BorderPane.alignment="CENTER" stylesheets="@CSS/Styles.css" />
          </left>
       </BorderPane>
    </top>

@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -39,8 +40,23 @@ public class MainController implements MainAppReceiver {
 
     @FXML
     private void initialize() {
-        drawer.setOnDrawerClosed(e -> drawer.toBack());
-        drawer.setOnDrawerOpening(e -> drawer.toFront());
+
+        HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
+        transition.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)-> {
+            transition.setRate(transition.getRate() * -1);
+            transition.play();
+
+            drawer.setOnDrawerClosed(e2 -> drawer.toBack());
+            drawer.setOnDrawerOpening(e2 -> drawer.toFront());
+
+            if (drawer.isShown()) {
+                drawer.close();
+            } else {
+                drawer.open();
+            }
+        });
+
     }
 
     /**
@@ -48,11 +64,8 @@ public class MainController implements MainAppReceiver {
      */
     @FXML
     private void handleHamburgerPressed(ActionEvent event) {
-        if (drawer.isShown()) {
-            drawer.close();
-        } else {
-            drawer.open();
-        }
+
+
     }
 
     /**
