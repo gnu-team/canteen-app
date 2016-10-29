@@ -4,9 +4,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportListController">
+<StackPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportListController">
    <children>
-      <TableView fx:id="reportTable" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="reportTable">
         <columns>
           <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date" />
           <TableColumn fx:id="creatorCol" prefWidth="70.0" text="Creator" />

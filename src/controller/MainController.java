@@ -47,7 +47,7 @@ public class MainController implements MainAppReceiver {
      * Expands/retracts the drawer when user presses the hamburger.
      */
     @FXML
-    private void handleHamburgerClicked(MouseEvent event) {
+    private void handleHamburgerPressed(ActionEvent event) {
         if (drawer.isShown()) {
             drawer.close();
         } else {
