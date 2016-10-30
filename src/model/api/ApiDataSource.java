@@ -86,16 +86,16 @@ public class ApiDataSource implements DataSource {
             conn.closeRequest(request);
             conn.connect();
 
-            // TODO: uncomment this
-            // Now that we've created the new account, test login
-            //authenticate(userdata.getUser(), userdata.getPassword());
+            // XXX Fix race condition
+            // XXX Test new account instead of blindly trusting it worked
+            this.user = userdata.getUser();
+            this.password = userdata.getPassword();
 
-            // TODO: uncomment this too
-            // Clear out password. Now that we've used it to register+login
+            // Clear out password. Now that we've used it to register
             // successfully, we've stored it here in ApiDataSource, and (1) we
             // don't want it hanging around, and (2) we don't want to change the
             // password every time we call updateUser(userdata) in the future
-            //userdata.setPassword(null);
+            userdata.setPassword(null);
         }));
     }
 
