@@ -37,19 +37,27 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
     private MainController mainController;
     private Collection<Report> reports;
 
+    @FXML
+    private void initialize() {
+        mapView.addMapInializedListener(this);
+    }
+
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
 
-        try {
-            reports = mainApp.getDataSource().listReports();
-        } catch (DataException e) {
-            e.printStackTrace();
-            mainApp.showAlert(e.getMessage());
-            return;
-        }
-
-        mapView.addMapInializedListener(this);
+        mainApp.getDataSource().listReports(
+            // Success
+            reports -> {
+                this.reports = reports;
+                drawReports();
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
     }
 
     @Override
@@ -75,6 +83,13 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
                 .mapType(MapTypeIdEnum.TERRAIN);
 
         map = mapView.createMap(options);
+        drawReports();
+    }
+
+    private void drawReports() {
+        if (reports == null || map == null) {
+            return;
+        }
 
         for (Report r : reports) {
             MarkerOptions markerOptions = new MarkerOptions();
@@ -103,6 +118,7 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
         }
 
         // Don't need reports anymore, so allow them to get garbage collected.
+        // This also marks the reports as drawn.
         reports = null;
     }
 }

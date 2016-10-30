@@ -31,18 +31,18 @@ public class LoginController implements MainAppReceiver {
      * When user presses login, attempt to log in
      */
     public void handleLoginPressed(ActionEvent event) throws Exception {
-        User user;
-
-        try {
-            user = mainApp.getDataSource().authenticate(usernameField.getText(),
-                                                        passwordField.getText());
-        } catch (DataException e) {
-            e.printStackTrace();
-            mainApp.showAlert(e.getMessage());
-            return;
-        }
-
-        mainApp.loginComplete(user);
+        mainApp.getDataSource().authenticate(
+            usernameField.getText(), passwordField.getText(),
+            // Success
+            user -> {
+                mainApp.loginComplete(user);
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
     }
 
     /**

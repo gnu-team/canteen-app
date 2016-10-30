@@ -10,6 +10,9 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import model.exception.DataException;
+import model.DataErrorReceiver;
+import model.DataSuccessReceiver;
+import model.DataReceiver;
 import model.AccountType;
 import model.DataSource;
 import model.PurityReport;
@@ -25,12 +28,23 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class ApiDataSource implements DataSource {
+    private Executor executor;
     private GsonBuilder gsonBuilder;
     private String user, password;
 
     public ApiDataSource() {
+        executor = Executors.newCachedThreadPool(r -> {
+            Thread t = new Thread(r);
+            // Don't let hung threads prevent the application from shutting down
+            t.setDaemon(true);
+            return t;
+        });
+
+        // Register (de)serializers
         gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
         gsonBuilder.registerTypeAdapter(WaterType.class, new WaterTypeDeserializer());
@@ -40,103 +54,120 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public User authenticate(String user, String password) throws DataException {
-        ApiConnection conn = new ApiConnection("GET", "/users/me/", HttpURLConnection.HTTP_OK, user, password);
-        Reader response = conn.getResponseReader();
+    public void authenticate(String user, String password, DataReceiver<User> onSuccess, DataErrorReceiver onFail) {
+        executor.execute(new ApiTask<User>(onSuccess, onFail, () -> {
+            ApiConnection conn = new ApiConnection("GET", "/users/me/", HttpURLConnection.HTTP_OK, user, password);
+            Reader response = conn.getResponseReader();
 
-        Gson gson = gsonBuilder.create();
-        User userData = gson.fromJson(response, User.class);
+            Gson gson = gsonBuilder.create();
+            User userData = gson.fromJson(response, User.class);
 
-        // Store credentials only if login succeeded
-        this.user = user;
-        this.password = password;
+            // TODO: Fix race condition
+            // Store credentials only if login succeeded
+            this.user = user;
+            this.password = password;
 
-        // For now, always return null.
-        return userData;
+            // For now, always return null.
+            return userData;
+        }));
     }
 
     @Override
-    public void addUser(User userdata) throws DataException {
-        // If we've already authenticated, don't use the stored
-        // username/password pair when registering
-        ApiConnection<ApiUserError> conn = new ApiConnection<>("POST", "/users/", HttpURLConnection.HTTP_CREATED, ApiUserError.class, null, null);
-        Writer request = conn.getRequestWriter();
+    public void addUser(User userdata, DataSuccessReceiver onSuccess, DataErrorReceiver onFail) {
+        executor.execute(new ApiVoidTask(onSuccess, onFail, () -> {
+            // If we've already authenticated, don't use the stored
+            // username/password pair when registering
+            ApiConnection<ApiUserError> conn = new ApiConnection<>("POST", "/users/", HttpURLConnection.HTTP_CREATED, ApiUserError.class, null, null);
+            Writer request = conn.getRequestWriter();
 
-        Gson gson = gsonBuilder.create();
-        gson.toJson(userdata, request);
+            Gson gson = gsonBuilder.create();
+            gson.toJson(userdata, request);
 
-        conn.closeRequest(request);
-        conn.connect();
+            conn.closeRequest(request);
+            conn.connect();
 
-        // Now that we've created the new account, test login
-        authenticate(userdata.getUser(), userdata.getPassword());
+            // TODO: uncomment this
+            // Now that we've created the new account, test login
+            //authenticate(userdata.getUser(), userdata.getPassword());
 
-        // Clear out password. Now that we've used it to register+login
-        // successfully, we've stored it here in ApiDataSource, and (1) we
-        // don't want it hanging around, and (2) we don't want to change the
-        // password every time we call updateUser(userdata) in the future
-        userdata.setPassword(null);
+            // TODO: uncomment this too
+            // Clear out password. Now that we've used it to register+login
+            // successfully, we've stored it here in ApiDataSource, and (1) we
+            // don't want it hanging around, and (2) we don't want to change the
+            // password every time we call updateUser(userdata) in the future
+            //userdata.setPassword(null);
+        }));
     }
 
     @Override
-    public void updateUser(User userdata) throws DataException {
-        // Use PATCH rather than PUT so we can exclude unchanged
-        // fields. (Currently, this is just password because we don't
-        // offer a way to change it in the client yet.)
-        ApiConnection<ApiUserError> conn = new ApiConnection<>("PATCH", "/users/me/", HttpURLConnection.HTTP_OK, ApiUserError.class, user, password);
-        Writer request = conn.getRequestWriter();
+    public void updateUser(User userdata, DataSuccessReceiver onSuccess, DataErrorReceiver onFail) {
+        executor.execute(new ApiVoidTask(onSuccess, onFail, () -> {
+            // Use PATCH rather than PUT so we can exclude unchanged
+            // fields. (Currently, this is just password because we don't
+            // offer a way to change it in the client yet.)
+            ApiConnection<ApiUserError> conn = new ApiConnection<>("PATCH", "/users/me/", HttpURLConnection.HTTP_OK, ApiUserError.class, user, password);
+            Writer request = conn.getRequestWriter();
 
-        Gson gson = gsonBuilder.create();
-        gson.toJson(userdata, request);
+            Gson gson = gsonBuilder.create();
+            gson.toJson(userdata, request);
 
-        conn.closeRequest(request);
-        conn.connect();
+            conn.closeRequest(request);
+            conn.connect();
+        }));
     }
 
     @Override
-    public void addReport(Report report) throws DataException {
-        ApiConnection<ApiReportError> conn = new ApiConnection<>("POST", "/reports/", HttpURLConnection.HTTP_CREATED, ApiReportError.class, user, password);
-        Writer request = conn.getRequestWriter();
+    public void addReport(Report report, DataSuccessReceiver onSuccess, DataErrorReceiver onFail) {
+        executor.execute(new ApiVoidTask(onSuccess, onFail, () -> {
+            ApiConnection<ApiReportError> conn = new ApiConnection<>("POST", "/reports/", HttpURLConnection.HTTP_CREATED, ApiReportError.class, user, password);
+            Writer request = conn.getRequestWriter();
 
-        Gson gson = gsonBuilder.create();
-        gson.toJson(report, request);
+            Gson gson = gsonBuilder.create();
+            gson.toJson(report, request);
 
-        conn.closeRequest(request);
-        conn.connect();
+            conn.closeRequest(request);
+            conn.connect();
+        }));
     }
 
     @Override
-    public void addPurityReport(PurityReport purityReport) throws DataException {
-        ApiConnection<ApiPurityReportError> conn = new ApiConnection<>("POST", "/purity_reports/", HttpURLConnection.HTTP_CREATED, ApiPurityReportError.class, user, password);
-        Writer request = conn.getRequestWriter();
+    public void addPurityReport(PurityReport purityReport, DataSuccessReceiver onSuccess, DataErrorReceiver onFail) {
+        executor.execute(new ApiVoidTask(onSuccess, onFail, () -> {
+            ApiConnection<ApiPurityReportError> conn = new ApiConnection<>("POST", "/purity_reports/", HttpURLConnection.HTTP_CREATED, ApiPurityReportError.class, user, password);
+            Writer request = conn.getRequestWriter();
 
-        Gson gson = gsonBuilder.create();
-        gson.toJson(purityReport, request);
+            Gson gson = gsonBuilder.create();
+            gson.toJson(purityReport, request);
 
-        conn.closeRequest(request);
-        conn.connect();
+            conn.closeRequest(request);
+            conn.connect();
+        }));
     }
 
     @Override
-    public Collection<Report> listReports() throws DataException {
-        ApiConnection conn = new ApiConnection("GET", "/reports/", HttpURLConnection.HTTP_OK, user, password);
-        Reader response = conn.getResponseReader();
+    public void listReports(DataReceiver<Collection<Report>> onSuccess, DataErrorReceiver onFail) {
+        executor.execute(new ApiTask<Collection<Report>>(onSuccess, onFail, () -> {
+            ApiConnection conn = new ApiConnection("GET", "/reports/", HttpURLConnection.HTTP_OK, user, password);
+            Reader response = conn.getResponseReader();
 
-        Gson gson = gsonBuilder.create();
-        Report[] reports = gson.fromJson(response, Report[].class);
+            Gson gson = gsonBuilder.create();
+            Report[] reports = gson.fromJson(response, Report[].class);
 
-        return Arrays.asList(reports);
+            return Arrays.asList(reports);
+        }));
     }
 
     @Override
-    public Collection<PurityReport> listPurityReports() throws DataException {
-        ApiConnection conn = new ApiConnection("GET", "/purity_reports/", HttpURLConnection.HTTP_OK, user, password);
-        Reader response = conn.getResponseReader();
+    public void listPurityReports(DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
+        executor.execute(new ApiTask<Collection<PurityReport>>(onSuccess, onFail, () -> {
+            ApiConnection conn = new ApiConnection("GET", "/purity_reports/", HttpURLConnection.HTTP_OK, user, password);
+            Reader response = conn.getResponseReader();
 
-        Gson gson = gsonBuilder.create();
-        PurityReport[] reports = gson.fromJson(response, PurityReport[].class);
+            Gson gson = gsonBuilder.create();
+            PurityReport[] reports = gson.fromJson(response, PurityReport[].class);
 
-        return Arrays.asList(reports);
+            return Arrays.asList(reports);
+        }));
     }
 
     private class FullUser extends User {}

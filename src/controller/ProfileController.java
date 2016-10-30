@@ -64,14 +64,17 @@ public class ProfileController implements MainAppReceiver,
         user.setAddress(address.getText());
         user.setPhoneNumber(phone.getText());
 
-        try {
-            mainApp.getDataSource().updateUser(user);
-        } catch (DataException e) {
-            e.printStackTrace();
-            mainApp.showAlert(e.getMessage());
-            return;
-        }
-
-        mainApp.registrationComplete();
+        mainApp.getDataSource().updateUser(
+            user,
+            // Success
+            () -> {
+                mainApp.registrationComplete();
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
     }
 }

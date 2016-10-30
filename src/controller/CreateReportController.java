@@ -72,21 +72,26 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
         } else if (waterConditionBox.getValue() == null) {
             mainApp.showAlert("Please choose a water condition");
         } else {
-            try {
-                mainApp.getDataSource().addReport(new Report(
-                    mainApp.getUser(),
-                    latitude,
-                    longitude,
-                    waterTypeBox.getValue(),
-                    waterConditionBox.getValue(),
-                    descriptionField.getText()));
-            } catch (DataException be) {
-                be.printStackTrace();
-                mainApp.showAlert(be.getMessage());
-                return;
-            }
+            Report newReport = new Report(
+                mainApp.getUser(),
+                latitude,
+                longitude,
+                waterTypeBox.getValue(),
+                waterConditionBox.getValue(),
+                descriptionField.getText());
 
-            mainController.showMap();
+            mainApp.getDataSource().addReport(
+                newReport,
+                // Success
+                () -> {
+                    mainController.showMap();
+                },
+                // Failure
+                e -> {
+                    e.printStackTrace();
+                    mainApp.showAlert(e.getMessage());
+                }
+            );
         }
     }
 
