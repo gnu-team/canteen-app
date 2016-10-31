@@ -161,7 +161,7 @@ public class MainController implements MainAppReceiver {
     }
 
     public void showYearHistoricalView() {
-        showView("YearHistoricalView");
+        showView("YearHistorical");
         closeDrawer();
     }
 
