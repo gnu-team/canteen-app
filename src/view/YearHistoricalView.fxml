@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -24,8 +25,14 @@
             <Font name="Courier" size="20.0" />
          </font>
       </Label>
-      <JFXComboBox fx:id="waterTypeBox" layoutX="116.0" layoutY="177.0" prefHeight="27.0" prefWidth="162.0" promptText="Year" />
-      <JFXRadioButton layoutX="103.0" layoutY="141.0" text="Virus" />
-      <JFXRadioButton layoutX="201.0" layoutY="141.0" text="Contaminate" />
+      <JFXComboBox fx:id="year" layoutX="116.0" layoutY="177.0" prefHeight="27.0" prefWidth="162.0" promptText="Year" />
+      <JFXRadioButton fx:id="virus" layoutX="103.0" layoutY="141.0" selected="true" text="Virus">
+         <font>
+            <Font name="Courier" size="13.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="contagion" />
+         </toggleGroup></JFXRadioButton>
+      <JFXRadioButton fx:id="contaminate" layoutX="197.0" layoutY="140.0" text="Contaminate" toggleGroup="$contagion" />
    </children>
 </Pane>
