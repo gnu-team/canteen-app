@@ -15,46 +15,46 @@ public interface DataSource {
      * @param password to check user Password which entered by an user
      * @return if there is the account, return the User Object included user and password
      */
-    User authenticate(String user, String password) throws DataException;
+    void authenticate(String user, String password, DataReceiver<User> onSuccess, DataErrorReceiver onFail);
 
     /**
      * Adds new account
      * @param userdata User Object (information with new ID and Password)
      */
-    void addUser(User userdata) throws DataException;
+    void addUser(User userdata, DataSuccessReceiver onSuccess, DataErrorReceiver onFail);
 
     /**
      * Change attributes (e.g., profile) of current user account
      * @param userdata User Object (information with changed
      *                 ID/Password/Profile)
      */
-    void updateUser(User userdata) throws DataException;
+    void updateUser(User userdata, DataSuccessReceiver onSuccess, DataErrorReceiver onFail);
 
     /**
      * Adds new report
      * @param report New report to add
      */
-    void addReport(Report report) throws DataException;
+    void addReport(Report report, DataSuccessReceiver onSuccess, DataErrorReceiver onFail);
 
     /**
      * Adds new purity report
      * @param purityReport New purity report to add
      * @throws DataException for unexpected backend failures
      */
-    void addPurityReport(PurityReport purityReport) throws DataException;
+    void addPurityReport(PurityReport purityReport, DataSuccessReceiver onSuccess, DataErrorReceiver onFail);
 
     /**
      * Returns all reports in the system
      * @return a Collection containing all known Reports
      * @throws DataException for unexpected backend failures
      */
-    Collection<Report> listReports() throws DataException;
+    void listReports(DataReceiver<Collection<Report>> onSuccess, DataErrorReceiver onFail);
 
     /**
      * Returns all purity reports in the system
      * @return a Collection containing all known PurityReports
      * @throws DataException for unexpected backend failures
      */
-    Collection<PurityReport> listPurityReports() throws DataException;
+    void listPurityReports(DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
 }
 
