@@ -160,6 +160,11 @@ public class MainController implements MainAppReceiver {
         closeDrawer();
     }
 
+    public void showYearHistoricalView() {
+        showView("YearHistoricalView");
+        closeDrawer();
+    }
+
     /**
      * Loads the root node of another view, and pass the controller a reference
      * to this instance.

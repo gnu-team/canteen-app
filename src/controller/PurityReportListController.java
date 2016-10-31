@@ -78,6 +78,10 @@ public class PurityReportListController implements MainAppReceiver, MainControll
         purityReportTable.getItems().setAll(purityReports);
     }
 
+    public void handleGraphButtonPressed() {
+        mainController.showYearHistoricalView();
+    }
+
     @Override
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
