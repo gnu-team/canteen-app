@@ -48,7 +48,7 @@ public class YearHistoricalController implements MainAppReceiver, MainController
 
     @FXML
     public void handleViewPressed() {
-        mainController.showHistoricalReport();
+        mainController.showHistoricalReport(0, 0, null);
     }
 
     @FXML
