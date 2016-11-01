@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import java.util.function.Consumer;
+import model.Year;
 
 /**
  * Handles events from the main screen
@@ -36,7 +38,7 @@ public class MainController implements MainAppReceiver {
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
 
-        drawer.setSidePane(loadView("DrawerContent"));
+        drawer.setSidePane(loadView("DrawerContent", null));
         showMap();
     }
 
@@ -155,8 +157,11 @@ public class MainController implements MainAppReceiver {
     /**
      * Shows the HistoricalReportView
      */
-    public void showHistoricalReport() {
-        showView("HistoricalReport");
+    public void showHistoricalReport(double latitude, double longitude, Year year) {
+        showView("HistoricalReport", c -> {
+            // XXX Don't hardcode the name of the controller like this
+            ((HistoricalReportController) c).drawGraphFor(latitude, longitude, year);
+        });
         closeDrawer();
     }
 
@@ -166,20 +171,33 @@ public class MainController implements MainAppReceiver {
     }
 
     /**
-     * Loads the root node of another view, and pass the controller a reference
-     * to this instance.
+     * Loads the root node of another view, pass the controller a reference
+     * to this instance, and allow controllerConsumer to perform custom
+     * operations on the controller.
      */
-    private Parent loadView(String name) {
+    private Parent loadView(String name, Consumer<Object> controllerConsumer) {
         return mainApp.loadView(name, c -> {
             MainControllerReceiver controller = (MainControllerReceiver) c;
             controller.setMainController(this);
+
+            if (controllerConsumer != null) {
+                controllerConsumer.accept(c);
+            }
         });
+    }
+
+    /**
+     * Loads view and places it in the center of the screen, allowing
+     * controllerConsumer to perform custom operations on it if necessary.
+     */
+    private void showView(String name, Consumer<Object> controllerConsumer) {
+        mainPane.getChildren().setAll(loadView(name, controllerConsumer));
     }
 
     /**
      * Loads view and places it in the center of the screen.
      */
     private void showView(String name) {
-        mainPane.getChildren().setAll(loadView(name));
+        mainPane.getChildren().setAll(loadView(name, null));
     }
 }

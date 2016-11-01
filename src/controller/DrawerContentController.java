@@ -97,6 +97,6 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
 
     @FXML
     private void handleHistoricalReportPressed(ActionEvent event) {
-        mainController.showHistoricalReport();
+        mainController.showHistoricalReport(0, 0, null);
     }
 }

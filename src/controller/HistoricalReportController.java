@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.stage.Stage;
+import model.Year;
 
 /**
  * Created by Ph3ncyclidine on 10/26/16.
@@ -51,5 +52,10 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
     @Override
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+    }
+
+    public void drawGraphFor(double latitude, double longitude, Year year) {
+        // insert graph-drawing magic here, including making the API request
+        // (will be called after initialize())
     }
 }
