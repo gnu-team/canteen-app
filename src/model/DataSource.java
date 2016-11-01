@@ -56,5 +56,7 @@ public interface DataSource {
      * @throws DataException for unexpected backend failures
      */
     void listPurityReports(DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
+
+    void createPurityPoints(DataReceiver<Collection<>> onSuccess, DataErrorReceiver onFail);
 }
 
