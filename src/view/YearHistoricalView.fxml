@@ -33,6 +33,6 @@
          <toggleGroup>
             <ToggleGroup fx:id="contagion" />
          </toggleGroup></JFXRadioButton>
-      <JFXRadioButton fx:id="contaminate" layoutX="197.0" layoutY="140.0" text="Contaminate" toggleGroup="$contagion" />
+      <JFXRadioButton fx:id="contaminant" layoutX="197.0" layoutY="140.0" text="Contaminate" toggleGroup="$contagion" />
    </children>
 </Pane>

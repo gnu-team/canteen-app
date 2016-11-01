@@ -17,11 +17,12 @@ public class YearHistoricalController implements MainAppReceiver, MainController
     private RadioButton virus;
 
     @FXML
-    private RadioButton contaminate;
+    private RadioButton contaminant;
 
     @FXML
     private ComboBox<Year> year;
 
+    public static String buttonLabel;
     private MainFXApplication mainApp;
     private MainController mainController;
 
@@ -38,6 +39,11 @@ public class YearHistoricalController implements MainAppReceiver, MainController
     @FXML
     private void initialize() {
         year.getItems().setAll(Year.values());
+        if (virus.isPressed()) {
+            buttonLabel = "Virus";
+        } else {
+            buttonLabel = "Contaminant";
+        }
     }
 
     @FXML
@@ -50,4 +56,11 @@ public class YearHistoricalController implements MainAppReceiver, MainController
         mainController.showMap();
     }
 
+    //private void getRadioValue() {
+    //    if (virus.isPressed()) {
+    //        buttonLabel = "Virus";
+    //    } else {
+    //        buttonLabel = "Contaminant";
+    //    }
+    //}
 }
