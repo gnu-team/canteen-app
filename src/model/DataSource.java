@@ -57,6 +57,9 @@ public interface DataSource {
      */
     void listPurityReports(DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
 
-    //void createPurityPoints(DataReceiver<Collection<>> onSuccess, DataErrorReceiver onFail);
+    /**
+     * Finds all purity reports near the given latitude and longitude.
+     */
+    void listNearbyPurityReports(double latitude, double longitude, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
 }
 

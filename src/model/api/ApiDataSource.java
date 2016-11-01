@@ -170,6 +170,20 @@ public class ApiDataSource implements DataSource {
         }));
     }
 
+    @Override
+    public void listNearbyPurityReports(double longitude, double latitude, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
+        executor.execute(new ApiTask<Collection<PurityReport>>(onSuccess, onFail, () -> {
+            String path = String.format("/purity_reports/near/%f,%f/", longitude, latitude);
+            ApiConnection conn = new ApiConnection("GET", path, HttpURLConnection.HTTP_OK, user, password);
+            Reader response = conn.getResponseReader();
+
+            Gson gson = gsonBuilder.create();
+            PurityReport[] reports = gson.fromJson(response, PurityReport[].class);
+
+            return Arrays.asList(reports);
+        }));
+    }
+
     private class FullUser extends User {}
     private class UserDeserializer implements JsonDeserializer<User> {
         @Override

@@ -77,5 +77,9 @@ public class MemoryDataSource implements DataSource {
     public void listPurityReports(DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
         onFail.onFail(new DataException("Not implemented"));
     }
-}
 
+    @Override
+    public void listNearbyPurityReports(double latitude, double longitude, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
+        onFail.onFail(new DataException("Not implemented"));
+    }
+}
