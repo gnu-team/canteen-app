@@ -1,7 +1,6 @@
 package model;
 
-import exception.InvalidUserException;
-import exception.NoSuchUserException;
+import model.exception.DataException;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -30,34 +29,53 @@ public class MemoryDataSource implements DataSource {
     }
 
     @Override
-    public User authenticate(String user, String password) throws NoSuchUserException {
+    public void authenticate(String user, String password, DataReceiver<User> onSuccess, DataErrorReceiver onFail) {
         for (User s: users) {
             if (s.authenticate(user, password)) {
-                return s;
+                onSuccess.onSuccess(s);
+                return;
             }
         }
-        throw new NoSuchUserException("No matched ID or Password");
+        onFail.onFail(new DataException("No matched ID or Password"));
     }
 
     @Override
-    public void addUser(User userdata) throws InvalidUserException {
+    public void addUser(User userdata, DataSuccessReceiver onSuccess, DataErrorReceiver onFail) {
         for (User userOb : users) {
             if (userdata.getUser().equals(userOb.getUser())) {
-                throw new InvalidUserException("Invalid ID");
+                onFail.onFail(new DataException("Invalid ID"));
+                return;
             }
         }
         users.add(userdata);
+        onSuccess.onSuccess();
     }
 
     @Override
-    public void addReport(Report report) {
+    public void updateUser(User userdata, DataSuccessReceiver onSuccess, DataErrorReceiver onFail) {
+        onFail.onFail(new DataException("Not implemented"));
+    }
+
+    @Override
+    public void addReport(Report report, DataSuccessReceiver onSuccess, DataErrorReceiver onFail) {
         report.setID(reports.size());
         reports.add(report);
+        onSuccess.onSuccess();
     }
 
     @Override
-    public Collection<Report> listReports() {
-        return reports;
+    public void addPurityReport(PurityReport purityReport, DataSuccessReceiver onSuccess, DataErrorReceiver onFail) {
+        onFail.onFail(new DataException("Not implemented"));
+    }
+
+    @Override
+    public void listReports(DataReceiver<Collection<Report>> onSuccess, DataErrorReceiver onFail) {
+        onSuccess.onSuccess(reports);
+    }
+
+    @Override
+    public void listPurityReports(DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
+        onFail.onFail(new DataException("Not implemented"));
     }
 }
 

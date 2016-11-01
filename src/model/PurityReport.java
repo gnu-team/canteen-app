@@ -1,30 +1,33 @@
 package model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
-import com.google.gson.annotations.SerializedName;
 
 /**
- * Represents a water source report.
+ * Represents a water purity report.
  */
-public class Report {
+public class PurityReport {
     private int id;
     private Date date;
     @SerializedName("creator_name")
     private User creator;
     private double latitude;
     private double longitude;
-    private WaterType type;
-    private WaterCondition condition;
+    private double virusPPM;
+    private double contaminantPPM;
+    private WaterPurityCondition condition;
     private String description;
 
-    public Report(User creator, double latitude, double longitude, WaterType type, WaterCondition condition, String description) {
+    public PurityReport(User creator, double latitude, double longitude, double virusPPM, double contaminantPPM, WaterPurityCondition condition, String description) {
         this.date = new Date();
         this.creator = creator;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.type = type;
+        this.virusPPM = virusPPM;
+        this.contaminantPPM = contaminantPPM;
         this.condition = condition;
         this.description = description;
     }
@@ -62,19 +65,27 @@ public class Report {
         this.longitude = longitude;
     }
 
-    public WaterType getType() {
-        return type;
+    public double getVirusPPM() {
+        return virusPPM;
     }
 
-    public void setType(WaterType type) {
-        this.type = type;
+    public void setVirusPPM(double virusPPM) {
+        this.virusPPM = virusPPM;
     }
 
-    public WaterCondition getCondition() {
+    public double getContaminantPPM() {
+        return contaminantPPM;
+    }
+
+    public void setContaminantPPM(double contaminantPPM) {
+        this.contaminantPPM = contaminantPPM;
+    }
+
+    public WaterPurityCondition getCondition() {
         return condition;
     }
 
-    public void setCondition(WaterCondition condition) {
+    public void setCondition(WaterPurityCondition condition) {
         this.condition = condition;
     }
 
@@ -104,11 +115,7 @@ public class Report {
 
         NumberFormat nf = new DecimalFormat("0000"); // ex) Making S-0001
         //S means Source, P will mean purity , and H will mean Historical
-        String reportNumber = "S-" + nf.format(id);
+        String reportNumber = "P-" + nf.format(id);
         return reportNumber;
-    }
-
-    public String getSummary() {
-        return String.format("%s: %s %s", getReportNumber(), condition, type);
     }
 }

@@ -14,30 +14,50 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import javafx.MainFXApplication;
 import javafx.MainAppReceiver;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import model.Report;
-import exception.DataBackendException;
+import model.exception.DataException;
 import netscape.javascript.JSObject;
 
-import java.net.URL;
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 /**
  * Created by Claude Peon on 10/16/16.
  */
 public class MapController implements MainAppReceiver, MainControllerReceiver,
-                                      Initializable, MapComponentInitializedListener {
+                                      MapComponentInitializedListener {
+    private static final double GEORGIA_TECH_LAT = 33.779;
+    private static final double GEORGIA_TECH_LONG = -84.398;
+    private static final int GEORGIA_TECH_ZOOM = 14;
+
     @FXML
     private GoogleMapView mapView;
 
     private GoogleMap map;
     private MainFXApplication mainApp;
     private MainController mainController;
+    private Collection<Report> reports;
+
+    @FXML
+    private void initialize() {
+        mapView.addMapInializedListener(this);
+    }
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
+
+        mainApp.getDataSource().listReports(
+            // Success
+            reports -> {
+                this.reports = reports;
+                drawReports();
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
     }
 
     @Override
@@ -46,19 +66,14 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle bundle) {
-        mapView.addMapInializedListener(this);
-    }
-
-    @Override
     public void mapInitialized() {
         MapOptions options = new MapOptions();
 
         // Set up the center location on Georgia Tech
-        LatLong center = new LatLong(33.779, -84.398);
+        LatLong center = new LatLong(GEORGIA_TECH_LAT, GEORGIA_TECH_LONG);
 
         options.center(center)
-                .zoom(14)
+                .zoom(GEORGIA_TECH_ZOOM)
                 .overviewMapControl(false)
                 .panControl(false)
                 .rotateControl(false)
@@ -68,13 +83,11 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
                 .mapType(MapTypeIdEnum.TERRAIN);
 
         map = mapView.createMap(options);
+        drawReports();
+    }
 
-        Collection<Report> reports;
-        try {
-            reports = mainApp.getDataSource().listReports();
-        } catch (DataBackendException e) {
-            e.printStackTrace();
-            mainApp.showAlert(e.getMessage());
+    private void drawReports() {
+        if (reports == null || map == null) {
             return;
         }
 
@@ -84,7 +97,7 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
 
             markerOptions.position(loc)
                     .visible(Boolean.TRUE)
-                    .title("Water Source");
+                    .title(r.getSummary());
 
             Marker marker = new Marker(markerOptions);
 
@@ -92,7 +105,10 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
                     UIEventType.click,
                     (JSObject obj) -> {
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("Water Source Description");
+                        infoWindowOptions.content(String.format(
+                            "<strong>%s</strong><br>%.4f, %.4f<br><br>%s",
+                            r.getSummary(), r.getLatitude(), r.getLongitude(),
+                            r.getDescription()));
 
                         InfoWindow window = new InfoWindow(infoWindowOptions);
                         window.open(map, marker);
@@ -100,5 +116,9 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
 
             map.addMarker(marker);
         }
+
+        // Don't need reports anymore, so allow them to get garbage collected.
+        // This also marks the reports as drawn.
+        reports = null;
     }
 }

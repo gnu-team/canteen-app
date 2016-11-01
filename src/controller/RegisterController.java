@@ -1,6 +1,6 @@
 package controller;
 
-import exception.DataBackendException;
+import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import model.User;
 import model.UserFactory;
 import model.AccountType;
-import exception.InvalidUserException;
 
 /**
  * Handles events from the registration screen
@@ -52,22 +51,22 @@ public class RegisterController implements MainAppReceiver {
      * When user presses register button, attempts to register.
      */
     public void handleRegisterPressed(ActionEvent actionEvent) {
-        User user;
-        try {
-            user = UserFactory.createUser(usernameField.getText(),
-                                          passwordField.getText(),
-                                          accountTypeBox.getValue());
-            mainApp.getDataSource().addUser(user);
-        } catch (InvalidUserException e) {
-            mainApp.showAlert(e.getMessage());
-            return;
-        } catch (DataBackendException e) {
-            e.printStackTrace();
-            mainApp.showAlert(e.getMessage());
-            return;
-        }
+        User user = UserFactory.createUser(usernameField.getText(),
+                                           passwordField.getText(),
+                                           accountTypeBox.getValue());
+        mainApp.getDataSource().addUser(
+            user,
+            // Success
+            () -> {
+                mainApp.finishRegistration(user);
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
 
-        mainApp.finishRegistration(user);
     }
 
     /**

@@ -7,32 +7,33 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import model.Report;
-import model.WaterCondition;
-import model.WaterType;
+import model.PurityReport;
+import model.WaterPurityCondition;
 
 import java.util.Collection;
 
 /**
- * Handles events sent by the reports list.
+ * Handles events sent by the purity reports list.
  */
-public class ReportListController implements MainAppReceiver, MainControllerReceiver {
+public class PurityReportListController implements MainAppReceiver, MainControllerReceiver {
     @FXML
-    private TableView<Report> reportTable;
+    private TableView<PurityReport> purityReportTable;
     @FXML
-    private TableColumn<Report, String> dateCol;
+    private TableColumn<PurityReport, String> dateCol;
     @FXML
-    private TableColumn<Report, String> creatorCol;
+    private TableColumn<PurityReport, String> creatorCol;
     @FXML
-    private TableColumn<Report, Double> latitudeCol;
+    private TableColumn<PurityReport, Double> latitudeCol;
     @FXML
-    private TableColumn<Report, Double> longitudeCol;
+    private TableColumn<PurityReport, Double> longitudeCol;
     @FXML
-    private TableColumn<Report, WaterType> typeCol;
+    private TableColumn<PurityReport, Double> virusPPMCol;
     @FXML
-    private TableColumn<Report, WaterCondition> conditionCol;
+    private TableColumn<PurityReport, Double> contaminantPPMCol;
     @FXML
-    private TableColumn<Report, String> descriptionCol;
+    private TableColumn<PurityReport, WaterPurityCondition> conditionCol;
+    @FXML
+    private TableColumn<PurityReport, String> descriptionCol;
 
     private MainFXApplication mainApp;
     private MainController mainController;
@@ -51,8 +52,10 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
             new ReadOnlyObjectWrapper<>(cdf.getValue().getLatitude()));
         longitudeCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getLongitude()));
-        typeCol.cellValueFactoryProperty().setValue(cdf ->
-            new ReadOnlyObjectWrapper<>(cdf.getValue().getType()));
+        virusPPMCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getVirusPPM()));
+        contaminantPPMCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getContaminantPPM()));
         conditionCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getCondition()));
         descriptionCol.cellValueFactoryProperty().setValue(cdf ->
@@ -63,11 +66,11 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
 
-        mainApp.getDataSource().listReports(
+        mainApp.getDataSource().listPurityReports(
             // Success
-            reports -> {
+            purityReports -> {
                 // Populate table
-                reportTable.getItems().setAll(reports);
+                purityReportTable.getItems().setAll(purityReports);
             },
             // Failure
             e -> {
@@ -75,6 +78,10 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
                 mainApp.showAlert(e.getMessage());
             }
         );
+    }
+
+    public void handleGraphButtonPressed() {
+        mainController.showYearHistoricalView();
     }
 
     @Override

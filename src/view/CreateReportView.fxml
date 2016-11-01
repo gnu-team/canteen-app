@@ -14,12 +14,12 @@
             <Font name="Courier" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXButton layoutX="112.0" layoutY="219.0" onAction="#handleCreateReportPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Report" textFill="#fcfcfc">
+      <JFXButton layoutX="112.0" layoutY="246.0" onAction="#handleCreateReportPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Report" textFill="#fcfcfc">
          <font>
             <Font name="Courier" size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="294.0" layoutY="219.0" onAction="#handleCancelReportPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Cancel" textFill="#fcfcfc">
+      <JFXButton layoutX="294.0" layoutY="246.0" onAction="#handleCancelReportPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Cancel" textFill="#fcfcfc">
          <font>
             <Font name="Courier" size="14.0" />
          </font>
@@ -32,6 +32,11 @@
       </Label>
       <JFXComboBox fx:id="waterTypeBox" layoutX="112.0" layoutY="115.0" prefHeight="27.0" prefWidth="162.0" promptText="Water Type" />
       <JFXTextField fx:id="longitudeField" focusColor="#028383" labelFloat="true" layoutX="193.0" layoutY="66.0" maxWidth="276.0" minWidth="87.0" prefHeight="33.0" prefWidth="92.0" promptText="Longitude">
+         <font>
+            <Font name="Courier" size="13.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="descriptionField" focusColor="#028383" labelFloat="true" layoutX="103.0" layoutY="205.0" maxWidth="276.0" minWidth="87.0" prefHeight="33.0" prefWidth="272.0" promptText="Description (optional)">
          <font>
             <Font name="Courier" size="13.0" />
          </font>

@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
+import model.exception.DataException;
 import model.User;
 
 /**
@@ -16,7 +17,9 @@ public class ProfileController implements MainAppReceiver,
     @FXML
     private TextArea bio;
     @FXML
-    private TextField name;
+    private TextField firstName;
+    @FXML
+    private TextField lastName;
     @FXML
     private TextField email;
     @FXML
@@ -35,7 +38,8 @@ public class ProfileController implements MainAppReceiver,
         // Can't do this in initialize() because initialize is called before
         // this method.
         User user = mainApp.getUser();
-        name.setText(user.getName());
+        firstName.setText(user.getFirstName());
+        lastName.setText(user.getLastName());
         bio.setText(user.getBio());
         email.setText(user.getEmail());
         address.setText(user.getAddress());
@@ -53,12 +57,24 @@ public class ProfileController implements MainAppReceiver,
      */
     public void handleSaveProfilePressed(ActionEvent actionEvent) {
         User user = mainApp.getUser();
-        user.setName(name.getText());
+        user.setFirstName(firstName.getText());
+        user.setLastName(lastName.getText());
         user.setBio(bio.getText());
         user.setEmail(email.getText());
         user.setAddress(address.getText());
         user.setPhoneNumber(phone.getText());
 
-        mainApp.registrationComplete();
+        mainApp.getDataSource().updateUser(
+            user,
+            // Success
+            () -> {
+                mainApp.registrationComplete();
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
     }
 }

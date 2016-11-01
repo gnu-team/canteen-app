@@ -7,40 +7,35 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import model.*;
+import model.PurityReport;
+import model.WaterPurityCondition;
 
 /**
  * Handles events from the create report screen
  */
-public class CreateReportController implements MainAppReceiver, MainControllerReceiver {
+public class CreatePurityReportController implements MainAppReceiver, MainControllerReceiver {
     @FXML
     private TextField latitudeField;
     @FXML
     private TextField longitudeField;
     @FXML
-    private ComboBox<WaterType> waterTypeBox;
+    private TextField virusPPMField;
     @FXML
-    private ComboBox<WaterCondition> waterConditionBox;
+    private TextField contaminantPPMField;
+    @FXML
+    private ComboBox<WaterPurityCondition> conditionBox;
     @FXML
     private TextField descriptionField;
 
     private MainFXApplication mainApp;
     private MainController mainController;
 
-    private static int reportNumber;
     /**
-     * Populates the water type combobox.
+     * Populates the water purity type combobox.
      */
     @FXML
     private void initialize() {
-        waterTypeBox.getItems().setAll(WaterType.values());
-        waterConditionBox.getItems().setAll(WaterCondition.values());
-    }
-    /**
-     * Each ReportNumber increamented by 1
-     */
-    public int getReportNumber() {
-        return reportNumber++;
+        conditionBox.getItems().setAll(WaterPurityCondition.values());
     }
 
     @Override
@@ -58,7 +53,7 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
      */
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
-        Double latitude, longitude;
+        Double latitude, longitude, virusPPM, contaminantPPM;
 
         if (latitudeField.getText().trim().equals("")
                 || longitudeField.getText().trim().equals("")) {
@@ -67,20 +62,23 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
             mainApp.showAlert("Please enter a valid number for latitude");
         } else if ((longitude = tryParseDouble(longitudeField.getText())) == null) {
             mainApp.showAlert("Please enter a valid number for longitude");
-        } else if (waterTypeBox.getValue() == null) {
+        } else if ((virusPPM = tryParseDouble(virusPPMField.getText())) == null) {
+            mainApp.showAlert("Please enter a valid number for virus PPM");
+        } else if ((contaminantPPM = tryParseDouble(contaminantPPMField.getText())) == null) {
+            mainApp.showAlert("Please enter a valid number for contaminant PPM");
+        } else if (conditionBox.getValue() == null) {
             mainApp.showAlert("Please choose a water type");
-        } else if (waterConditionBox.getValue() == null) {
-            mainApp.showAlert("Please choose a water condition");
         } else {
-            Report newReport = new Report(
+            PurityReport newReport = new PurityReport(
                 mainApp.getUser(),
                 latitude,
                 longitude,
-                waterTypeBox.getValue(),
-                waterConditionBox.getValue(),
+                virusPPM,
+                contaminantPPM,
+                conditionBox.getValue(),
                 descriptionField.getText());
 
-            mainApp.getDataSource().addReport(
+            mainApp.getDataSource().addPurityReport(
                 newReport,
                 // Success
                 () -> {
@@ -95,19 +93,19 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
         }
     }
 
-    private Double tryParseDouble(String s) {
-        try {
-            return Double.parseDouble(s);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
-
     /**
      * Shows main screen when user presses cancel report button.
      */
     @FXML
     private void handleCancelReportPressed(ActionEvent event) {
         mainController.showMap();
+    }
+
+    private Double tryParseDouble(String s) {
+        try {
+            return Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }

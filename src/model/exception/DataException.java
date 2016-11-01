@@ -1,16 +1,16 @@
-package exception;
+package model.exception;
 
 /**
  * Represents an unexpected error encountered by a class implementing
  * DataSource.
  */
-public class DataBackendException extends Exception {
+public class DataException extends Exception {
     /**
      * Creates a DataSource backend exception.
      *
      * @param message The error message shown to the user.
      */
-    public DataBackendException(String message) {
+    public DataException(String message) {
         super(message);
     }
 
@@ -20,7 +20,7 @@ public class DataBackendException extends Exception {
      * @param message The error message shown to the user
      * @param cause The inner exception
      */
-    public DataBackendException(String message, Throwable cause) {
+    public DataException(String message, Throwable cause) {
         super(message, cause);
     }
 }

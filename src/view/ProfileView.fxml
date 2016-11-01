@@ -7,49 +7,44 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfileController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfileController">
    <children>
-      <JFXTextArea fx:id="bio" layoutX="245.0" layoutY="121.0" maxWidth="288.0" minWidth="266.0"
-                   prefHeight="205.0" prefWidth="288.0" promptText="Bio">
+      <JFXTextArea fx:id="bio" layoutX="245.0" layoutY="96.0" maxWidth="288.0" minWidth="266.0" prefHeight="205.0" prefWidth="288.0" promptText="Bio">
          <font>
             <Font name="Courier" size="12.0" />
          </font>
       </JFXTextArea>
-      <JFXTextField fx:id="name" labelFloat="true" layoutX="54.0" layoutY="121.0" maxWidth="150.0"
-                    minWidth="150.0" prefHeight="30.0" prefWidth="150.0" promptText="Name">
+      <JFXTextField fx:id="lastName" labelFloat="true" layoutX="54.0" layoutY="130.0" maxWidth="171.0" minWidth="150.0" prefHeight="32.0" prefWidth="171.0" promptText="Last Name">
          <font>
             <Font name="Courier" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXButton layoutX="76.0" layoutY="282.0" onAction="#handleSaveProfilePressed"
-                 prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9"
-                 style="-fx-background-color: #3366ff;" text="Save Changes" textFill="#fcfcfc">
+      <JFXButton layoutX="76.0" layoutY="291.0" onAction="#handleSaveProfilePressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Save Changes" textFill="#fcfcfc">
          <font>
             <Font name="Courier" size="12.0" />
          </font>
       </JFXButton>
-      <Label layoutX="129.0" layoutY="39.0" prefHeight="60.0" prefWidth="187.0"
-             text="Edit Profile">
+      <Label layoutX="129.0" layoutY="14.0" prefHeight="60.0" prefWidth="187.0" text="Edit Profile">
          <font>
             <Font name="Courier" size="24.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="email" labelFloat="true" layoutX="54.0" layoutY="158.0" minWidth="150.0"
-                    promptText="Email">
+      <JFXTextField fx:id="email" labelFloat="true" layoutX="54.0" layoutY="167.0" minWidth="150.0" promptText="Email">
          <font>
             <Font name="Courier" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="address" labelFloat="true" layoutX="54.0" layoutY="200.0"
-                    minWidth="150.0" promptText="Address">
+      <JFXTextField fx:id="address" labelFloat="true" layoutX="54.0" layoutY="209.0" minWidth="150.0" promptText="Address">
          <font>
             <Font name="Courier" size="13.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="phone" labelFloat="true" layoutX="54.0" layoutY="238.0"
-                    minWidth="150.0" promptText="Phone #">
+      <JFXTextField fx:id="phone" labelFloat="true" layoutX="54.0" layoutY="247.0" minWidth="150.0" promptText="Phone #">
+         <font>
+            <Font name="Courier" size="13.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="firstName" labelFloat="true" layoutX="54.0" layoutY="92.0" maxWidth="171.0" minWidth="150.0" prefHeight="32.0" prefWidth="171.0" promptText="First Name">
          <font>
             <Font name="Courier" size="13.0" />
          </font>
