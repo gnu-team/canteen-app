@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.stage.Stage;
+import model.Year;
 
 /**
  * Created by Ph3ncyclidine on 10/26/16.
@@ -33,7 +34,7 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
 
 
 
-        lineChart.setTitle(YearHistoricalController.buttonLabel + " PPM");
+        lineChart.setTitle(YearHistoricalController.getButtonLabel() + " PPM");
 
 
 
