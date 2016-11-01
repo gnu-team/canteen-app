@@ -54,15 +54,19 @@ public class RegisterController implements MainAppReceiver {
         User user = UserFactory.createUser(usernameField.getText(),
                                            passwordField.getText(),
                                            accountTypeBox.getValue());
-        try {
-            mainApp.getDataSource().addUser(user);
-        } catch (DataException e) {
-            e.printStackTrace();
-            mainApp.showAlert(e.getMessage());
-            return;
-        }
+        mainApp.getDataSource().addUser(
+            user,
+            // Success
+            () -> {
+                mainApp.finishRegistration(user);
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
 
-        mainApp.finishRegistration(user);
     }
 
     /**

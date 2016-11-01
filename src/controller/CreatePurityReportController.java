@@ -69,22 +69,27 @@ public class CreatePurityReportController implements MainAppReceiver, MainContro
         } else if (conditionBox.getValue() == null) {
             mainApp.showAlert("Please choose a water type");
         } else {
-            try {
-                mainApp.getDataSource().addPurityReport(new PurityReport(
-                    mainApp.getUser(),
-                    latitude,
-                    longitude,
-                    virusPPM,
-                    contaminantPPM,
-                    conditionBox.getValue(),
-                    descriptionField.getText()));
-            } catch (DataException be) {
-                be.printStackTrace();
-                mainApp.showAlert(be.getMessage());
-                return;
-            }
+            PurityReport newReport = new PurityReport(
+                mainApp.getUser(),
+                latitude,
+                longitude,
+                virusPPM,
+                contaminantPPM,
+                conditionBox.getValue(),
+                descriptionField.getText());
 
-            mainController.showMap();
+            mainApp.getDataSource().addPurityReport(
+                newReport,
+                // Success
+                () -> {
+                    mainController.showMap();
+                },
+                // Failure
+                e -> {
+                    e.printStackTrace();
+                    mainApp.showAlert(e.getMessage());
+                }
+            );
         }
     }
 

@@ -66,16 +66,22 @@ public class PurityReportListController implements MainAppReceiver, MainControll
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
 
-        // Populate table
-        Collection<PurityReport> purityReports;
-        try {
-            purityReports = mainApp.getDataSource().listPurityReports();
-        } catch (DataException e) {
-            e.printStackTrace();
-            mainApp.showAlert(e.getMessage());
-            return;
-        }
-        purityReportTable.getItems().setAll(purityReports);
+        mainApp.getDataSource().listPurityReports(
+            // Success
+            purityReports -> {
+                // Populate table
+                purityReportTable.getItems().setAll(purityReports);
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
+    }
+
+    public void handleGraphButtonPressed() {
+        mainController.showYearHistoricalView();
     }
 
     @Override

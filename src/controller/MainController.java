@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -29,6 +30,8 @@ public class MainController implements MainAppReceiver {
     @FXML
     private StackPane mainPane;
 
+    private HamburgerBackArrowBasicTransition transition;
+
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
@@ -37,22 +40,40 @@ public class MainController implements MainAppReceiver {
         showMap();
     }
 
+    /**
+     * Creates a hamburger that pulls out a drawer when clicked. It also
+     * transitions to an arrow when clicked and back when clicked again.
+     * This is used as the primary method to navigate the app.
+     */
     @FXML
     private void initialize() {
-        drawer.setOnDrawerClosed(e -> drawer.toBack());
-        drawer.setOnDrawerOpening(e -> drawer.toFront());
+
+        transitionHelper();
+        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)-> {
+            transition.setRate(transition.getRate() * -1);
+            transition.play();
+
+            drawer.setOnDrawerClosed(e2 -> drawer.toBack());
+            drawer.setOnDrawerOpening(e2 -> drawer.toFront());
+
+            if (drawer.isShown()) {
+                drawer.close();
+            } else {
+                drawer.open();
+            }
+        });
+
     }
 
     /**
-     * Expands/retracts the drawer when user presses the hamburger.
+     * A private helper method to allow constant use of the hamburger
+     * transition across multiple methods in the class without having
+     * to create new instance of the HamburgerBackArrowBasicTransition
      */
-    @FXML
-    private void handleHamburgerClicked(MouseEvent event) {
-        if (drawer.isShown()) {
-            drawer.close();
-        } else {
-            drawer.open();
-        }
+    private void transitionHelper() {
+        transition = new
+                HamburgerBackArrowBasicTransition(hamburger);
+        transition.setRate(-1);
     }
 
     /**
@@ -76,7 +97,9 @@ public class MainController implements MainAppReceiver {
     /**
      * Slides the drawer shut.
      */
-    public void closeDrawer() {
+    private void closeDrawer() {
+        transition.setRate(-1);
+        transition.play();
         drawer.close();
     }
 
@@ -84,7 +107,9 @@ public class MainController implements MainAppReceiver {
      * Shows the map screen.
      */
     public void showMap() {
+        //closeDrawer();
         showView("Map");
+        closeDrawer();
     }
 
     /**
@@ -92,6 +117,7 @@ public class MainController implements MainAppReceiver {
      */
     public void showReportList() {
         showView("ReportList");
+        closeDrawer();
     }
 
     /**
@@ -99,6 +125,7 @@ public class MainController implements MainAppReceiver {
      */
     public void showCreateReport() {
         showView("CreateReport");
+        closeDrawer();
     }
 
     /**
@@ -106,6 +133,7 @@ public class MainController implements MainAppReceiver {
      */
     public void showPurityReportList() {
         showView("PurityReportList");
+        closeDrawer();
     }
 
     /**
@@ -113,6 +141,7 @@ public class MainController implements MainAppReceiver {
      */
     public void showCreatePurityReport() {
         showView("CreatePurityReport");
+        closeDrawer();
     }
 
     /**
@@ -120,6 +149,20 @@ public class MainController implements MainAppReceiver {
      */
     public void showEditProfile() {
         showView("Profile");
+        closeDrawer();
+    }
+
+    /**
+     * Shows the HistoricalReportView
+     */
+    public void showHistoricalReport() {
+        showView("HistoricalReport");
+        closeDrawer();
+    }
+
+    public void showYearHistoricalView() {
+        showView("YearHistorical");
+        closeDrawer();
     }
 
     /**
