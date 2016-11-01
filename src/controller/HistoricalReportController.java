@@ -57,7 +57,18 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
     }
 
     public void drawGraphFor(double latitude, double longitude, Year year) {
-        // insert graph-drawing magic here, including making the API request
-        // (will be called after initialize())
+        mainApp.getDataSource().listNearbyPurityReports(
+            latitude, longitude,
+            // Success
+            reports -> {
+                // TODO: Draw chart with reports
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+                return;
+            }
+        );
     }
 }
