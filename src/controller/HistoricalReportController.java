@@ -24,13 +24,12 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
     private MainFXApplication mainApp;
     private MainController mainController;
 
-    public void initilize() {
-
+    public void initialize() {
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Month");
         yAxis.setLabel("PPM");
-        lineChart = new LineChart<>(xAxis, yAxis);
+        //lineChart = new LineChart<>(xAxis, yAxis);
 
         lineChart.setTitle("PPM 2016");
 
@@ -45,9 +44,8 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
-        series.getData().add(new XYChart.Data("Jan", 23));
-        lineChart.getData().add(series);
-
+        series.getData().add(new XYChart.Data<String, Number>("Jan", 23));
+        //lineChart.getData().add(series);
     }
 
     @Override
