@@ -57,6 +57,6 @@ public interface DataSource {
      */
     void listPurityReports(DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
 
-    void createPurityPoints(DataReceiver<Collection<>> onSuccess, DataErrorReceiver onFail);
+    //void createPurityPoints(DataReceiver<Collection<>> onSuccess, DataErrorReceiver onFail);
 }
 

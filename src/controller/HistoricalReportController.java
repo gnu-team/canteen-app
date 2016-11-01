@@ -17,6 +17,10 @@ import javafx.stage.Stage;
  * Created by Ph3ncyclidine on 10/26/16.
  */
 public class HistoricalReportController implements MainAppReceiver, MainControllerReceiver {
+
+    @FXML
+    private LineChart<String, Number> lineChart;
+    private XYChart.Series series;
     private MainFXApplication mainApp;
     private MainController mainController;
 
@@ -25,15 +29,15 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Month");
-        final LineChart<String, Number> lineChart =
-                new LineChart<>(xAxis, yAxis);
+        yAxis.setLabel("PPM");
+        lineChart = new LineChart<>(xAxis, yAxis);
 
         lineChart.setTitle("PPM 2016");
 
-        XYChart.Series series = new XYChart.Series();
-        series.setName("My portfolio");
 
-        series.getData().add(new XYChart.Data("Jan", 23));
+
+        series = new XYChart.Series();
+        series.setName("My portfolio");
 
         lineChart.getData().add(series);
     }
@@ -41,6 +45,9 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
+        series.getData().add(new XYChart.Data("Jan", 23));
+        lineChart.getData().add(series);
+
     }
 
     @Override
