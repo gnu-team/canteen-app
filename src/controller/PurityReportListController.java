@@ -19,6 +19,8 @@ public class PurityReportListController implements MainAppReceiver, MainControll
     @FXML
     private TableView<PurityReport> purityReportTable;
     @FXML
+    private TableColumn<PurityReport, String> idCol;
+    @FXML
     private TableColumn<PurityReport, String> dateCol;
     @FXML
     private TableColumn<PurityReport, String> creatorCol;
@@ -44,6 +46,8 @@ public class PurityReportListController implements MainAppReceiver, MainControll
     @FXML
     private void initialize() {
         // Set column cell factories
+        idCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getReportNumber()));
         dateCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getDateFormat()));
         creatorCol.cellValueFactoryProperty().setValue(cdf ->

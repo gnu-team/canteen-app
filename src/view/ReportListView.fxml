@@ -8,6 +8,7 @@
    <children>
       <TableView fx:id="reportTable">
         <columns>
+          <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date" />
           <TableColumn fx:id="creatorCol" prefWidth="70.0" text="Creator" />
             <TableColumn fx:id="latitudeCol" prefWidth="46.0" text="Latitude" />
