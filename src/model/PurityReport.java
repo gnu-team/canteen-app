@@ -119,6 +119,12 @@ public class PurityReport implements MapPin {
         return reportNumber;
     }
 
+    @Override
+    public String getColor() {
+        return MapPin.COLOR_YELLOW;
+    }
+
+    @Override
     public String getSummary() {
         return String.format("%s: %s", getReportNumber(), condition);
     }

@@ -108,6 +108,12 @@ public class Report implements MapPin {
         return reportNumber;
     }
 
+    @Override
+    public String getColor() {
+        return MapPin.COLOR_BLUE;
+    }
+
+    @Override
     public String getSummary() {
         return String.format("%s: %s %s", getReportNumber(), condition, type);
     }

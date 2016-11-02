@@ -27,6 +27,7 @@ import java.util.Collection;
  */
 public class MapController implements MainAppReceiver, MainControllerReceiver,
                                       MapComponentInitializedListener {
+    private static final String ICON_FORMAT = "https://canteen-water.org/static/canteen_browser/img/%s32.png";
     private static final double GEORGIA_TECH_LAT = 33.779;
     private static final double GEORGIA_TECH_LONG = -84.398;
     private static final int GEORGIA_TECH_ZOOM = 14;
@@ -116,6 +117,7 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
 
             markerOptions.position(loc)
                     .visible(Boolean.TRUE)
+                    .icon(String.format(ICON_FORMAT, p.getColor()))
                     .title(p.getSummary());
 
             Marker marker = new Marker(markerOptions);
