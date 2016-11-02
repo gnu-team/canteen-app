@@ -12,6 +12,12 @@ import javafx.scene.control.Button;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.stage.Stage;
+import java.text.DateFormatSymbols;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import model.PurityReport;
 import model.Year;
 
@@ -31,16 +37,10 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Month");
         yAxis.setLabel("PPM");
-        //lineChart = new LineChart<>(xAxis, yAxis);
-
-
 
         lineChart.setTitle(YearHistoricalController.getButtonLabel() + " PPM");
 
-
-
         series = new XYChart.Series();
-        series.setName("My portfolio");
 
         lineChart.getData().add(series);
     }
@@ -48,8 +48,6 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
-        series.getData().add(new XYChart.Data<String, Number>("Jan", 23));
-        //lineChart.getData().add(series);
     }
 
     @Override
@@ -58,11 +56,14 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
     }
 
     public void drawGraphFor(Year year, PurityReport report) {
+        // Set series name
+        series.setName("Reports near " + report.getLatitude() + "," + report.getLongitude());
+
         mainApp.getDataSource().listNearbyPurityReports(
             year, report,
             // Success
             reports -> {
-                // TODO: Draw chart with reports
+                drawPoints(reports);
             },
             // Failure
             e -> {
@@ -71,5 +72,43 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
                 return;
             }
         );
+    }
+
+    private int reportMonth(PurityReport report) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(report.getDate());
+        return c.get(Calendar.MONTH);
+    }
+
+    private void drawPoints(Collection<PurityReport> reports) {
+        // First, sort reports by date
+        List<PurityReport> sorted = new ArrayList<>(reports);
+        Collections.sort(sorted, (r1, r2) -> r1.getDate().compareTo(r2.getDate()));
+
+        for (int i = 0; i < sorted.size();) {
+            // Index of next report with unique month
+            int j;
+
+            for (j = i + 1; j < sorted.size() &&
+                 reportMonth(sorted.get(j)) == reportMonth(sorted.get(i)); j++);
+
+            double avg = 0;
+            // Now, find sum
+            for (int k = i; k < j; k++) {
+                // XXX Show contaminant PPM instead if chosen in
+                //     YearHistoricalC8r
+                avg += sorted.get(k).getVirusPPM();
+            }
+            avg /= j - i;
+
+            drawPoint(reportMonth(sorted.get(i)), avg);
+
+            i = j;
+        }
+    }
+
+    private void drawPoint(int month, double avg) {
+        String monthName = new DateFormatSymbols().getMonths()[month];
+        series.getData().add(new XYChart.Data<String, Number>(monthName, avg));
     }
 }
