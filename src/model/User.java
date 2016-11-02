@@ -187,8 +187,20 @@ public class User {
         return phoneNumber;
     }
 
+    /**
+     * Determines whether user can create/list purity reports.
+     * @return true if they can, false if they cannot.
+     */
     public boolean canUsePurityReports() {
         return group != null && group.canUsePurityReports();
+    }
+
+    /**
+     * Determines whether user can view the history report for a water source.
+     * @return true if they can, false if they cannot.
+     */
+    public boolean canViewHistoryReports() {
+        return group != null && group.canViewHistoryReports();
     }
 
     /**

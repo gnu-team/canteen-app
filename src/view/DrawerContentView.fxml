@@ -4,38 +4,42 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="box" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="400.0" prefWidth="181.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DrawerContentController">
+<VBox fx:id="box" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="181.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DrawerContentController">
     <children>
         <JFXButton onAction="#handleMapPressed" prefHeight="48.0" prefWidth="183.0" text="Map">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton onAction="#handleReportListPressed" prefHeight="48.0" prefWidth="183.0" text="Water Source List">
+        <JFXButton onAction="#handleReportListPressed" prefHeight="48.0" prefWidth="183.0" text="Source List">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton onAction="#handleCreateReportPressed" prefHeight="48.0" prefWidth="183.0" text="Report Water Source">
+        <JFXButton onAction="#handleCreateReportPressed" prefHeight="48.0" prefWidth="183.0" text="Report New Source">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton onAction="#handlePurityReportListPressed" prefHeight="48.0" prefWidth="183.0" text="Water Purity List" fx:id="purityReportListButton">
+        <JFXButton fx:id="purityReportListButton" onAction="#handlePurityReportListPressed" prefHeight="48.0" prefWidth="183.0" text="Purity List">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton onAction="#handleCreatePurityReportPressed" prefHeight="48.0" prefWidth="183.0" text="Report Water Purity" fx:id="createPurityReportButton">
+        <JFXButton fx:id="createPurityReportButton" onAction="#handleCreatePurityReportPressed" prefHeight="48.0" prefWidth="183.0" text="Report Purity">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton onAction="#handleEditProfilePressed" prefHeight="48.0" prefWidth="183.0" text="Edit Profile">
+        <JFXButton fx:id="historyReportButton" onAction="#handleHistoricalReportPressed" prefHeight="48.0" prefWidth="183.0" text="Historical Report">
             <font>
                 <Font name="Courier" size="14.0" />
             </font>
         </JFXButton>
+      <JFXButton onAction="#handleEditProfilePressed" prefHeight="48.0" prefWidth="183.0" text="Edit Profile">
+         <font>
+            <Font name="Courier" size="14.0" />
+         </font>
+      </JFXButton>
     </children>
 </VBox>

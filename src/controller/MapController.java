@@ -14,7 +14,9 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import javafx.MainFXApplication;
 import javafx.MainAppReceiver;
 import javafx.fxml.FXML;
+import model.MapPin;
 import model.Report;
+import model.PurityReport;
 import model.exception.DataException;
 import netscape.javascript.JSObject;
 
@@ -35,21 +37,15 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
     private GoogleMap map;
     private MainFXApplication mainApp;
     private MainController mainController;
-    private Collection<Report> reports;
+
+    @FXML
+    private void initialize() {
+        mapView.addMapInializedListener(this);
+    }
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
-
-        try {
-            reports = mainApp.getDataSource().listReports();
-        } catch (DataException e) {
-            e.printStackTrace();
-            mainApp.showAlert(e.getMessage());
-            return;
-        }
-
-        mapView.addMapInializedListener(this);
     }
 
     @Override
@@ -76,13 +72,51 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
 
         map = mapView.createMap(options);
 
-        for (Report r : reports) {
+        drawReports();
+    }
+
+    /**
+     * Attempts to list and draw points for all reports.
+     */
+    private void drawReports() {
+        mainApp.getDataSource().listReports(
+            // Success
+            reports -> {
+                drawPins(reports);
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
+
+        if (mainApp.getUser().canUsePurityReports()) {
+            mainApp.getDataSource().listPurityReports(
+                // Success
+                purityReports -> {
+                    drawPins(purityReports);
+                },
+                // Failure
+                e -> {
+                    e.printStackTrace();
+                    mainApp.showAlert(e.getMessage());
+                }
+            );
+        }
+    }
+
+    /**
+     * Adds pins to the map for a given set of reports.
+     */
+    private void drawPins(Iterable<? extends MapPin> pins) {
+        for (MapPin p : pins) {
             MarkerOptions markerOptions = new MarkerOptions();
-            LatLong loc = new LatLong(r.getLatitude(), r.getLongitude());
+            LatLong loc = new LatLong(p.getLatitude(), p.getLongitude());
 
             markerOptions.position(loc)
                     .visible(Boolean.TRUE)
-                    .title(r.getSummary());
+                    .title(p.getSummary());
 
             Marker marker = new Marker(markerOptions);
 
@@ -92,8 +126,8 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
                         infoWindowOptions.content(String.format(
                             "<strong>%s</strong><br>%.4f, %.4f<br><br>%s",
-                            r.getSummary(), r.getLatitude(), r.getLongitude(),
-                            r.getDescription()));
+                            p.getSummary(), p.getLatitude(), p.getLongitude(),
+                            p.getDescription()));
 
                         InfoWindow window = new InfoWindow(infoWindowOptions);
                         window.open(map, marker);
@@ -101,8 +135,5 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
 
             map.addMarker(marker);
         }
-
-        // Don't need reports anymore, so allow them to get garbage collected.
-        reports = null;
     }
 }

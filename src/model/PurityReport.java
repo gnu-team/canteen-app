@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Represents a water purity report.
  */
-public class PurityReport {
+public class PurityReport implements MapPin {
     private int id;
     private Date date;
     @SerializedName("creator_name")
@@ -117,5 +117,9 @@ public class PurityReport {
         //S means Source, P will mean purity , and H will mean Historical
         String reportNumber = "P-" + nf.format(id);
         return reportNumber;
+    }
+
+    public String getSummary() {
+        return String.format("%s: %s", getReportNumber(), condition);
     }
 }

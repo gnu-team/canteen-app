@@ -19,6 +19,8 @@ public class PurityReportListController implements MainAppReceiver, MainControll
     @FXML
     private TableView<PurityReport> purityReportTable;
     @FXML
+    private TableColumn<PurityReport, String> idCol;
+    @FXML
     private TableColumn<PurityReport, String> dateCol;
     @FXML
     private TableColumn<PurityReport, String> creatorCol;
@@ -44,6 +46,8 @@ public class PurityReportListController implements MainAppReceiver, MainControll
     @FXML
     private void initialize() {
         // Set column cell factories
+        idCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getReportNumber()));
         dateCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getDateFormat()));
         creatorCol.cellValueFactoryProperty().setValue(cdf ->
@@ -66,16 +70,28 @@ public class PurityReportListController implements MainAppReceiver, MainControll
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
 
-        // Populate table
-        Collection<PurityReport> purityReports;
-        try {
-            purityReports = mainApp.getDataSource().listPurityReports();
-        } catch (DataException e) {
-            e.printStackTrace();
-            mainApp.showAlert(e.getMessage());
-            return;
+        mainApp.getDataSource().listPurityReports(
+            // Success
+            purityReports -> {
+                // Populate table
+                purityReportTable.getItems().setAll(purityReports);
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
+    }
+
+    public void handleGraphButtonPressed() {
+        PurityReport report = purityReportTable.getSelectionModel().getSelectedItem();
+
+        if (report == null) {
+            mainApp.showAlert("Please select a purity report first.");
+        } else {
+            mainController.showYearHistoricalView(report);
         }
-        purityReportTable.getItems().setAll(purityReports);
     }
 
     @Override

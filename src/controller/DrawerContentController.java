@@ -15,6 +15,8 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     private Button purityReportListButton;
     @FXML
     private Button createPurityReportButton;
+    @FXML
+    private Button historyReportButton;
 
     private MainFXApplication mainApp;
     private MainController mainController;
@@ -28,6 +30,10 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
             hide(purityReportListButton);
             hide(createPurityReportButton);
         }
+        // Hide history report control if less than a Manager
+        if (!mainApp.getUser().canViewHistoryReports()) {
+            hide(historyReportButton);
+        }
     }
 
     @Override
@@ -36,7 +42,9 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     }
 
     /**
-     * Hides the node n.
+     * Sets the node as managed so that there isn't a blank
+     * space, then makes it invisible. This method is used to hide
+     * elements of the ui that are only intended for higher level users.
      *
      * @param n node to hide
      */
@@ -51,7 +59,6 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     @FXML
     private void handleMapPressed(ActionEvent event) {
         mainController.showMap();
-        mainController.closeDrawer();
     }
 
     /**
@@ -60,7 +67,6 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     @FXML
     private void handleReportListPressed(ActionEvent event) {
         mainController.showReportList();
-        mainController.closeDrawer();
     }
 
     /**
@@ -69,7 +75,6 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
         mainController.showCreateReport();
-        mainController.closeDrawer();
     }
 
     /**
@@ -78,18 +83,20 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     @FXML
     private void handleEditProfilePressed(ActionEvent event) {
         mainController.showEditProfile();
-        mainController.closeDrawer();
     }
 
     @FXML
     private void handlePurityReportListPressed(ActionEvent event) {
         mainController.showPurityReportList();
-        mainController.closeDrawer();
     }
 
     @FXML
     private void handleCreatePurityReportPressed(ActionEvent event) {
         mainController.showCreatePurityReport();
-        mainController.closeDrawer();
+    }
+
+    @FXML
+    private void handleHistoricalReportPressed(ActionEvent event) {
+        mainController.showHistoricalReport(null, null);
     }
 }

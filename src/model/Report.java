@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Represents a water source report.
  */
-public class Report {
+public class Report implements MapPin {
     private int id;
     private Date date;
     @SerializedName("creator_name")
