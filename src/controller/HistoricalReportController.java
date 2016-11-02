@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.stage.Stage;
+import model.PurityReport;
 import model.Year;
 
 /**
@@ -56,9 +57,9 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
         this.mainController = mainController;
     }
 
-    public void drawGraphFor(double latitude, double longitude, Year year) {
+    public void drawGraphFor(Year year, PurityReport report) {
         mainApp.getDataSource().listNearbyPurityReports(
-            latitude, longitude,
+            year, report,
             // Success
             reports -> {
                 // TODO: Draw chart with reports

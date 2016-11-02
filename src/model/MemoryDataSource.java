@@ -79,7 +79,7 @@ public class MemoryDataSource implements DataSource {
     }
 
     @Override
-    public void listNearbyPurityReports(double latitude, double longitude, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
+    public void listNearbyPurityReports(Year year, PurityReport report, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
         onFail.onFail(new DataException("Not implemented"));
     }
 }

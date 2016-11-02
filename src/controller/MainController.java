@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import java.util.function.Consumer;
+import model.PurityReport;
 import model.Year;
 
 /**
@@ -157,16 +158,19 @@ public class MainController implements MainAppReceiver {
     /**
      * Shows the HistoricalReportView
      */
-    public void showHistoricalReport(double latitude, double longitude, Year year) {
+    public void showHistoricalReport(Year year, PurityReport report) {
         showView("HistoricalReport", c -> {
             // XXX Don't hardcode the name of the controller like this
-            ((HistoricalReportController) c).drawGraphFor(latitude, longitude, year);
+            ((HistoricalReportController) c).drawGraphFor(year, report);
         });
         closeDrawer();
     }
 
-    public void showYearHistoricalView() {
-        showView("YearHistorical");
+    public void showYearHistoricalView(PurityReport report) {
+        showView("YearHistorical", c -> {
+            // XXX Don't hardcode the name of the controller like this
+            ((YearHistoricalController) c).setReport(report);
+        });
         closeDrawer();
     }
 

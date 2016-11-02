@@ -81,7 +81,13 @@ public class PurityReportListController implements MainAppReceiver, MainControll
     }
 
     public void handleGraphButtonPressed() {
-        mainController.showYearHistoricalView();
+        PurityReport report = purityReportTable.getSelectionModel().getSelectedItem();
+
+        if (report == null) {
+            mainApp.showAlert("Please select a purity report first.");
+        } else {
+            mainController.showYearHistoricalView(report);
+        }
     }
 
     @Override

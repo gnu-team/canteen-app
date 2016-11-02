@@ -21,6 +21,7 @@ import model.User;
 import model.WaterCondition;
 import model.WaterPurityCondition;
 import model.WaterType;
+import model.Year;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -171,9 +172,10 @@ public class ApiDataSource implements DataSource {
     }
 
     @Override
-    public void listNearbyPurityReports(double longitude, double latitude, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
+    public void listNearbyPurityReports(Year year, PurityReport report, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
         executor.execute(new ApiTask<Collection<PurityReport>>(onSuccess, onFail, () -> {
-            String path = String.format("/purity_reports/near/%f,%f/", longitude, latitude);
+            String path = String.format("/purity_reports/near/%f,%f/?startDate=%s-01-01&endDate=%s-12-31",
+                                        report.getLongitude(), report.getLatitude(), year, year);
             ApiConnection conn = new ApiConnection("GET", path, HttpURLConnection.HTTP_OK, user, password);
             Reader response = conn.getResponseReader();
 

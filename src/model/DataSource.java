@@ -60,6 +60,6 @@ public interface DataSource {
     /**
      * Finds all purity reports near the given latitude and longitude.
      */
-    void listNearbyPurityReports(double latitude, double longitude, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
+    void listNearbyPurityReports(Year year, PurityReport report, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
 }
 

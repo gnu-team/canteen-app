@@ -5,6 +5,7 @@ import javafx.MainFXApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
+import model.PurityReport;
 import model.Year;
 
 
@@ -25,6 +26,7 @@ public class YearHistoricalController implements MainAppReceiver, MainController
     private static String buttonLabel;
     private MainFXApplication mainApp;
     private MainController mainController;
+    private PurityReport report;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
@@ -34,6 +36,10 @@ public class YearHistoricalController implements MainAppReceiver, MainController
     @Override
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+    }
+
+    public void setReport(PurityReport report) {
+        this.report = report;
     }
 
     @FXML
@@ -52,7 +58,7 @@ public class YearHistoricalController implements MainAppReceiver, MainController
 
     @FXML
     public void handleViewPressed() {
-        mainController.showHistoricalReport(0, 0, null);
+        mainController.showHistoricalReport(year.getValue(), report);
     }
 
     @FXML
