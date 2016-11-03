@@ -1,6 +1,5 @@
 package model;
 
-import java.util.regex.Pattern;
 
 /**
  * Generates a User instance from a username, password, and AccountType.
