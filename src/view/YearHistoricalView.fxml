@@ -10,29 +10,29 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.YearHistoricalController">
    <children>
-      <JFXButton layoutX="112.0" layoutY="246.0" onAction="#handleViewPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="View" textFill="#fcfcfc">
+      <JFXButton layoutX="112.0" layoutY="246.0" onAction="#handleViewPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" stylesheets="@CSS/Styles.css" text="View" textFill="#fcfcfc">
          <font>
             <Font name="Courier" size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="294.0" layoutY="246.0" onAction="#handleCancelPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" text="Cancel" textFill="#fcfcfc">
+      <JFXButton layoutX="294.0" layoutY="246.0" onAction="#handleCancelPressed" prefHeight="43.0" prefWidth="106.0" ripplerFill="#003cc9" style="-fx-background-color: #3366ff;" stylesheets="@CSS/Styles.css" text="Cancel" textFill="#fcfcfc">
          <font>
             <Font name="Courier" size="14.0" />
          </font>
       </JFXButton>
-      <Label layoutX="103.0" layoutY="40.0" text="Select Additional Details" wrapText="true">
+      <Label layoutX="103.0" layoutY="40.0" styleClass="label-header2" stylesheets="@CSS/Styles.css" text="Select Additional Details" wrapText="true">
          <font>
             <Font name="Courier" size="20.0" />
          </font>
       </Label>
-      <JFXComboBox fx:id="year" layoutX="116.0" layoutY="177.0" prefHeight="27.0" prefWidth="162.0" promptText="Year" />
-      <JFXRadioButton fx:id="virus" layoutX="103.0" layoutY="141.0" onAction="#handleRadioButtonPressed" text="Virus">
+      <JFXComboBox fx:id="year" layoutX="116.0" layoutY="177.0" prefHeight="27.0" prefWidth="162.0" promptText="Year" stylesheets="@CSS/Styles.css" />
+      <JFXRadioButton fx:id="virus" layoutX="103.0" layoutY="141.0" onAction="#handleRadioButtonPressed" stylesheets="@CSS/Styles.css" text="Virus">
          <font>
             <Font name="Courier" size="13.0" />
          </font>
          <toggleGroup>
             <ToggleGroup fx:id="contagion" />
          </toggleGroup></JFXRadioButton>
-      <JFXRadioButton fx:id="contaminant" layoutX="197.0" layoutY="140.0" onAction="#handleRadioButtonPressed" text="Contaminate" toggleGroup="$contagion" />
+      <JFXRadioButton fx:id="contaminant" layoutX="197.0" layoutY="140.0" onAction="#handleRadioButtonPressed" stylesheets="@CSS/Styles.css" text="Contaminate" toggleGroup="$contagion" />
    </children>
 </Pane>
