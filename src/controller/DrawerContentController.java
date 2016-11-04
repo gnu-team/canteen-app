@@ -15,8 +15,6 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     private Button purityReportListButton;
     @FXML
     private Button createPurityReportButton;
-    @FXML
-    private Button historyReportButton;
 
     private MainFXApplication mainApp;
     private MainController mainController;
@@ -29,10 +27,6 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
         if (!mainApp.getUser().canUsePurityReports()) {
             hide(purityReportListButton);
             hide(createPurityReportButton);
-        }
-        // Hide history report control if less than a Manager
-        if (!mainApp.getUser().canViewHistoryReports()) {
-            hide(historyReportButton);
         }
     }
 
@@ -93,10 +87,5 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     @FXML
     private void handleCreatePurityReportPressed(ActionEvent event) {
         mainController.showCreatePurityReport();
-    }
-
-    @FXML
-    private void handleHistoricalReportPressed(ActionEvent event) {
-        mainController.showHistoricalReport(null, null);
     }
 }
