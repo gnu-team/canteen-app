@@ -7,6 +7,9 @@ public class ApiUserError extends ApiError {
     private String[] email;
     private String[] group;
     private String[] password;
+    private String[] phone;
+    private String[] address;
+    private String[] bio;
 
     @Override
     public String fieldErrors() {
@@ -17,6 +20,9 @@ public class ApiUserError extends ApiError {
         listReasons(sb, "Email address", email);
         listReasons(sb, "Group name", group);
         listReasons(sb, "Password", password);
+        listReasons(sb, "Phone number", phone);
+        listReasons(sb, "Address", address);
+        listReasons(sb, "Bio", bio);
         return (sb.length() > 0) ? sb.toString() : null;
     }
 }
