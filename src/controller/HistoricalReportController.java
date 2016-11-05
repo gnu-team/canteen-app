@@ -2,16 +2,12 @@ package controller;
 
 
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
-import javafx.stage.Stage;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,9 +46,10 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
         this.mainApp = mainApp;
     }
 
+
     @Override
     public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+        //this.mainController = mainController;
     }
 
     public void drawGraphFor(Year year, PurityReport report) {
@@ -69,7 +66,7 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
             e -> {
                 e.printStackTrace();
                 mainApp.showAlert(e.getMessage());
-                return;
+                //return;
             }
         );
     }
