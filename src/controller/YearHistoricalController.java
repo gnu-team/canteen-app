@@ -24,13 +24,12 @@ public class YearHistoricalController implements MainAppReceiver, MainController
     private ComboBox<Year> year;
 
     private static String buttonLabel;
-    private MainFXApplication mainApp;
     private MainController mainController;
     private PurityReport report;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
-        this.mainApp = mainApp;
+        //MainFXApplication mainApp1 = mainApp;
     }
 
     @Override
@@ -43,17 +42,25 @@ public class YearHistoricalController implements MainAppReceiver, MainController
     }
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         year.getItems().setAll(Year.values());
     }
 
     @FXML
     public void handleRadioButtonPressed() {
         if (virus.isSelected()) {
-            buttonLabel = "Virus";
+            //buttonLabel = "Virus";
+            setButtonLabel("Virus");
         } else if (contaminant.isSelected()) {
-            buttonLabel = "Contaminant";
+            //buttonLabel = "Contaminant";
+            setButtonLabel("Contaminant");
         }
+    }
+    /*
+     * setter method for button label to remove Dodgy errors
+     */
+    private static void setButtonLabel(String buttonValue) {
+        buttonLabel = buttonValue;
     }
 
     @FXML
