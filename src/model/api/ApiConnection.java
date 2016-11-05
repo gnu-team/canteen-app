@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -14,6 +15,7 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.io.IOUtils;
 import model.exception.DataException;
 
 import javax.xml.bind.DatatypeConverter;
@@ -53,14 +55,7 @@ public class ApiConnection<T extends ApiError> {
         }
 
         if (statusCode != statusWanted) {
-            String err = parseError();
-
-            if (err == null) {
-                throw new DataException("Unexpected response code "
-                    + statusCode + " but no error sent.");
-            } else {
-                throw new DataException(err);
-            }
+            determineError(statusCode);
         }
     }
 
@@ -116,18 +111,42 @@ public class ApiConnection<T extends ApiError> {
         return conn;
     }
 
-    private String parseError() {
-        String result = null;
+    // Throw a DataException best representing the error encountered
+    private void determineError(int statusCode) throws DataException {
+        String errDetail = null;
+        String rawResponse = null;
         InputStream response = conn.getErrorStream();
 
         if (response != null) {
             Gson gson = gsonBuilder.create();
-            ApiError err = (ApiError) gson.fromJson(new InputStreamReader(response), errType);
 
-            result = err.getDetail();
+            try {
+                rawResponse = IOUtils.toString(response, StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                throw new DataException("Reading error response", e);
+            }
+
+            ApiError err = (ApiError) gson.fromJson(rawResponse, errType);
+
+            errDetail = err.getDetail();
         }
 
-        return result;
+        // Parsing error messages with ApiError often causes issues (for
+        // instance, when a new required field is added of which the specific
+        // Api*Error is unaware), so go ahead and log the full response body
+        // for debugging purposes.
+        if (rawResponse != null) {
+            // XXX Use logging somehow instead of writing directly to stderr
+            System.err.println(String.format("Bad response (%d): %s",
+                                             statusCode, rawResponse));
+        }
+
+        if (errDetail == null) {
+            throw new DataException("Unexpected response code " + statusCode
+                                    + " but no error response sent.");
+        } else {
+            throw new DataException(errDetail);
+        }
     }
 
     public void closeRequest(Writer writer) throws DataException {
