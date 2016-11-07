@@ -1,6 +1,5 @@
 package controller;
 
-import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
@@ -53,18 +52,21 @@ public class CreatePurityReportController implements MainAppReceiver, MainContro
      */
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
-        Double latitude, longitude, virusPPM, contaminantPPM;
+        Double latitude = tryParseDouble(latitudeField.getText());
+        Double longitude = tryParseDouble(longitudeField.getText());
+        Double virusPPM = tryParseDouble(virusPPMField.getText());
+        Double contaminantPPM = tryParseDouble(contaminantPPMField.getText());
 
         if (latitudeField.getText().trim().equals("")
                 || longitudeField.getText().trim().equals("")) {
             mainApp.showAlert("Please enter a location");
-        } else if ((latitude = tryParseDouble(latitudeField.getText())) == null) {
+        } else if (latitude == null) {
             mainApp.showAlert("Please enter a valid number for latitude");
-        } else if ((longitude = tryParseDouble(longitudeField.getText())) == null) {
+        } else if (longitude == null) {
             mainApp.showAlert("Please enter a valid number for longitude");
-        } else if ((virusPPM = tryParseDouble(virusPPMField.getText())) == null) {
+        } else if (virusPPM == null) {
             mainApp.showAlert("Please enter a valid number for virus PPM");
-        } else if ((contaminantPPM = tryParseDouble(contaminantPPMField.getText())) == null) {
+        } else if (contaminantPPM == null) {
             mainApp.showAlert("Please enter a valid number for contaminant PPM");
         } else if (conditionBox.getValue() == null) {
             mainApp.showAlert("Please choose a water type");
