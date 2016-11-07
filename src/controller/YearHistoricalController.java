@@ -48,7 +48,13 @@ public class YearHistoricalController implements MainAppReceiver, MainController
 
     @FXML
     public void handleViewPressed() {
-        mainController.showHistoricalReport(virus.isSelected(), year.getValue(), report);
+        if (!virus.isSelected() && !contaminant.isSelected()) {
+            mainApp.showAlert("Please select a PPM to graph.");
+        } else if (year.getValue() == null) {
+            mainApp.showAlert("Please select a year to graph.");
+        } else {
+            mainController.showHistoricalReport(virus.isSelected(), year.getValue(), report);
+        }
     }
 
     @FXML
