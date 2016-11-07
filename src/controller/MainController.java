@@ -157,11 +157,16 @@ public class MainController implements MainAppReceiver {
 
     /**
      * Shows the HistoricalReportView
+     *
+     * @param virus true if Virus PPM should be graphed, false if contaminant
+     *              PPM should be graphed
+     * @param year The year of reports to graph
+     * @param report the report around which to search
      */
-    public void showHistoricalReport(Year year, PurityReport report) {
+    public void showHistoricalReport(boolean virus, Year year, PurityReport report) {
         showView("HistoricalReport", c -> {
             // XXX Don't hardcode the name of the controller like this
-            ((HistoricalReportController) c).drawGraphFor(year, report);
+            ((HistoricalReportController) c).drawGraphFor(virus, year, report);
         });
         closeDrawer();
     }

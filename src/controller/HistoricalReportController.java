@@ -38,10 +38,7 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
         xAxis.setLabel("Month");
         yAxis.setLabel("PPM");
 
-        lineChart.setTitle(YearHistoricalController.getButtonLabel() + " PPM");
-
         series = new XYChart.Series();
-
         lineChart.getData().add(series);
     }
 
@@ -55,7 +52,9 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
         this.mainController = mainController;
     }
 
-    public void drawGraphFor(Year year, PurityReport report) {
+    public void drawGraphFor(boolean virus, Year year, PurityReport report) {
+        // Apply the right PPM label
+        lineChart.setTitle((virus ? "Virus" : "Contaminant") + " PPM");
         // Set series name
         series.setName("Reports near " + report.getLatitude() + "," + report.getLongitude());
 
@@ -63,7 +62,7 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
             year, report,
             // Success
             reports -> {
-                drawPoints(reports);
+                drawPoints(virus, reports);
             },
             // Failure
             e -> {
@@ -80,7 +79,7 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
         return c.get(Calendar.MONTH);
     }
 
-    private void drawPoints(Collection<PurityReport> reports) {
+    private void drawPoints(boolean virus, Collection<PurityReport> reports) {
         // First, sort reports by date
         List<PurityReport> sorted = new ArrayList<>(reports);
         Collections.sort(sorted, (r1, r2) -> r1.getDate().compareTo(r2.getDate()));
@@ -95,9 +94,9 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
             double avg = 0;
             // Now, find sum
             for (int k = i; k < j; k++) {
-                // XXX Show contaminant PPM instead if chosen in
-                //     YearHistoricalC8r
-                avg += sorted.get(k).getVirusPPM();
+                PurityReport report = sorted.get(k);
+                avg += (virus ? report.getVirusPPM()
+                              : report.getContaminantPPM());
             }
             avg /= j - i;
 
