@@ -42,7 +42,7 @@ public class YearHistoricalController implements MainAppReceiver, MainController
     }
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         year.getItems().setAll(Year.values());
     }
 
