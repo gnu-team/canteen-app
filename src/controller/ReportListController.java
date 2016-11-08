@@ -1,6 +1,5 @@
 package controller;
 
-import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -10,8 +9,6 @@ import javafx.scene.control.TableView;
 import model.Report;
 import model.WaterCondition;
 import model.WaterType;
-
-import java.util.Collection;
 
 /**
  * Handles events sent by the reports list.
@@ -35,9 +32,6 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
     private TableColumn<Report, WaterCondition> conditionCol;
     @FXML
     private TableColumn<Report, String> descriptionCol;
-
-    private MainFXApplication mainApp;
-    private MainController mainController;
 
     /**
      * Configures the columns of the table of reports.
@@ -65,7 +59,6 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
-        this.mainApp = mainApp;
 
         mainApp.getDataSource().listReports(
             // Success
@@ -83,6 +76,5 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
 
     @Override
     public void setMainController(MainController mainController) {
-        this.mainController = mainController;
     }
 }

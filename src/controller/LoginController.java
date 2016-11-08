@@ -1,13 +1,9 @@
 package controller;
 
-import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
-import model.User;
 
 /**
  * Handles events from the welcome screen
@@ -17,8 +13,6 @@ public class LoginController implements MainAppReceiver {
     private TextField usernameField;
     @FXML
     private TextField passwordField;
-    @FXML
-    private Label Welcome;
 
     private MainFXApplication mainApp;
 
@@ -30,7 +24,7 @@ public class LoginController implements MainAppReceiver {
     /**
      * When user presses login, attempt to log in
      */
-    public void handleLoginPressed(ActionEvent event) throws Exception {
+    public void handleLoginPressed() {
         mainApp.getDataSource().authenticate(
             usernameField.getText(), passwordField.getText(),
             // Success
@@ -48,7 +42,7 @@ public class LoginController implements MainAppReceiver {
     /**
      * When user presses register, show registration screen
      */
-    public void handleRegisterPressed(ActionEvent actionEvent) {
+    public void handleRegisterPressed() {
         mainApp.showRegister();
     }
 }

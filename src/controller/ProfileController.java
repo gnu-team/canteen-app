@@ -2,11 +2,9 @@ package controller;
 
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
-import model.exception.DataException;
 import model.User;
 
 /**
@@ -28,7 +26,6 @@ public class ProfileController implements MainAppReceiver,
     private TextField phone;
 
     private MainFXApplication mainApp;
-    private MainController mainController;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
@@ -48,14 +45,13 @@ public class ProfileController implements MainAppReceiver,
 
     @Override
     public void setMainController(MainController mainController) {
-        this.mainController = mainController;
     }
 
     /**
      * Saves profile information and tells MainFXApp to display the success
      * page.
      */
-    public void handleSaveProfilePressed(ActionEvent actionEvent) {
+    public void handleSaveProfilePressed() {
         User user = mainApp.getUser();
         user.setFirstName(firstName.getText());
         user.setLastName(lastName.getText());

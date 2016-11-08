@@ -10,7 +10,8 @@ import model.Year;
 
 
 /**
- * Created by Ph3ncyclidine on 10/31/16.
+ * Dialog window for the user to select what kind of ppm
+ * and which year to graph.
  */
 public class YearHistoricalController implements MainAppReceiver, MainControllerReceiver {
 
@@ -37,15 +38,25 @@ public class YearHistoricalController implements MainAppReceiver, MainController
         this.mainController = mainController;
     }
 
+    /**
+     * Sets the report to graph.
+     * @param report the report to graph
+     */
     public void setReport(PurityReport report) {
         this.report = report;
     }
 
+    /**
+     * Sets the year
+     */
     @FXML
     private void initialize() {
         year.getItems().setAll(Year.values());
     }
 
+    /**
+     * Shows the graph with the selected ppm and year.
+     */
     @FXML
     public void handleViewPressed() {
         if (!virus.isSelected() && !contaminant.isSelected()) {
@@ -57,6 +68,9 @@ public class YearHistoricalController implements MainAppReceiver, MainController
         }
     }
 
+    /**
+     * Goes back to the previous page.
+     */
     @FXML
     public void handleCancelPressed() {
         mainController.showMap();

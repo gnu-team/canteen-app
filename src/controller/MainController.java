@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import java.util.function.Consumer;
 import model.PurityReport;
@@ -20,9 +19,6 @@ import model.Year;
  */
 public class MainController implements MainAppReceiver {
     private MainFXApplication mainApp;
-
-    @FXML
-    private AnchorPane anchorPane;
 
     @FXML
     private JFXHamburger hamburger;
@@ -84,17 +80,8 @@ public class MainController implements MainAppReceiver {
      * the current user and display the registration screen.
      */
     @FXML
-    private void handleLogoutPressed(ActionEvent event) {
+    private void handleLogoutPressed() {
         mainApp.logout();
-    }
-
-    /**
-     * When user pressed edit profile button, displays edit profile screen.
-     * @param event event raised
-     */
-    @FXML
-    private void handleEditProfile(ActionEvent event) {
-        mainApp.editProfile();
     }
 
     /**
@@ -110,7 +97,6 @@ public class MainController implements MainAppReceiver {
      * Shows the map screen.
      */
     public void showMap() {
-        //closeDrawer();
         showView("Map");
         closeDrawer();
     }
@@ -171,6 +157,11 @@ public class MainController implements MainAppReceiver {
         closeDrawer();
     }
 
+    /**
+     * Shows the dialoge for the user to choose which year and
+     * ppm to graph
+     * @param report the report to graph
+     */
     public void showYearHistoricalView(PurityReport report) {
         showView("YearHistorical", c -> {
             // XXX Don't hardcode the name of the controller like this

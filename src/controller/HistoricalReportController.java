@@ -2,16 +2,12 @@ package controller;
 
 
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
-import javafx.stage.Stage;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,7 +18,7 @@ import model.PurityReport;
 import model.Year;
 
 /**
- * Created by Ph3ncyclidine on 10/26/16.
+ * Draws a chart for the history of the water's purity.
  */
 public class HistoricalReportController implements MainAppReceiver, MainControllerReceiver {
 
@@ -30,8 +26,10 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
     private LineChart<String, Number> lineChart;
     private XYChart.Series series;
     private MainFXApplication mainApp;
-    private MainController mainController;
 
+    /**
+     * Initializes the graph with startup data
+     */
     public void initialize() {
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -49,9 +47,14 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
 
     @Override
     public void setMainController(MainController mainController) {
-        this.mainController = mainController;
     }
 
+    /**
+     * Called by main controller to specify what to graph
+     * @param virus true if virus is selected false for contaminate
+     * @param year the year we're looking at
+     * @param report the report to graph
+     */
     public void drawGraphFor(boolean virus, Year year, PurityReport report) {
         // Apply the right PPM label
         lineChart.setTitle((virus ? "Virus" : "Contaminant") + " PPM");
@@ -68,17 +71,26 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
             e -> {
                 e.printStackTrace();
                 mainApp.showAlert(e.getMessage());
-                return;
             }
         );
     }
 
+    /**
+     * Gets the month of the report as an integer
+     * @param report the report we want to use
+     * @return the month as an integer
+     */
     private int reportMonth(PurityReport report) {
         Calendar c = Calendar.getInstance();
         c.setTime(report.getDate());
         return c.get(Calendar.MONTH);
     }
 
+    /**
+     * Draws the points on the graph
+     * @param virus true if virus is selected, false if contaminate is selected
+     * @param reports the report to draw the points of
+     */
     private void drawPoints(boolean virus, Collection<PurityReport> reports) {
         // First, sort reports by date
         List<PurityReport> sorted = new ArrayList<>(reports);
@@ -106,6 +118,11 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
         }
     }
 
+    /**
+     * Draws an individual point
+     * @param month the month of the point to be drawn
+     * @param avg the average of the months
+     */
     private void drawPoint(int month, double avg) {
         String monthName = new DateFormatSymbols().getMonths()[month];
         series.getData().add(new XYChart.Data<String, Number>(monthName, avg));

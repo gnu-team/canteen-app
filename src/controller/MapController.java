@@ -15,29 +15,23 @@ import javafx.MainFXApplication;
 import javafx.MainAppReceiver;
 import javafx.fxml.FXML;
 import model.MapPin;
-import model.Report;
-import model.PurityReport;
-import model.exception.DataException;
 import netscape.javascript.JSObject;
 
-import java.util.Collection;
-
 /**
- * Created by Claude Peon on 10/16/16.
+ * Displays map which shows the reports as icons
  */
 public class MapController implements MainAppReceiver, MainControllerReceiver,
                                       MapComponentInitializedListener {
     private static final String ICON_FORMAT = "https://canteen-water.org/static/canteen_browser/img/%s32.png";
     private static final double GEORGIA_TECH_LAT = 33.779;
     private static final double GEORGIA_TECH_LONG = -84.398;
-    private static final int GEORGIA_TECH_ZOOM = 14;
+    private static final int GEORGIA_TECH_ZOOM = 15;
 
     @FXML
     private GoogleMapView mapView;
 
     private GoogleMap map;
     private MainFXApplication mainApp;
-    private MainController mainController;
 
     @FXML
     private void initialize() {
@@ -51,7 +45,6 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
 
     @Override
     public void setMainController(MainController mainController) {
-        this.mainController = mainController;
     }
 
     @Override
