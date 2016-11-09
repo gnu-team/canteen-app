@@ -1,13 +1,19 @@
 package model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Defines a user account, which can view water sources and leave reports.
  */
 public class User {
-    private String user;
+    private String username;
     private String password;
+    private AccountType group;
     // Profile attributes
-    private String name;
+    @SerializedName("first_name")
+    private String firstName;
+    @SerializedName("last_name")
+    private String lastName;
     private String email;
     private String address;
     private String bio;
@@ -18,26 +24,51 @@ public class User {
      * Creates user object
      */
     public User(){
-        this("user","pass");
+        this("user", "pass", AccountType.USER);
     }
 
     /**
      * Creates user object with given username and password
      * @param user the username
      * @param password the password
+     * @param type account type
      */
-    public User(String user, String password) {
-        this.user = user;
+    public User(String user, String password, AccountType type) {
+        this.username = user;
         this.password = password;
+        this.group = type;
     }
 
     /**
      * Gets the username of User account
      * @return the username
      */
-
     public String getUser() {
-        return user;
+        return username;
+    }
+
+    /**
+     * Sets the username of this account.
+     * @param username new username
+     */
+    public void setUser(String username) {
+        this.username = username;
+    }
+
+    /**
+     * Gets the password of this account
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Sets the password of this account
+     * @return the password
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
@@ -47,7 +78,7 @@ public class User {
      * @return if the login is correct or not
      */
     public boolean authenticate(String user, String password) {
-        return this.user.equals(user) && this.password.equals(password);
+        return this.username.equals(user) && this.password.equals(password);
     }
 
     /**
@@ -59,19 +90,35 @@ public class User {
     }
 
     /**
-     * Gets the name of User
-     * @return the name of user
+     * Gets the firstName of User
+     * @return the firstName of user
      */
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     /**
-     * Sets the name of user
-     * @param name the name of user
+     * Sets the firstName of user
+     * @param firstName the firstName of user
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * Gets the last name of this user
+     * @return the last name of this user
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Sets the last name of this user
+     * @param lastName new last name of this user
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     /**
@@ -138,6 +185,22 @@ public class User {
      */
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    /**
+     * Determines whether user can create/list purity reports.
+     * @return true if they can, false if they cannot.
+     */
+    public boolean canUsePurityReports() {
+        return group != null && group.canUsePurityReports();
+    }
+
+    /**
+     * Determines whether user can view the history report for a water source.
+     * @return true if they can, false if they cannot.
+     */
+    public boolean canViewHistoryReports() {
+        return group != null && group.canViewHistoryReports();
     }
 
     /**

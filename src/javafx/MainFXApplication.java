@@ -5,9 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import java.util.function.Consumer;
+
+import model.DataSource;
 import model.User;
+import model.api.ApiDataSource;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +24,7 @@ public class MainFXApplication extends Application {
 
     private User user;
     private Stage stage;
+    private DataSource dataSource;
 
     /**
      * Sets the window title and displays the registration screen.
@@ -28,25 +32,48 @@ public class MainFXApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         stage = primaryStage;
+        // For now, store system state in memory
+        dataSource = new ApiDataSource();
 
         primaryStage.setTitle(TITLE);
-        showRegister();
+        showLogin();
         primaryStage.show();
     }
 
     /**
-     * Load a view and place it in the main window.
+     * Return the DataSource used to store state in this application.
+     * @return A DataSource instance
+     */
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    /**
+     * Load a view and return its root node.
      *
      * @param name name of the view to load
+     * @return root node of view specified
      */
-    private void showView(String name) {
+    public Parent loadView(String name) {
+        return loadView(name, null);
+    }
+
+    /**
+     * Load a view and return its root node.
+     *
+     * @param name name of the view to load
+     * @param controllerConsumer function performing custom operations on
+     *        controller, or null
+     * @return root node of view specified
+     */
+    public Parent loadView(String name, Consumer<Object> controllerConsumer) {
         URL path = getClass().getResource("/view/" + name + "View.fxml");
 
         // If getResource() does not find the resource given, it returns
         // null
         if (path == null) {
             bail("Cannot locate view " + name + ".");
-            return;
+            return null;
         }
 
         FXMLLoader loader = new FXMLLoader(path);
@@ -56,14 +83,35 @@ public class MainFXApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             bail("IOException thrown when loading view '" + name + "'.");
-            return;
+            return null;
         }
 
         // TODO: Use dependency injection or something instead of this
         // interface-cast hack
-        ((IMainAppReceiver)loader.getController()).setMainApp(this);
+        MainAppReceiver controller = (MainAppReceiver) loader.getController();
+        if (controller != null) {
+            controller.setMainApp(this);
 
-        stage.setScene(new Scene(root));
+            // Do caller-specific stuff on controller
+            if (controllerConsumer != null) {
+                controllerConsumer.accept(controller);
+            }
+        }
+
+        return root;
+    }
+
+    /**
+     * Load a view and place it in the main window.
+     *
+     * @param name name of the view to load
+     */
+    private void showView(String name) {
+        Parent root = loadView(name);
+
+        if (root != null) {
+            stage.setScene(new Scene(root));
+        }
     }
 
     /**
@@ -119,7 +167,7 @@ public class MainFXApplication extends Application {
      * Displays welcome screen.
      */
     public void showRegister() {
-        showView("Welcome");
+        showView("Register");
     }
 
     /**
@@ -134,7 +182,7 @@ public class MainFXApplication extends Application {
      */
     public void logout() {
         this.user = null;
-        showRegister();
+        showLogin();
     }
 
     /**
@@ -164,18 +212,8 @@ public class MainFXApplication extends Application {
     }
 
     /**
-     * After logged in, user can create water report
+     * Launches the application.
      */
-    public void createWaterReport() {
-        showView("WaterReport");
-    }
-    /**
-     * If user press cancel button for water report, shows main screen.
-     */
-    public void cancelWaterReport() {
-        showView("Main");
-    }
-
     public static void main(String[] args) {
         launch(args);
     }

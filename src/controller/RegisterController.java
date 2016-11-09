@@ -1,30 +1,26 @@
 package controller;
 
-import javafx.IMainAppReceiver;
+import model.exception.DataException;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import model.User;
-import model.AccountType;
 import model.UserFactory;
-import model.DataSource;
-import exception.InvalidUserException;
+import model.AccountType;
 
 /**
- * Handles events from the welcome screen
+ * Handles events from the registration screen
  */
-public class WelcomeController implements IMainAppReceiver {
+public class RegisterController implements MainAppReceiver {
     @FXML
     private TextField usernameField;
     @FXML
     private TextField passwordField;
     @FXML
     private ComboBox<AccountType> accountTypeBox;
-    @FXML
-    private Label Welcome;
 
     private MainFXApplication mainApp;
 
@@ -52,30 +48,31 @@ public class WelcomeController implements IMainAppReceiver {
     }
 
     /**
-     * Displays the login screen when user presses the login button.
+     * When user presses register button, attempts to register.
      */
-    public void login(ActionEvent event) throws Exception {
-        mainApp.showLogin();
+    public void handleRegisterPressed(ActionEvent actionEvent) {
+        User user = UserFactory.createUser(usernameField.getText(),
+                                           passwordField.getText(),
+                                           accountTypeBox.getValue());
+        mainApp.getDataSource().addUser(
+            user,
+            // Success
+            () -> {
+                mainApp.finishRegistration(user);
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
+
     }
 
     /**
-     * Attempts to create a new user with the information provided.
-     *
-     * Displays an error box if user already exists or username/password do not
-     * match requirements.
+     * Allows user to cancel login and return to the registration screen.
      */
-    public void register(ActionEvent actionEvent) {
-        User user;
-        try {
-            user = UserFactory.createUser(usernameField.getText(),
-                                          passwordField.getText(),
-                                          accountTypeBox.getValue());
-            DataSource.getInstance().add(user);
-        } catch (InvalidUserException e) {
-            mainApp.showAlert(e.getMessage());
-            return;
-        }
-
-        mainApp.finishRegistration(user);
+    public void handleBackButtonPressed(ActionEvent actionEvent) {
+        mainApp.showLogin();
     }
 }

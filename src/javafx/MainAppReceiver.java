@@ -9,7 +9,7 @@ package javafx;
  *
  * All controllers must implement this interface.
  */
-public interface IMainAppReceiver {
+public interface MainAppReceiver {
     /**
      * Passes a reference to the running MainFXApplication
      * instance into this controller.

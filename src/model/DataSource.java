@@ -1,55 +1,65 @@
 package model;
 
-import exception.InvalidUserException;
-import exception.NoSuchUserException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
+
+import model.exception.DataException;
 
 /**
- * Stores an account and check if there is an account or not
+ * Maintains system state, either by storing state in memory or by
+ * querying a service.
  */
-public class DataSource {
-    private static DataSource instance = new DataSource();
-    private Set<User> users;
-
-    private DataSource() {
-        users = new HashSet<>();
-    }
-
-    /**
-     * Gets the instance for this class
-     * @return instance for this class
-     */
-    public static DataSource getInstance() {
-        return instance;
-    }
-
+public interface DataSource {
     /**
      * Checks if there is the account or not in the list which we already have
      * @param user to check user ID which entered by an user
      * @param password to check user Password which entered by an user
      * @return if there is the account, return the User Object included user and password
      */
-    public User authenticate(String user, String password) throws NoSuchUserException {
-        for (User s: users) {
-            if (s.authenticate(user, password)) {
-                return s;
-            }
-        }
-        throw new NoSuchUserException("No matched ID or Password");
-    }
+    void authenticate(String user, String password, DataReceiver<User> onSuccess, DataErrorReceiver onFail);
 
     /**
      * Adds new account
      * @param userdata User Object (information with new ID and Password)
      */
-    public void add(User userdata) throws InvalidUserException {
-        for (User userOb : users) {
-            if (userdata.getUser().equals(userOb.getUser())) {
-                throw new InvalidUserException("Invalid ID");
-            }
-        }
-        users.add(userdata);
-    }
+    void addUser(User userdata, DataSuccessReceiver onSuccess, DataErrorReceiver onFail);
+
+    /**
+     * Change attributes (e.g., profile) of current user account
+     * @param userdata User Object (information with changed
+     *                 ID/Password/Profile)
+     */
+    void updateUser(User userdata, DataSuccessReceiver onSuccess, DataErrorReceiver onFail);
+
+    /**
+     * Adds new report
+     * @param report New report to add
+     */
+    void addReport(Report report, DataSuccessReceiver onSuccess, DataErrorReceiver onFail);
+
+    /**
+     * Adds new purity report
+     * @param purityReport New purity report to add
+     * @throws DataException for unexpected backend failures
+     */
+    void addPurityReport(PurityReport purityReport, DataSuccessReceiver onSuccess, DataErrorReceiver onFail);
+
+    /**
+     * Returns all reports in the system
+     * @return a Collection containing all known Reports
+     * @throws DataException for unexpected backend failures
+     */
+    void listReports(DataReceiver<Collection<Report>> onSuccess, DataErrorReceiver onFail);
+
+    /**
+     * Returns all purity reports in the system
+     * @return a Collection containing all known PurityReports
+     * @throws DataException for unexpected backend failures
+     */
+    void listPurityReports(DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
+
+    /**
+     * Finds all purity reports near the given latitude and longitude.
+     */
+    void listNearbyPurityReports(Year year, PurityReport report, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
 }
 

@@ -1,22 +1,25 @@
 package controller;
 
-import javafx.IMainAppReceiver;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
+import model.exception.DataException;
 import model.User;
 
 /**
  * Handles events from the edit profile screen
  */
-public class ProfileController implements IMainAppReceiver {
+public class ProfileController implements MainAppReceiver,
+        MainControllerReceiver {
     @FXML
     private TextArea bio;
     @FXML
-    private TextField name;
+    private TextField firstName;
+    @FXML
+    private TextField lastName;
     @FXML
     private TextField email;
     @FXML
@@ -25,6 +28,7 @@ public class ProfileController implements IMainAppReceiver {
     private TextField phone;
 
     private MainFXApplication mainApp;
+    private MainController mainController;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
@@ -34,11 +38,17 @@ public class ProfileController implements IMainAppReceiver {
         // Can't do this in initialize() because initialize is called before
         // this method.
         User user = mainApp.getUser();
-        name.setText(user.getName());
+        firstName.setText(user.getFirstName());
+        lastName.setText(user.getLastName());
         bio.setText(user.getBio());
         email.setText(user.getEmail());
         address.setText(user.getAddress());
         phone.setText(user.getPhoneNumber());
+    }
+
+    @Override
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
     /**
@@ -47,12 +57,24 @@ public class ProfileController implements IMainAppReceiver {
      */
     public void handleSaveProfilePressed(ActionEvent actionEvent) {
         User user = mainApp.getUser();
-        user.setName(name.getText());
+        user.setFirstName(firstName.getText());
+        user.setLastName(lastName.getText());
         user.setBio(bio.getText());
         user.setEmail(email.getText());
         user.setAddress(address.getText());
         user.setPhoneNumber(phone.getText());
 
-        mainApp.registrationComplete();
+        mainApp.getDataSource().updateUser(
+            user,
+            // Success
+            () -> {
+                mainApp.registrationComplete();
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
     }
 }

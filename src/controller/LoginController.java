@@ -1,23 +1,24 @@
 package controller;
 
-import javafx.IMainAppReceiver;
+import model.exception.DataException;
+import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import model.User;
-import model.DataSource;
-import exception.NoSuchUserException;
 
 /**
- * Handles events from the login screen
+ * Handles events from the welcome screen
  */
-public class LoginController implements IMainAppReceiver {
+public class LoginController implements MainAppReceiver {
     @FXML
-    private TextField username;
+    private TextField usernameField;
     @FXML
-    private TextField password;
+    private TextField passwordField;
+    @FXML
+    private Label Welcome;
 
     private MainFXApplication mainApp;
 
@@ -27,25 +28,27 @@ public class LoginController implements IMainAppReceiver {
     }
 
     /**
-     * When user presses login button, attempts to log in.
-     *
-     * If there's an authentication failure, shows a whiny alert.
+     * When user presses login, attempt to log in
      */
-    public void handleLoginPressed(ActionEvent actionEvent) {
-        try {
-            User user = DataSource.getInstance().authenticate(
-                username.getText(), password.getText());
-
-            mainApp.loginComplete(user);
-        } catch (NoSuchUserException e) {
-            mainApp.showAlert(e.getMessage());
-        }
+    public void handleLoginPressed(ActionEvent event) throws Exception {
+        mainApp.getDataSource().authenticate(
+            usernameField.getText(), passwordField.getText(),
+            // Success
+            user -> {
+                mainApp.loginComplete(user);
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
     }
 
     /**
-     * Allows user to cancel login and return to the registration screen.
+     * When user presses register, show registration screen
      */
-    public void handleBackButtonPressed(ActionEvent actionEvent) {
+    public void handleRegisterPressed(ActionEvent actionEvent) {
         mainApp.showRegister();
     }
 }
