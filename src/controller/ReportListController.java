@@ -1,6 +1,5 @@
 package controller;
 
-import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -11,14 +10,14 @@ import model.Report;
 import model.WaterCondition;
 import model.WaterType;
 
-import java.util.Collection;
-
 /**
  * Handles events sent by the reports list.
  */
 public class ReportListController implements MainAppReceiver, MainControllerReceiver {
     @FXML
     private TableView<Report> reportTable;
+    @FXML
+    private TableColumn<Report, String> idCol;
     @FXML
     private TableColumn<Report, String> dateCol;
     @FXML
@@ -34,15 +33,14 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
     @FXML
     private TableColumn<Report, String> descriptionCol;
 
-    private MainFXApplication mainApp;
-    private MainController mainController;
-
     /**
      * Configures the columns of the table of reports.
      */
     @FXML
     private void initialize() {
         // Set column cell factories
+        idCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getReportNumber()));
         dateCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getDateFormat()));
         creatorCol.cellValueFactoryProperty().setValue(cdf ->
@@ -61,7 +59,6 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
-        this.mainApp = mainApp;
 
         mainApp.getDataSource().listReports(
             // Success
@@ -79,6 +76,5 @@ public class ReportListController implements MainAppReceiver, MainControllerRece
 
     @Override
     public void setMainController(MainController mainController) {
-        this.mainController = mainController;
     }
 }

@@ -56,5 +56,10 @@ public interface DataSource {
      * @throws DataException for unexpected backend failures
      */
     void listPurityReports(DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
+
+    /**
+     * Finds all purity reports near the given latitude and longitude.
+     */
+    void listNearbyPurityReports(Year year, PurityReport report, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail);
 }
 

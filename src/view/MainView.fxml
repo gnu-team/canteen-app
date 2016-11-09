@@ -23,7 +23,7 @@
          <right>
             <JFXButton onAction="#handleLogoutPressed" text="Logout" textFill="WHITE" BorderPane.alignment="CENTER">
                <font>
-                  <Font name="Courier" size="13.0" />
+                  <Font name="Droid Sans Mono" size="13.0" />
                </font>
                <padding>
                   <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
@@ -31,7 +31,7 @@
             </JFXButton>
          </right>
          <left>
-            <JFXHamburger fx:id="hamburger" prefHeight="46.0" prefWidth="53.0" BorderPane.alignment="CENTER" stylesheets="@CSS/Styles.css" />
+            <JFXHamburger fx:id="hamburger" prefHeight="46.0" prefWidth="53.0" stylesheets="@CSS/Styles.css" BorderPane.alignment="CENTER" />
          </left>
       </BorderPane>
    </top>

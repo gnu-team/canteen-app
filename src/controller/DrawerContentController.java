@@ -15,24 +15,15 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
     private Button purityReportListButton;
     @FXML
     private Button createPurityReportButton;
-    @FXML
-    private Button historyReportButton;
 
-    private MainFXApplication mainApp;
     private MainController mainController;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
-        this.mainApp = mainApp;
-
         // Hide purity report controls if needed
         if (!mainApp.getUser().canUsePurityReports()) {
             hide(purityReportListButton);
             hide(createPurityReportButton);
-        }
-        // Hide history report control if less than a Manager
-        if (!mainApp.getUser().canViewHistoryReports()) {
-            hide(historyReportButton);
         }
     }
 
@@ -57,7 +48,7 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
      * Shows map when user presses map button.
      */
     @FXML
-    private void handleMapPressed(ActionEvent event) {
+    private void handleMapPressed() {
         mainController.showMap();
     }
 
@@ -65,7 +56,7 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
      * Shows report list when user presses report list button.
      */
     @FXML
-    private void handleReportListPressed(ActionEvent event) {
+    private void handleReportListPressed() {
         mainController.showReportList();
     }
 
@@ -73,7 +64,7 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
      * Shows create report screen when user presses create report button.
      */
     @FXML
-    private void handleCreateReportPressed(ActionEvent event) {
+    private void handleCreateReportPressed() {
         mainController.showCreateReport();
     }
 
@@ -81,22 +72,17 @@ public class DrawerContentController implements MainAppReceiver, MainControllerR
      * Shows profile editor when user presses edit profile button.
      */
     @FXML
-    private void handleEditProfilePressed(ActionEvent event) {
+    private void handleEditProfilePressed() {
         mainController.showEditProfile();
     }
 
     @FXML
-    private void handlePurityReportListPressed(ActionEvent event) {
+    private void handlePurityReportListPressed() {
         mainController.showPurityReportList();
     }
 
     @FXML
-    private void handleCreatePurityReportPressed(ActionEvent event) {
+    private void handleCreatePurityReportPressed() {
         mainController.showCreatePurityReport();
-    }
-
-    @FXML
-    private void handleHistoricalReportPressed(ActionEvent event) {
-        mainController.showHistoricalReport();
     }
 }

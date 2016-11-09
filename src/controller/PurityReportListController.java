@@ -1,6 +1,5 @@
 package controller;
 
-import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -10,14 +9,14 @@ import javafx.scene.control.TableView;
 import model.PurityReport;
 import model.WaterPurityCondition;
 
-import java.util.Collection;
-
 /**
  * Handles events sent by the purity reports list.
  */
 public class PurityReportListController implements MainAppReceiver, MainControllerReceiver {
     @FXML
     private TableView<PurityReport> purityReportTable;
+    @FXML
+    private TableColumn<PurityReport, String> idCol;
     @FXML
     private TableColumn<PurityReport, String> dateCol;
     @FXML
@@ -44,6 +43,8 @@ public class PurityReportListController implements MainAppReceiver, MainControll
     @FXML
     private void initialize() {
         // Set column cell factories
+        idCol.cellValueFactoryProperty().setValue(cdf ->
+            new ReadOnlyObjectWrapper<>(cdf.getValue().getReportNumber()));
         dateCol.cellValueFactoryProperty().setValue(cdf ->
             new ReadOnlyObjectWrapper<>(cdf.getValue().getDateFormat()));
         creatorCol.cellValueFactoryProperty().setValue(cdf ->
@@ -80,8 +81,19 @@ public class PurityReportListController implements MainAppReceiver, MainControll
         );
     }
 
+    /**
+     * Pressing the graph button takes the user to a dialog which asks
+     * the user for appropriate fields. If the user does not select a
+     * report first an alert will be shown.
+     */
     public void handleGraphButtonPressed() {
-        mainController.showYearHistoricalView();
+        PurityReport report = purityReportTable.getSelectionModel().getSelectedItem();
+
+        if (report == null) {
+            mainApp.showAlert("Please select a purity report first.");
+        } else {
+            mainController.showYearHistoricalView(report);
+        }
     }
 
     @Override

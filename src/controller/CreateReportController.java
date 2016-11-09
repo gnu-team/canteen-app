@@ -1,13 +1,14 @@
 package controller;
 
-import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import model.*;
+import model.Report;
+import model.WaterCondition;
+import model.WaterType;
 
 /**
  * Handles events from the create report screen
@@ -27,7 +28,6 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
     private MainFXApplication mainApp;
     private MainController mainController;
 
-    private static int reportNumber;
     /**
      * Populates the water type combobox.
      */
@@ -35,12 +35,6 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
     private void initialize() {
         waterTypeBox.getItems().setAll(WaterType.values());
         waterConditionBox.getItems().setAll(WaterCondition.values());
-    }
-    /**
-     * Each ReportNumber increamented by 1
-     */
-    public int getReportNumber() {
-        return reportNumber++;
     }
 
     @Override
@@ -58,14 +52,15 @@ public class CreateReportController implements MainAppReceiver, MainControllerRe
      */
     @FXML
     private void handleCreateReportPressed(ActionEvent event) {
-        Double latitude, longitude;
+        Double latitude = tryParseDouble(latitudeField.getText());
+        Double longitude = tryParseDouble(longitudeField.getText());
 
         if (latitudeField.getText().trim().equals("")
                 || longitudeField.getText().trim().equals("")) {
             mainApp.showAlert("Please enter a location");
-        } else if ((latitude = tryParseDouble(latitudeField.getText())) == null) {
+        } else if (latitude == null) {
             mainApp.showAlert("Please enter a valid number for latitude");
-        } else if ((longitude = tryParseDouble(longitudeField.getText())) == null) {
+        } else if (longitude == null) {
             mainApp.showAlert("Please enter a valid number for longitude");
         } else if (waterTypeBox.getValue() == null) {
             mainApp.showAlert("Please choose a water type");

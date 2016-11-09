@@ -14,28 +14,24 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import javafx.MainFXApplication;
 import javafx.MainAppReceiver;
 import javafx.fxml.FXML;
-import model.Report;
-import model.exception.DataException;
+import model.MapPin;
 import netscape.javascript.JSObject;
 
-import java.util.Collection;
-
 /**
- * Created by Claude Peon on 10/16/16.
+ * Displays map which shows the reports as icons
  */
 public class MapController implements MainAppReceiver, MainControllerReceiver,
                                       MapComponentInitializedListener {
+    private static final String ICON_FORMAT = "https://canteen-water.org/static/canteen_browser/img/%s32.png";
     private static final double GEORGIA_TECH_LAT = 33.779;
     private static final double GEORGIA_TECH_LONG = -84.398;
-    private static final int GEORGIA_TECH_ZOOM = 14;
+    private static final int GEORGIA_TECH_ZOOM = 15;
 
     @FXML
     private GoogleMapView mapView;
 
     private GoogleMap map;
     private MainFXApplication mainApp;
-    private MainController mainController;
-    private Collection<Report> reports;
 
     @FXML
     private void initialize() {
@@ -45,24 +41,10 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
     @Override
     public void setMainApp(MainFXApplication mainApp) {
         this.mainApp = mainApp;
-
-        mainApp.getDataSource().listReports(
-            // Success
-            reports -> {
-                this.reports = reports;
-                drawReports();
-            },
-            // Failure
-            e -> {
-                e.printStackTrace();
-                mainApp.showAlert(e.getMessage());
-            }
-        );
     }
 
     @Override
     public void setMainController(MainController mainController) {
-        this.mainController = mainController;
     }
 
     @Override
@@ -83,21 +65,53 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
                 .mapType(MapTypeIdEnum.TERRAIN);
 
         map = mapView.createMap(options);
+
         drawReports();
     }
 
+    /**
+     * Attempts to list and draw points for all reports.
+     */
     private void drawReports() {
-        if (reports == null || map == null) {
-            return;
-        }
+        mainApp.getDataSource().listReports(
+            // Success
+            reports -> {
+                drawPins(reports);
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
 
-        for (Report r : reports) {
+        if (mainApp.getUser().canUsePurityReports()) {
+            mainApp.getDataSource().listPurityReports(
+                // Success
+                purityReports -> {
+                    drawPins(purityReports);
+                },
+                // Failure
+                e -> {
+                    e.printStackTrace();
+                    mainApp.showAlert(e.getMessage());
+                }
+            );
+        }
+    }
+
+    /**
+     * Adds pins to the map for a given set of reports.
+     */
+    private void drawPins(Iterable<? extends MapPin> pins) {
+        for (MapPin p : pins) {
             MarkerOptions markerOptions = new MarkerOptions();
-            LatLong loc = new LatLong(r.getLatitude(), r.getLongitude());
+            LatLong loc = new LatLong(p.getLatitude(), p.getLongitude());
 
             markerOptions.position(loc)
                     .visible(Boolean.TRUE)
-                    .title(r.getSummary());
+                    .icon(String.format(ICON_FORMAT, p.getColor()))
+                    .title(p.getSummary());
 
             Marker marker = new Marker(markerOptions);
 
@@ -107,8 +121,8 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
                         infoWindowOptions.content(String.format(
                             "<strong>%s</strong><br>%.4f, %.4f<br><br>%s",
-                            r.getSummary(), r.getLatitude(), r.getLongitude(),
-                            r.getDescription()));
+                            p.getSummary(), p.getLatitude(), p.getLongitude(),
+                            p.getDescription()));
 
                         InfoWindow window = new InfoWindow(infoWindowOptions);
                         window.open(map, marker);
@@ -116,9 +130,5 @@ public class MapController implements MainAppReceiver, MainControllerReceiver,
 
             map.addMarker(marker);
         }
-
-        // Don't need reports anymore, so allow them to get garbage collected.
-        // This also marks the reports as drawn.
-        reports = null;
     }
 }

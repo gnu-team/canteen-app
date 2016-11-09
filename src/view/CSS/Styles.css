@@ -1,3 +1,53 @@
-.jfx-hamburger StackPane{
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans+Mono');
+
+.jfx-hamburger StackPane {
     -fx-background-color: #fcfcfc;
+}
+
+.label-header {
+    -fx-font-family: 'Droid Sans Mono', monospace;
+    -fx-font-size: 28px;
+}
+
+.label-header2 {
+    -fx-font-family: 'Droid Sans Mono', monospace;
+    -fx-font-size: 24px;
+}
+
+.button {
+    -fx-font-family: 'Droid Sans Mono', monospace;
+    -fx-font-size: 15px;
+    -fx-background-color: #3366ff;
+    -fx-text-fill: #fcfcfc;
+}
+
+.drawer-button {
+    -fx-font-family: 'Droid Sans Mono', monospace;
+    -fx-font-size: 15px;
+    -fx-background-color: #fcfcfc;
+    -fx-text-fill: black;
+}
+
+/*.fx-button-background {*/
+    /*-fx-background-color: #3366ff;*/
+/*}*/
+
+.text-field {
+    -fx-font-family: 'Droid Sans Mono', monospace;
+    -fx-font-size: 13px;
+}
+
+.combo-box {
+    -fx-font-family: 'Droid Sans Mono', monospace;
+    -fx-font-size: 13px;
+}
+
+.radio-button {
+    -fx-font-family: 'Droid Sans Mono', monospace;
+    -fx-font-size: 13px;
+}
+
+.table-view {
+    -fx-font-family: 'Droid Sans Mono', monospace;
+    -fx-font-size: 13px;
 }

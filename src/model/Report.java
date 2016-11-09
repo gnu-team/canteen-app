@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Represents a water source report.
  */
-public class Report {
+public class Report implements MapPin {
     private int id;
     private Date date;
     @SerializedName("creator_name")
@@ -108,6 +108,12 @@ public class Report {
         return reportNumber;
     }
 
+    @Override
+    public String getColor() {
+        return MapPin.COLOR_BLUE;
+    }
+
+    @Override
     public String getSummary() {
         return String.format("%s: %s %s", getReportNumber(), condition, type);
     }

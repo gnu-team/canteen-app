@@ -1,9 +1,7 @@
 package controller;
 
-import model.exception.DataException;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -50,7 +48,7 @@ public class RegisterController implements MainAppReceiver {
     /**
      * When user presses register button, attempts to register.
      */
-    public void handleRegisterPressed(ActionEvent actionEvent) {
+    public void handleRegisterPressed() {
         User user = UserFactory.createUser(usernameField.getText(),
                                            passwordField.getText(),
                                            accountTypeBox.getValue());
@@ -72,7 +70,7 @@ public class RegisterController implements MainAppReceiver {
     /**
      * Allows user to cancel login and return to the registration screen.
      */
-    public void handleBackButtonPressed(ActionEvent actionEvent) {
+    public void handleBackButtonPressed() {
         mainApp.showLogin();
     }
 }

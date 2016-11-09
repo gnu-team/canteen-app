@@ -17,6 +17,7 @@ public class User {
     private String email;
     private String address;
     private String bio;
+    @SerializedName("phone")
     private String phoneNumber;
     private boolean isblock = false;
 

@@ -5,11 +5,13 @@ import javafx.MainFXApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
+import model.PurityReport;
 import model.Year;
 
 
 /**
- * Created by Ph3ncyclidine on 10/31/16.
+ * Dialog window for the user to select what kind of ppm
+ * and which year to graph.
  */
 public class YearHistoricalController implements MainAppReceiver, MainControllerReceiver {
 
@@ -17,13 +19,14 @@ public class YearHistoricalController implements MainAppReceiver, MainController
     private RadioButton virus;
 
     @FXML
-    private RadioButton contaminate;
+    private RadioButton contaminant;
 
     @FXML
     private ComboBox<Year> year;
 
     private MainFXApplication mainApp;
     private MainController mainController;
+    private PurityReport report;
 
     @Override
     public void setMainApp(MainFXApplication mainApp) {
@@ -35,19 +38,41 @@ public class YearHistoricalController implements MainAppReceiver, MainController
         this.mainController = mainController;
     }
 
+    /**
+     * Sets the report to graph.
+     * @param report the report to graph
+     */
+    public void setReport(PurityReport report) {
+        this.report = report;
+    }
+
+    /**
+     * Sets the year
+     */
     @FXML
     private void initialize() {
         year.getItems().setAll(Year.values());
     }
 
+    /**
+     * Shows the graph with the selected ppm and year.
+     */
     @FXML
     public void handleViewPressed() {
-        mainController.showHistoricalReport();
+        if (!virus.isSelected() && !contaminant.isSelected()) {
+            mainApp.showAlert("Please select a PPM to graph.");
+        } else if (year.getValue() == null) {
+            mainApp.showAlert("Please select a year to graph.");
+        } else {
+            mainController.showHistoricalReport(virus.isSelected(), year.getValue(), report);
+        }
     }
 
+    /**
+     * Goes back to the previous page.
+     */
     @FXML
     public void handleCancelPressed() {
         mainController.showMap();
     }
-
 }

@@ -2,39 +2,41 @@ package controller;
 
 
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.MainAppReceiver;
 import javafx.MainFXApplication;
-import javafx.stage.Stage;
+import java.text.DateFormatSymbols;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import model.PurityReport;
+import model.Year;
 
 /**
- * Created by Ph3ncyclidine on 10/26/16.
+ * Draws a chart for the history of the water's purity.
  */
 public class HistoricalReportController implements MainAppReceiver, MainControllerReceiver {
+
+    @FXML
+    private LineChart<String, Number> lineChart;
+    private XYChart.Series series;
     private MainFXApplication mainApp;
-    private MainController mainController;
 
-    public void initilize() {
-
+    /**
+     * Initializes the graph with startup data
+     */
+    public void initialize() {
         final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Month");
-        final LineChart<String, Number> lineChart =
-                new LineChart<>(xAxis, yAxis);
+        yAxis.setLabel("PPM");
 
-        lineChart.setTitle("PPM 2016");
-
-        XYChart.Series series = new XYChart.Series();
-        series.setName("My portfolio");
-
-        series.getData().add(new XYChart.Data("Jan", 23));
-
+        series = new XYChart.Series();
         lineChart.getData().add(series);
     }
 
@@ -45,6 +47,84 @@ public class HistoricalReportController implements MainAppReceiver, MainControll
 
     @Override
     public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+    }
+
+    /**
+     * Called by main controller to specify what to graph
+     * @param virus true if virus is selected false for contaminate
+     * @param year the year we're looking at
+     * @param report the report to graph
+     */
+    public void drawGraphFor(boolean virus, Year year, PurityReport report) {
+        // Apply the right PPM label
+        lineChart.setTitle((virus ? "Virus" : "Contaminant") + " PPM");
+        // Set series name
+        series.setName("Reports near " + report.getLatitude() + "," + report.getLongitude());
+
+        mainApp.getDataSource().listNearbyPurityReports(
+            year, report,
+            // Success
+            reports -> {
+                drawPoints(virus, reports);
+            },
+            // Failure
+            e -> {
+                e.printStackTrace();
+                mainApp.showAlert(e.getMessage());
+            }
+        );
+    }
+
+    /**
+     * Gets the month of the report as an integer
+     * @param report the report we want to use
+     * @return the month as an integer
+     */
+    private int reportMonth(PurityReport report) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(report.getDate());
+        return c.get(Calendar.MONTH);
+    }
+
+    /**
+     * Draws the points on the graph
+     * @param virus true if virus is selected, false if contaminate is selected
+     * @param reports the report to draw the points of
+     */
+    private void drawPoints(boolean virus, Collection<PurityReport> reports) {
+        // First, sort reports by date
+        List<PurityReport> sorted = new ArrayList<>(reports);
+        Collections.sort(sorted, (r1, r2) -> r1.getDate().compareTo(r2.getDate()));
+
+        for (int i = 0; i < sorted.size();) {
+            // Index of next report with unique month
+            int j;
+
+            for (j = i + 1; j < sorted.size() &&
+                 reportMonth(sorted.get(j)) == reportMonth(sorted.get(i)); j++);
+
+            double avg = 0;
+            // Now, find sum
+            for (int k = i; k < j; k++) {
+                PurityReport report = sorted.get(k);
+                avg += (virus ? report.getVirusPPM()
+                              : report.getContaminantPPM());
+            }
+            avg /= j - i;
+
+            drawPoint(reportMonth(sorted.get(i)), avg);
+
+            i = j;
+        }
+    }
+
+    /**
+     * Draws an individual point
+     * @param month the month of the point to be drawn
+     * @param avg the average of the months
+     */
+    private void drawPoint(int month, double avg) {
+        String monthName = new DateFormatSymbols().getMonths()[month];
+        series.getData().add(new XYChart.Data<String, Number>(monthName, avg));
     }
 }

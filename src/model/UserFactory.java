@@ -1,6 +1,5 @@
 package model;
 
-import java.util.regex.Pattern;
 
 /**
  * Generates a User instance from a username, password, and AccountType.
@@ -9,6 +8,11 @@ import java.util.regex.Pattern;
  * Manager etc. are subclasses of User.
  */
 public class UserFactory {
+
+    private UserFactory() {
+        //default constructor
+    }
+
     /**
      * Checks username and password for correctness and returns a User of the
      * given account type.
