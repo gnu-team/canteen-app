@@ -14,6 +14,7 @@ public class MemoryDataSource implements DataSource {
     private static MemoryDataSource instance = new MemoryDataSource();
     private Set<User> users;
     private Set<Report> reports;
+    private String notImplemented = "Not implemented";
 
     private MemoryDataSource() {
         users = new HashSet<>();
@@ -53,7 +54,7 @@ public class MemoryDataSource implements DataSource {
 
     @Override
     public void updateUser(User userdata, DataSuccessReceiver onSuccess, DataErrorReceiver onFail) {
-        onFail.onFail(new DataException("Not implemented"));
+        onFail.onFail(new DataException(notImplemented));
     }
 
     @Override
@@ -65,7 +66,7 @@ public class MemoryDataSource implements DataSource {
 
     @Override
     public void addPurityReport(PurityReport purityReport, DataSuccessReceiver onSuccess, DataErrorReceiver onFail) {
-        onFail.onFail(new DataException("Not implemented"));
+        onFail.onFail(new DataException(notImplemented));
     }
 
     @Override
@@ -75,11 +76,11 @@ public class MemoryDataSource implements DataSource {
 
     @Override
     public void listPurityReports(DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
-        onFail.onFail(new DataException("Not implemented"));
+        onFail.onFail(new DataException(notImplemented));
     }
 
     @Override
     public void listNearbyPurityReports(Year year, PurityReport report, DataReceiver<Collection<PurityReport>> onSuccess, DataErrorReceiver onFail) {
-        onFail.onFail(new DataException("Not implemented"));
+        onFail.onFail(new DataException(notImplemented));
     }
 }
