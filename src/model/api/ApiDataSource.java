@@ -186,8 +186,8 @@ public class ApiDataSource implements DataSource {
         }));
     }
 
-    private class FullUser extends User {}
-    private class UserDeserializer implements JsonDeserializer<User> {
+    private static class FullUser extends User {}
+    private static class UserDeserializer implements JsonDeserializer<User> {
         @Override
         public User deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             // Full user object (e.g., {"username": "austin", "first_name": "Austin", ... })
@@ -202,7 +202,7 @@ public class ApiDataSource implements DataSource {
         }
     }
 
-    private class WaterTypeDeserializer implements JsonSerializer<WaterType>, JsonDeserializer<WaterType> {
+    private static class WaterTypeDeserializer implements JsonSerializer<WaterType>, JsonDeserializer<WaterType> {
         @Override
         public JsonElement serialize(WaterType src, Type typeOfSrc, JsonSerializationContext context) {
             return new JsonPrimitive(Arrays.asList(WaterType.values()).indexOf(src));
@@ -214,7 +214,7 @@ public class ApiDataSource implements DataSource {
         }
     }
 
-    private class WaterConditionDeserializer implements JsonSerializer<WaterCondition>, JsonDeserializer<WaterCondition> {
+    private static class WaterConditionDeserializer implements JsonSerializer<WaterCondition>, JsonDeserializer<WaterCondition> {
         @Override
         public JsonElement serialize(WaterCondition src, Type typeOfSrc, JsonSerializationContext context) {
             return new JsonPrimitive(Arrays.asList(WaterCondition.values()).indexOf(src));
@@ -226,7 +226,7 @@ public class ApiDataSource implements DataSource {
         }
     }
 
-    private class WaterPurityConditionDeserializer implements JsonSerializer<WaterPurityCondition>, JsonDeserializer<WaterPurityCondition> {
+    private static class WaterPurityConditionDeserializer implements JsonSerializer<WaterPurityCondition>, JsonDeserializer<WaterPurityCondition> {
         @Override
         public JsonElement serialize(WaterPurityCondition src, Type typeOfSrc, JsonSerializationContext context) {
             return new JsonPrimitive(Arrays.asList(WaterPurityCondition.values()).indexOf(src));
@@ -238,7 +238,7 @@ public class ApiDataSource implements DataSource {
         }
     }
 
-    private class AccountTypeDeserializer implements JsonSerializer<AccountType>, JsonDeserializer<AccountType> {
+    private static class AccountTypeDeserializer implements JsonSerializer<AccountType>, JsonDeserializer<AccountType> {
         @Override
         public JsonElement serialize(AccountType src, Type typeOfSrc, JsonSerializationContext context) {
             return new JsonPrimitive(src.toString() + "s");
