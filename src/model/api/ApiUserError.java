@@ -16,8 +16,7 @@ public class ApiUserError extends ApiError {
     private String[] bio;
 
     @Override
-    public String fieldErrors() {
-        StringBuilder sb = new StringBuilder();
+    public void fieldErrors(StringBuilder sb) {
         listReasons(sb, "User name", username);
         listReasons(sb, "First name", firstName);
         listReasons(sb, "Last name", lastName);
@@ -27,6 +26,5 @@ public class ApiUserError extends ApiError {
         listReasons(sb, "Phone number", phone);
         listReasons(sb, "Address", address);
         listReasons(sb, "Bio", bio);
-        return (sb.length() > 0) ? sb.toString() : null;
     }
 }
