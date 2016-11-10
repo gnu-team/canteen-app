@@ -115,8 +115,7 @@ public class PurityReport implements MapPin {
 
         NumberFormat nf = new DecimalFormat("0000"); // ex) Making S-0001
         //S means Source, P will mean purity , and H will mean Historical
-        String reportNumber = "P-" + nf.format(id);
-        return reportNumber;
+        return "P-" + nf.format(id);
     }
 
     @Override

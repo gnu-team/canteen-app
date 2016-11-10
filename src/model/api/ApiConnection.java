@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import javax.net.ssl.SSLException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,6 +51,16 @@ public class ApiConnection<T extends ApiError> {
         int statusCode;
         try {
             statusCode = conn.getResponseCode();
+        } catch (SSLException e) {
+            // If there might have been a certificate verification
+            // failure, encourage users to upgrade Java.
+            //
+            // (OpenJDK seems to throw SSLProtocolException, while the
+            //  Oracle JRE throws SSLHandshakeException, so catch
+            //  SSLException, a common superclass.)
+            throw new DataException(String.format("SSL error making %s request"
+                + " to %s: %s\n\nPlease try upgrading to Java 8u101 or later.",
+                method, path, e.getMessage()), e);
         } catch (IOException e) {
             throw new DataException("Could not make " + method + " request to " + path, e);
         }
