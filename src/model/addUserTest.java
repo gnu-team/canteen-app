@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.Assert;
 
 /**
- * Created by NikosD on 11/9/16.
+ * Created by Hyungsuk Do on 11/9/16.
  */
 
 
@@ -22,7 +22,6 @@ public class addUserTest {
     @Before
     public void setUp() throws Exception {
         mds = MemoryDataSource.getInstance();
-        a = new User("hyungsuk5057", "dhdish34846238", AccountType.USER);
         b = new User("jadsld5857", "dklfjdopsfhaod234", AccountType.USER);
     }
 
