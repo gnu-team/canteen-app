@@ -7,7 +7,7 @@ package model;
  * This hack exists because AccountType is not a field of User; instead,
  * Manager etc. are subclasses of User.
  */
-public class UserFactory {
+public final class UserFactory {
 
     private UserFactory() {
         //default constructor

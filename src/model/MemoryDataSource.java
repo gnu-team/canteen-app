@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Stores an account and check if there is an account or not
  */
-public class MemoryDataSource implements DataSource {
+public final class MemoryDataSource implements DataSource {
     private static MemoryDataSource instance = new MemoryDataSource();
     private Set<User> users;
     private Set<Report> reports;
