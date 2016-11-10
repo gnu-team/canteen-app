@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.canteen_water.controller.PurityReportListController">
+   <children>
+      <TableView fx:id="purityReportTable" maxHeight="300.0" stylesheets="@CSS/Styles.css" StackPane.alignment="TOP_LEFT">
+        <columns>
+          <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date" />
+          <TableColumn fx:id="creatorCol" prefWidth="70.0" text="Creator" />
+            <TableColumn fx:id="latitudeCol" prefWidth="46.0" text="Latitude" />
+            <TableColumn fx:id="longitudeCol" prefWidth="56.0" text="Longitude" />
+            <TableColumn fx:id="virusPPMCol" minWidth="9.0" prefWidth="87.0" text="Virus PPM" />
+            <TableColumn fx:id="contaminantPPMCol" minWidth="9.0" prefWidth="87.0" text="Contaminant PPM" />
+            <TableColumn fx:id="conditionCol" minWidth="0.0" prefWidth="98.0" text="Condition" />
+            <TableColumn fx:id="descriptionCol" maxWidth="167.0" minWidth="0.0" prefWidth="167.0" text="Description" />
+        </columns>
+      </TableView>
+      <JFXButton onAction="#handleGraphButtonPressed" style="-fx-background-color: #3366ff;" text="Graph" textFill="WHITE" StackPane.alignment="CENTER_RIGHT">
+         <font>
+            <Font name="Courier" size="13.0" />
+         </font>
+      </JFXButton>
+   </children>
+</StackPane>

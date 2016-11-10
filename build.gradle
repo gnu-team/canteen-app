@@ -3,7 +3,7 @@ version '2.0.1'
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'javafx.MainFXApplication'
+mainClassName = 'org.canteen_water.javafx.MainFXApplication'
 
 repositories {
     mavenCentral()
