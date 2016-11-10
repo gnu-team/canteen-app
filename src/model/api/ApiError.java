@@ -4,11 +4,20 @@ public class ApiError {
     private String detail;
 
     public String getDetail() {
-        return (detail != null) ? detail : fieldErrors();
+        StringBuilder sb = new StringBuilder();
+
+        if (detail != null) {
+            sb.append(detail);
+        }
+
+        // Allow subclasses to add errors for other fields
+        fieldErrors(sb);
+
+        return (sb.length() > 0) ? sb.toString() : null;
     }
 
-    protected String fieldErrors() {
-        return null;
+    protected void fieldErrors(StringBuilder sb) {
+        // Nothing to add
     }
 
     protected void listReasons(StringBuilder dest, String label, String[] reasons) {

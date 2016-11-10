@@ -1,9 +1,13 @@
 package model.api;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ApiUserError extends ApiError {
     private String[] username;
-    private String[] first_name;
-    private String[] last_name;
+    @SerializedName("first_name")
+    private String[] firstName;
+    @SerializedName("last_name")
+    private String[] lastName;
     private String[] email;
     private String[] group;
     private String[] password;
@@ -12,17 +16,15 @@ public class ApiUserError extends ApiError {
     private String[] bio;
 
     @Override
-    public String fieldErrors() {
-        StringBuilder sb = new StringBuilder();
+    public void fieldErrors(StringBuilder sb) {
         listReasons(sb, "User name", username);
-        listReasons(sb, "First name", first_name);
-        listReasons(sb, "Last name", last_name);
+        listReasons(sb, "First name", firstName);
+        listReasons(sb, "Last name", lastName);
         listReasons(sb, "Email address", email);
         listReasons(sb, "Group name", group);
         listReasons(sb, "Password", password);
         listReasons(sb, "Phone number", phone);
         listReasons(sb, "Address", address);
         listReasons(sb, "Bio", bio);
-        return (sb.length() > 0) ? sb.toString() : null;
     }
 }
