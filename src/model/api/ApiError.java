@@ -11,7 +11,7 @@ public class ApiError {
         return null;
     }
 
-    protected void listReasons(StringBuilder dest, String label, String[] reasons) {
+    protected StringBuilder listReasons(StringBuilder dest, String label, String[] reasons) {
         if (reasons != null && reasons.length > 0) {
             // If we've already added some reasons for a different
             // input, start the reasons for this new input on a new line
@@ -30,5 +30,6 @@ public class ApiError {
                 }
             }
         }
+        return dest;
     }
 }
