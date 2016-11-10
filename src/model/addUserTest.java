@@ -12,23 +12,29 @@ import org.junit.Assert;
 
 public class addUserTest {
     MemoryDataSource mds;
-    boolean added = false;
-    boolean ifFail = true;
-    User a;
+    boolean added;
+    boolean ifFail;
     User b;
-    User c;
-    DataSuccessReceiver dsr = ()-> added = true;
-    DataErrorReceiver der = (DataException e)-> ifFail = false;
+    User a;
+    DataSuccessReceiver dsr;
+    DataErrorReceiver der;
     @Before
     public void setUp() throws Exception {
         mds = MemoryDataSource.getInstance();
-        b = new User("jadsld5857", "dklfjdopsfhaod234", AccountType.USER);
+        dsr = ()-> added = true;
+        der = (DataException e)-> ifFail = true;
+        a = new User("hyungsuk505", "dlwi278", AccountType.USER);
+        b = new User("jadsld5857", "dklfjdaod234", AccountType.USER);
+    }
+
+    @Test
+    public void testAddSuccess() {
+        mds.addUser(b, dsr, der);
+        Assert.assertEquals("success to add", false, added);
     }
 
     @Test
     public void testAddFail() {
-        mds.addUser(b, dsr, der);
-        Assert.assertEquals("success to add", true, ifFail);
         mds.addUser(b, dsr, der);
         Assert.assertEquals("The account already exists", false, ifFail);
     }
