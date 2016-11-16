@@ -1,12 +1,13 @@
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
-import org.canteen_web.model.exception.DataException;
-import org.canteen_web.model.DataReceiver;
-import org.canteen_web.model.DataErrorReceiver;
-import org.canteen_web.model.DataSuccessReceiver;
-import org.canteen_web.model.MemoryDataSource;
-import org.canteen_web.model.User;
+import org.canteen_water.model.exception.DataException;
+import org.canteen_water.model.DataReceiver;
+import org.canteen_water.model.DataErrorReceiver;
+import org.canteen_water.model.DataSuccessReceiver;
+import org.canteen_water.model.MemoryDataSource;
+import org.canteen_water.model.AccountType;
+import org.canteen_water.model.User;
 
 /**
  * Created by Hyungsuk Do on 11/9/16.
