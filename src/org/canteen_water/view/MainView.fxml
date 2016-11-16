@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.canteen_water.controller.MainController">
+   <center>
+      <AnchorPane fx:id="anchorPane">
+         <children>
+            <StackPane fx:id="mainPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <JFXDrawer fx:id="drawer" defaultDrawerSize="190.0" prefHeight="403.0" prefWidth="117.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <BorderPane style="-fx-background-color: #003cc9;" BorderPane.alignment="CENTER">
+         <right>
+            <JFXButton onAction="#handleLogoutPressed" text="Logout" textFill="WHITE" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Droid Sans Mono" size="13.0" />
+               </font>
+               <padding>
+                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+               </padding>
+            </JFXButton>
+         </right>
+         <left>
+            <JFXHamburger fx:id="hamburger" prefHeight="46.0" prefWidth="53.0" stylesheets="@CSS/Styles.css" BorderPane.alignment="CENTER" />
+         </left>
+      </BorderPane>
+   </top>
+</BorderPane>
