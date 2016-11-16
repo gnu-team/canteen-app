@@ -1,7 +1,7 @@
 import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
-import model.api.ApiUserError;
+import org.canteen_water.model.api.ApiUserError;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
