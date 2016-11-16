@@ -39,7 +39,7 @@ public class PurityReport implements MapPin {
     }
 
     public Date getDate() {
-        return date.clone();
+        return (Date) date.clone();
     }
     public User getCreator() {
         return creator;
