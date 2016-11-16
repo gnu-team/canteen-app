@@ -1,18 +1,20 @@
 import static org.junit.Assert.*;
 
-import model.exception.DataException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.canteen_water.model.exception.DataException;
+import org.canteen_water.model.AccountType;
 import org.canteen_water.model.MemoryDataSource;
 import org.canteen_water.model.DataReceiver;
 import org.canteen_water.model.DataSuccessReceiver;
 import org.canteen_water.model.DataErrorReceiver;
+import org.canteen_water.model.User;
 
 /**
  * Created by XinZhang on 11/9/16.
  */
-public class AuthenticateTestTest {
+public class AuthenticateTest {
     MemoryDataSource msc;
     String useri;
     User a;
