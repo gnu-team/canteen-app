@@ -1,4 +1,4 @@
-import model.AccountType;
+import org.canteen_water.model.AccountType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -6,12 +6,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-import model.User;
+import org.canteen_water.model.User;
 
 /**
  * Created by Ph3ncyclidine on 11/15/16.
  */
-public class Tester {
+public class AuthenticateUserTest {
     User claude = new User("Claude", "passpass", AccountType.USER);
     User phony = new User("phony", "password", AccountType.ADMIN);
 
