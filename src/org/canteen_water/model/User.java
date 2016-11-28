@@ -22,10 +22,10 @@ public class User {
     private boolean isblock = false;
 
     /**
-     * Creates user object
+     * Creates user object with null fields.
+     * (Called by Gson, which uses reflection to populate fields)
      */
     public User(){
-        this("user", "pass", AccountType.USER);
     }
 
     /**
